@@ -57,6 +57,12 @@
   <p class="pn-demo mono" id="demoBar" hidden>Modo demostración: estos pedidos son de ejemplo y los cambios no se guardan.</p>
 
   <main class="wrap pn-main">
+    <div class="pn-tabs mono" role="tablist" aria-label="Secciones del panel">
+      <button type="button" role="tab" class="is-on" data-tab="pedidos" aria-selected="true">Pedidos <small id="tabPedN"></small></button>
+      <button type="button" role="tab" data-tab="referidos" aria-selected="false">Referidos <small id="tabRefN"></small></button>
+    </div>
+
+    <div id="tabPedidos">
     <div class="pn-head">
       <div><p class="mono muted">Pedidos de la tienda</p><h1 class="s-lg">Pedi<em>dos</em></h1></div>
       <p class="mono muted" id="totalTxt"></p>
@@ -84,6 +90,44 @@
         <p>Abre un pedido para ver los datos del cliente, escribirle por WhatsApp, cambiar el estado o dejar una nota interna. Todo se guarda en la misma hoja.</p>
         <p>El panel se actualiza solo cada minuto mientras está abierto.</p>
       </section>
+    </div>
+    </div>
+
+    <div id="tabReferidos" hidden>
+      <div class="pn-head">
+        <div><p class="mono muted">Ventas por recomendación</p><h1 class="s-lg">Refe<em>ridos</em></h1></div>
+        <p class="mono muted" id="refTotalTxt"></p>
+      </div>
+
+      <section class="pn-kpis" aria-label="Resumen de referidos">
+        <div class="pn-kpi" id="rkActive"><p class="mono muted">Referidos</p><b>0</b><p class="mono muted">activos</p></div>
+        <div class="pn-kpi" id="rkSales"><p class="mono muted">Ventas entregadas</p><b>$0</b><p class="mono muted">por referidos</p></div>
+        <div class="pn-kpi" id="rkDue"><p class="mono muted">Comisiones por pagar</p><b>$0</b><p class="mono muted">pedidos entregados</p></div>
+        <div class="pn-kpi" id="rkPaid"><p class="mono muted">Comisiones pagadas</p><b>$0</b><p class="mono muted">histórico</p></div>
+      </section>
+
+      <div class="pn-refgrid">
+        <div class="pn-reflist" id="refList"></div>
+        <aside class="pn-refform">
+          <h2 id="refFormTitle">Nuevo <em>referido</em></h2>
+          <form class="form" id="refForm" novalidate>
+            <div class="field full"><label class="mono" for="rNombre">Nombre</label><input id="rNombre" name="nombre" autocomplete="off" required></div>
+            <div class="field"><label class="mono" for="rCel">Celular (opcional)</label><input id="rCel" name="celular" type="tel" inputmode="tel" autocomplete="off"></div>
+            <div class="field"><label class="mono" for="rCom">Comisión (%)</label><input id="rCom" name="comision" type="number" min="0" max="90" step="1" value="10"></div>
+            <div class="field full"><label class="mono" for="rCod">Código del enlace</label><input id="rCod" name="codigo" autocomplete="off" required><span class="err" id="rErr"></span></div>
+            <label class="pn-check mono full" for="rAct"><input type="checkbox" id="rAct" name="activo" checked> Activo</label>
+            <p class="mono muted full pn-refprev">Enlace: <span id="rPrev"></span></p>
+            <button class="btn btn--block full" type="submit" id="rSave">Crear enlace <span class="btn__ico"></span></button>
+            <button class="link full" type="button" id="rCancel" hidden>Cancelar edición</button>
+          </form>
+          <div class="pn-help" style="margin-top:2rem">
+            <h2>Cómo <em>funciona</em></h2>
+            <p>Crea un referido y comparte su enlace. Quien entre por ese enlace queda marcado durante 30 días, aunque compre otro día.</p>
+            <p>El código funciona en cualquier página: por ejemplo <em>obsidiancol.shop/productos/adidas-samba-og.html?ref=juan</em>.</p>
+            <p>La comisión se calcula sobre los pedidos <b>entregados</b>. Cuando le pagues a tu referido, márcalo como pagado.</p>
+          </div>
+        </aside>
+      </div>
     </div>
   </main>
 </div>

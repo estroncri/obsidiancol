@@ -42,6 +42,18 @@
     set(k, v) { try { sessionStorage.setItem(k, v); } catch (e) { /* bloqueado */ } },
   };
 
+  /* código de referido: ?ref=juan en cualquier página. Se recuerda N días (último enlace usado gana). */
+  const REF_KEY = 'obs-ref';
+  const REF_DAYS = Number(CFG.referidoDias) || 30;
+  const cleanRef = v => { const s = norm(v).replace(/[^a-z0-9_-]/g, '').slice(0, 30); return s.length >= 2 ? s : ''; };
+  (() => {
+    let incoming = '';
+    try { incoming = cleanRef(new URLSearchParams(location.search).get('ref')); } catch (e) { incoming = ''; }
+    if (incoming) store.set(REF_KEY, { c: incoming, t: Date.now() });
+  })();
+  const getRef = () => { const o = store.get(REF_KEY, null); return o && o.c && Date.now() - o.t < REF_DAYS * 864e5 ? o.c : ''; };
+  const refLine = () => (getRef() ? `\nCódigo de referido: ${getRef()}` : '');
+
   const COLLECTIONS = {
     blackout: { name: 'Blackout', img: 'img/products/lv-skate-black-4.jpg' },
     icons: { name: 'Icons', img: 'img/products/af1-mid-2.jpg' },
@@ -857,7 +869,7 @@
     $$('.size', sizesEl).forEach(b => { b.disabled = p.agotado || !p.tallas.includes(Number(b.dataset.size)); });
     if (p.agotado) { addBtn.disabled = true; addBtn.firstChild.textContent = 'Agotado '; }
     let size = null, qty = 1;
-    const waMsg = () => `Hola OBSIDIAN 👋 Quiero este par:\n\n• ${qty} × ${name} (${p.color}) — Talla ${size} — ${fmt(p.precio * qty)}\n\n¿Está disponible? ${location.href}`;
+    const waMsg = () => `Hola OBSIDIAN 👋 Quiero este par:\n\n• ${qty} × ${name} (${p.color}) — Talla ${size} — ${fmt(p.precio * qty)}\n\n¿Está disponible? ${location.href}${refLine()}`;
     sizesEl.addEventListener('click', e => {
       const b = e.target.closest('.size'); if (!b) return;
       size = Number(b.dataset.size);
@@ -934,7 +946,7 @@
       $('#cNombre').closest('.field').classList.toggle('bad', !okN);
       $('#cMensaje').closest('.field').classList.toggle('bad', !okM);
       if (!okN || !okM) return;
-      openWA(waLink(`Hola OBSIDIAN 👋 Soy ${d.nombre.trim()}${d.ciudad.trim() ? ' de ' + d.ciudad.trim() : ''}.\nMotivo: ${d.motivo}\n\n${d.mensaje.trim()}`), $('#cFallback'));
+      openWA(waLink(`Hola OBSIDIAN 👋 Soy ${d.nombre.trim()}${d.ciudad.trim() ? ' de ' + d.ciudad.trim() : ''}.\nMotivo: ${d.motivo}\n\n${d.mensaje.trim()}${refLine()}`), $('#cFallback'));
       toast('Mensaje listo en WhatsApp');
     });
     return null;
@@ -953,6 +965,8 @@
       $('#sumItems').textContent = `${n} ${n === 1 ? 'par' : 'pares'}`;
       $('#sumSub').textContent = fmt(Cart.total());
       $('#sumTotal').textContent = fmt(Cart.total());
+      const ref = getRef(), refRow = $('#sumRefRow');
+      if (refRow) { refRow.hidden = !ref; $('#sumRef').textContent = ref; }
     };
     document.addEventListener('cart:change', render);
     render();
@@ -977,7 +991,7 @@
       });
       if (bad) { bad.focus(); return; }
       const items = Cart.items.map(i => { const p = byId[i.id]; return { id: p.id, slug: p.slug, marca: p.marca, nombre: p.nombre, color: p.color, talla: i.talla, cantidad: i.qty, precio: p.precio }; });
-      const pedido = { nombre: d.nombre.trim(), celular: d.celular.trim(), ciudad: d.ciudad.trim(), direccion: d.direccion.trim(), barrio: (d.barrio || '').trim(), notas: (d.notas || '').trim(), items, subtotal: Cart.total(), origen: location.host || 'local' };
+      const pedido = { nombre: d.nombre.trim(), celular: d.celular.trim(), ciudad: d.ciudad.trim(), direccion: d.direccion.trim(), barrio: (d.barrio || '').trim(), notas: (d.notas || '').trim(), items, subtotal: Cart.total(), origen: location.host || 'local', ref: getRef() };
       const btn = $('button[type="submit"]', form), btnHTML = btn.innerHTML;
       let numero = '';
       if (CFG.pedidosApi) {
@@ -993,7 +1007,7 @@
       const lines = items.map(i => `• ${i.cantidad} × ${fullName(byId[i.id])} (${i.color}) — Talla ${i.talla} — ${fmt(i.precio * i.cantidad)}`).join('\n');
       const msg = `Hola OBSIDIAN 👋 ${numero ? `Acabo de hacer el pedido *${numero}*` : 'Quiero hacer este pedido'}:\n\n${lines}\n\nSubtotal: ${fmt(pedido.subtotal)}\nEnvío: por confirmar\n\n` +
         `Nombre: ${pedido.nombre}\nCelular: ${pedido.celular}\nCiudad: ${pedido.ciudad}\nDirección: ${pedido.direccion}` +
-        (pedido.barrio ? `\nBarrio: ${pedido.barrio}` : '') + (pedido.notas ? `\nNotas: ${pedido.notas}` : '') + `\n\nForma de pago: ${CFG.pago || 'Contraentrega'}`;
+        (pedido.barrio ? `\nBarrio: ${pedido.barrio}` : '') + (pedido.notas ? `\nNotas: ${pedido.notas}` : '') + `\n\nForma de pago: ${CFG.pago || 'Contraentrega'}` + (pedido.ref ? `\nCódigo de referido: ${pedido.ref}` : '');
       const wa = waLink(msg);
       $('#doneNum').textContent = numero ? `Pedido ${numero}` : 'Pedido listo';
       $('#doneTxt').textContent = numero

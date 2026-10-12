@@ -22,6 +22,9 @@ window.OBSIDIAN_CONFIG = {
   // Instrucciones en herramientas/pedidos-google-apps-script.gs. Vacío = los pedidos solo llegan por WhatsApp.
   pedidosApi: 'https://script.google.com/macros/s/AKfycbza702qJ3pv81ozSRvWaBb-mrI-DpzhCkIVLYxgH3iC3CGw9wTN14m__iQkjnSdYuKK/exec',
 
+  // Referidos: días que se recuerda el código de un enlace como obsidiancol.shop/?ref=juan
+  referidoDias: 30,
+
   // Suma este valor (COP) al precio de cada par. Útil si revendes con margen.
   aumentoPrecio: 0,
 
