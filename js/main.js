@@ -979,6 +979,7 @@
       celular: v => /^\d{7,12}$/.test(v.replace(/\D/g, '')) || 'Escribe un número de celular válido.',
       ciudad: v => v.trim().length >= 3 || 'Escribe tu ciudad.',
       direccion: v => v.trim().length >= 5 || 'Escribe la dirección de entrega.',
+      barrio: v => v.trim().length >= 3 || 'Escribe tu barrio.',
     };
     form.addEventListener('submit', async e => {
       e.preventDefault();
