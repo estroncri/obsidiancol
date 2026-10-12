@@ -33,6 +33,14 @@ Si algún día quieres volver a Shopify, los registros DNS anteriores eran: A `@
 
 Abre la hoja **OBSIDIAN Pedidos** en Google Sheets (en el computador) → menú **OBSIDIAN** → **Definir clave del panel**. La primera vez Google te pedirá permiso para mostrar ese cuadro; acéptalo. Con esa clave entras a obsidiancol.shop/panel.html, también desde el celular.
 
+## Referidos (como Hotmart)
+
+1. En el panel, pestaña **Referidos**, escribe el nombre de tu amigo, su celular y su % de comisión. Se crea su enlace, por ejemplo `https://obsidiancol.shop/?ref=juan`.
+2. Mándaselo con el botón de WhatsApp de su tarjeta. El código funciona en cualquier página (`...samba-og.html?ref=juan`).
+3. Quien entre por ese enlace queda marcado 30 días (`referidoDias` en `js/config.js`). Si compra, el pedido llega con el código en la hoja, en el panel y en el mensaje de WhatsApp.
+4. La comisión se calcula sobre pedidos **Entregados**. Cuando le pagues, toca "Marcar como pagado" y queda registrado con la fecha.
+5. Si un cliente te dice por WhatsApp que lo recomendó alguien, abre el pedido en el panel y asígnale el código a mano.
+
 ## Cambiar datos — `js/config.js`
 
 WhatsApp, Instagram, correo, margen sobre el precio (`aumentoPrecio`) y los textos de pago, envío y cambios.
