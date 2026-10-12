@@ -528,6 +528,9 @@ html.is-nav .tr__panel { transform: translateY(0); }
 .card__meta .mono:first-child { grid-column: 1 / -1; color: var(--muted); }
 .card__name { font-family: var(--serif); font-weight: 400; font-size: clamp(1.25rem, 1.6vw, 1.6rem); letter-spacing: -.025em; line-height: 1.05; }
 .card__price { font-family: var(--mono); font-size: .8rem; white-space: nowrap; padding-top: .3rem; font-variant-numeric: tabular-nums; }
+/* mientras llegan los precios del vendedor (primera visita con su enlace) */
+[data-price-of], [data-price], #sumSub, #sumTotal, .dw__foot .tot b { transition: opacity .35s; }
+.px-wait [data-price-of], .px-wait [data-price], .px-wait #sumSub, .px-wait #sumTotal, .px-wait .ln__r .mono, .px-wait .dw__foot .tot b { opacity: 0; }
 .card__color { grid-column: 1 / -1; color: var(--muted); font-size: .86rem; }
 .card.is-out .card__img { filter: grayscale(1) contrast(.9); opacity: .6; }
 .empty { padding: 5rem 1rem; text-align: center; border: 1px dashed var(--line-2); }

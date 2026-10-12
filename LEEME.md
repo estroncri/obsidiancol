@@ -1,6 +1,6 @@
 # OBSIDIAN — tienda de sneakers + panel de pedidos
 
-Sitio estático (HTML, CSS y JS) con 52 páginas, publicado en **https://obsidiancol.shop**. Los pedidos se registran en tu hoja de Google Sheets **OBSIDIAN Pedidos**, los ves en tu panel privado y te llegan por WhatsApp al 319 255 9674. El cliente paga contraentrega.
+Sitio estático (HTML, CSS y JS) con 53 páginas, publicado en **https://obsidiancol.shop**. Los pedidos se registran en tu hoja de Google Sheets **OBSIDIAN Pedidos**, los ves en tu panel privado y te llegan por WhatsApp al 319 255 9674. El cliente paga contraentrega.
 
 ## Dónde está cada cosa
 
@@ -8,6 +8,7 @@ Sitio estático (HTML, CSS y JS) con 52 páginas, publicado en **https://obsidia
 |---|---|
 | Tienda | https://obsidiancol.shop |
 | Panel de pedidos | https://obsidiancol.shop/panel.html |
+| Portal de vendedores | https://obsidiancol.shop/vendedores.html |
 | Hoja de pedidos | Google Sheets → "OBSIDIAN Pedidos" (cuenta rooneyagamez0@gmail.com) |
 | Código del sitio | github.com/estroncri/obsidiancol (GitHub Pages lo publica solo) |
 | Dominio | Hostinger → obsidiancol.shop → DNS: 4 registros A a GitHub (185.199.108–111.153) y `www` → estroncri.github.io |
@@ -28,18 +29,24 @@ Si algún día quieres volver a Shopify, los registros DNS anteriores eran: A `@
 | Ayuda | `como-comprar.html`, `envios.html`, `pagos.html`, `cambios.html`, `guia-de-tallas.html`, `preguntas-frecuentes.html`, `contacto.html`, `privacidad.html` |
 | Bolsa y pedido | `carrito.html` |
 | Panel privado | `panel.html` (no aparece en el menú ni en Google) |
+| Portal de vendedores | `vendedores.html` (no aparece en el menú ni en Google) |
 
 ## Clave del panel
 
 Abre la hoja **OBSIDIAN Pedidos** en Google Sheets (en el computador) → menú **OBSIDIAN** → **Definir clave del panel**. La primera vez Google te pedirá permiso para mostrar ese cuadro; acéptalo. Con esa clave entras a obsidiancol.shop/panel.html, también desde el celular.
 
-## Referidos (como Hotmart)
+## Vendedores (trabajadores con su propio precio)
 
-1. En el panel, pestaña **Referidos**, escribe el nombre de tu amigo, su celular y su % de comisión. Se crea su enlace, por ejemplo `https://obsidiancol.shop/?ref=juan`.
-2. Mándaselo con el botón de WhatsApp de su tarjeta. El código funciona en cualquier página (`...samba-og.html?ref=juan`).
-3. Quien entre por ese enlace queda marcado 30 días (`referidoDias` en `js/config.js`). Si compra, el pedido llega con el código en la hoja, en el panel y en el mensaje de WhatsApp.
-4. La comisión se calcula sobre pedidos **Entregados**. Cuando le pagues, toca "Marcar como pagado" y queda registrado con la fecha.
-5. Si un cliente te dice por WhatsApp que lo recomendó alguien, abre el pedido en el panel y asígnale el código a mano.
+Ejemplo con el Air Force 1: al proveedor le pagas **$90.000** (te cuesta), al vendedor se lo das en **$100.000** (precio vendedor) y él lo vende al precio que quiera, por ejemplo $140.000. Él gana $40.000 y tú $10.000.
+
+1. **Costos** (pestaña del panel): escribe en cada modelo cuánto te cuesta y cuál es el precio vendedor. Solo tú ves esta tabla; los modelos sin precio vendedor no aparecen para los vendedores.
+2. **Vendedores** (pestaña del panel): escribe nombre y celular. Se crea su código, su enlace (`https://obsidiancol.shop/?ref=juan`) y un PIN de 6 números. Mándale todo con el botón **Enviar acceso por WhatsApp**.
+3. El vendedor entra a **obsidiancol.shop/vendedores.html** con su código y PIN, pone su precio en cada modelo (nunca por debajo del precio vendedor) y ve sus ventas y lo que ha ganado.
+4. Quien entra por su enlace ve **los precios de ese vendedor** durante 30 días (`referidoDias` en `js/config.js`). Sin enlace, la tienda muestra el precio normal. El pedido llega con el vendedor en la hoja, en el panel y en el mensaje de WhatsApp.
+5. La ganancia del vendedor se vuelve "por pagar" cuando marcas el pedido como **Entregado**. Cuando le pagues, toca "Marcar como pagado" y queda la fecha.
+6. Si un cliente te dice que lo atendió un vendedor, abre el pedido en el panel y asígnale el código a mano.
+
+En la hoja de Google quedan las pestañas **Pedidos**, **Vendedores**, **Costos** y **PreciosVendedores**. Cada pedido guarda la ganancia del vendedor y la tuya.
 
 ## Cambiar datos — `js/config.js`
 

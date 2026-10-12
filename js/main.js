@@ -52,7 +52,42 @@
     if (incoming) store.set(REF_KEY, { c: incoming, t: Date.now() });
   })();
   const getRef = () => { const o = store.get(REF_KEY, null); return o && o.c && Date.now() - o.t < REF_DAYS * 864e5 ? o.c : ''; };
-  const refLine = () => (getRef() ? `\nCódigo de referido: ${getRef()}` : '');
+  const refLine = () => (getRef() ? `\nVendedor: ${getRef()}` : '');
+
+  /* precios del vendedor: quien llega con su enlace ve los precios que él puso (sin enlace, los de la tienda).
+     Se guardan 10 min en el navegador; en la bolsa siempre se piden de nuevo. */
+  const PX_KEY = 'obs-refp';
+  const BASE_PRICE = Object.fromEntries(PRODUCTS.map(p => [p.id, p.precio]));
+  const setPrices = map => PRODUCTS.forEach(p => { const v = Math.round(Number(map && map[p.id]) || 0); p.precio = v > 0 ? v : BASE_PRICE[p.id]; });
+  const RefPrices = (() => {
+    const ref = getRef();
+    if (!ref || !CFG.pedidosApi) return { ready: Promise.resolve() };
+    const cached = store.get(PX_KEY, null), same = !!(cached && cached.c === ref);
+    if (same) setPrices(cached.p);
+    if (same && PAGE !== 'cart' && Date.now() - cached.t < 10 * 60e3) return { ready: Promise.resolve() };
+    if (!same) html.classList.add('px-wait');
+    const unwait = () => html.classList.remove('px-wait');
+    setTimeout(unwait, 3500);
+    const ctl = new AbortController(); setTimeout(() => ctl.abort(), 9000);
+    const ready = fetch(CFG.pedidosApi, { method: 'POST', body: JSON.stringify({ accion: 'preciosRef', ref }), signal: ctl.signal })
+      .then(r => r.json())
+      .then(j => {
+        if (!j || !j.ok) return;
+        store.set(PX_KEY, { c: ref, t: Date.now(), p: j.precios || {} });
+        const before = PRODUCTS.map(p => p.precio).join();
+        setPrices(j.precios);
+        if (PRODUCTS.map(p => p.precio).join() !== before) paintPrices();
+      })
+      .catch(() => {})
+      .finally(unwait);
+    return { ready };
+  })();
+  function paintPrices() {
+    $$('[data-price-of]').forEach(el => { const p = bySlug[el.dataset.priceOf]; if (p) el.textContent = fmt(p.precio); });
+    const cur = bySlug[body.dataset.product];
+    if (cur) $$('[data-price]').forEach(el => { el.textContent = fmt(cur.precio); });
+    renderBag();
+  }
 
   const COLLECTIONS = {
     blackout: { name: 'Blackout', img: 'img/products/lv-skate-black-4.jpg' },
@@ -342,11 +377,11 @@
         ${tag ? `<span class="tag card__tag">${esc(tag)}</span>` : ''}
         ${quick}
       </div>
-      <div class="card__meta"><p class="mono">${esc(p.marca)}</p><h3 class="card__name"><a href="${productUrl(p)}">${esc(p.nombre)}</a></h3><span class="card__price">${fmt(p.precio)}</span><p class="card__color">${esc(p.color)}</p></div>
+      <div class="card__meta"><p class="mono">${esc(p.marca)}</p><h3 class="card__name"><a href="${productUrl(p)}">${esc(p.nombre)}</a></h3><span class="card__price" data-price-of="${p.slug}">${fmt(p.precio)}</span><p class="card__color">${esc(p.color)}</p></div>
     </article>`;
   }
   const rowHTML = p => `<a class="irow${p.agotado ? ' is-out' : ''}" href="${productUrl(p)}" data-id="${esc(p.id)}" data-hover-img="${u(p.imagenes[0])}">
-    <span class="mono">${pad(p.n)}</span><span class="mono c-brand">${esc(p.marca)}</span><span class="serif">${esc(p.nombre)}</span><span class="mono c-color muted">${esc(p.color)}</span><span class="mono c-sizes">${sizeRange(p)}</span><span class="mono">${p.agotado ? 'Agotado' : fmt(p.precio)}</span>${I.arrowUR}</a>`;
+    <span class="mono">${pad(p.n)}</span><span class="mono c-brand">${esc(p.marca)}</span><span class="serif">${esc(p.nombre)}</span><span class="mono c-color muted">${esc(p.color)}</span><span class="mono c-sizes">${sizeRange(p)}</span>${p.agotado ? '<span class="mono">Agotado</span>' : `<span class="mono" data-price-of="${p.slug}">${fmt(p.precio)}</span>`}${I.arrowUR}</a>`;
 
   document.addEventListener('click', e => {
     const plus = e.target.closest('.card__plus');
@@ -991,6 +1026,7 @@
         if (r !== true && !bad) bad = form.elements[k];
       });
       if (bad) { bad.focus(); return; }
+      await RefPrices.ready;
       const items = Cart.items.map(i => { const p = byId[i.id]; return { id: p.id, slug: p.slug, marca: p.marca, nombre: p.nombre, color: p.color, talla: i.talla, cantidad: i.qty, precio: p.precio }; });
       const pedido = { nombre: d.nombre.trim(), celular: d.celular.trim(), ciudad: d.ciudad.trim(), direccion: d.direccion.trim(), barrio: (d.barrio || '').trim(), notas: (d.notas || '').trim(), items, subtotal: Cart.total(), origen: location.host || 'local', ref: getRef() };
       const btn = $('button[type="submit"]', form), btnHTML = btn.innerHTML;
@@ -1008,7 +1044,7 @@
       const lines = items.map(i => `• ${i.cantidad} × ${fullName(byId[i.id])} (${i.color}) — Talla ${i.talla} — ${fmt(i.precio * i.cantidad)}`).join('\n');
       const msg = `Hola OBSIDIAN 👋 ${numero ? `Acabo de hacer el pedido *${numero}*` : 'Quiero hacer este pedido'}:\n\n${lines}\n\nSubtotal: ${fmt(pedido.subtotal)}\nEnvío: por confirmar\n\n` +
         `Nombre: ${pedido.nombre}\nCelular: ${pedido.celular}\nCiudad: ${pedido.ciudad}\nDirección: ${pedido.direccion}` +
-        (pedido.barrio ? `\nBarrio: ${pedido.barrio}` : '') + (pedido.notas ? `\nNotas: ${pedido.notas}` : '') + `\n\nForma de pago: ${CFG.pago || 'Contraentrega'}` + (pedido.ref ? `\nCódigo de referido: ${pedido.ref}` : '');
+        (pedido.barrio ? `\nBarrio: ${pedido.barrio}` : '') + (pedido.notas ? `\nNotas: ${pedido.notas}` : '') + `\n\nForma de pago: ${CFG.pago || 'Contraentrega'}` + (pedido.ref ? `\nVendedor: ${pedido.ref}` : '');
       const wa = waLink(msg);
       $('#doneNum').textContent = numero ? `Pedido ${numero}` : 'Pedido listo';
       $('#doneTxt').textContent = numero

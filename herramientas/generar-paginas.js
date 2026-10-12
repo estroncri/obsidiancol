@@ -491,7 +491,7 @@ function helpPages() {
       ['2', 'Para qué los usamos', '<p>Para preparar, confirmar y entregar tu pedido, y para comunicarnos contigo por WhatsApp sobre ese pedido.</p>'],
       ['3', 'Dónde se guardan', '<p>Tu pedido queda registrado en nuestro sistema de pedidos para poder gestionarlo. Además, tu navegador guarda tu bolsa y tus datos de envío en este dispositivo para que no tengas que escribirlos de nuevo; puedes borrarlos limpiando los datos del sitio en tu navegador.</p>'],
       ['4', 'Con quién los compartimos', '<p>No vendemos tus datos. Solo los compartimos con la transportadora que entrega tu pedido.</p>'],
-      ['5', 'Enlaces de referido', '<p>Si llegas a la tienda por el enlace de un amigo (por ejemplo <em>obsidiancol.shop/?ref=juan</em>), tu navegador guarda ese código durante 30 días y lo agregamos a tu pedido para saber quién te recomendó. No guarda nada más sobre ti.</p>'],
+      ['5', 'Enlaces de vendedores', '<p>Si llegas a la tienda por el enlace de uno de nuestros vendedores (por ejemplo <em>obsidiancol.shop/?ref=juan</em>), tu navegador guarda ese código durante 30 días, te mostramos los precios de ese vendedor y lo agregamos a tu pedido para saber quién te atendió. No guarda nada más sobre ti.</p>'],
       ['6', 'Tus derechos', '<p>Conforme a la Ley 1581 de 2012 de protección de datos personales, puedes pedirnos por WhatsApp que consultemos, actualicemos o eliminemos tus datos.</p>'],
     ]),
   ];
@@ -509,7 +509,7 @@ function cartPage() {
   <aside class="receipt" id="receipt" hidden>
     <h2>Recibo</h2>
     <p class="mono muted">OBSIDIAN · ${esc(CFG.dominio || 'obsidiancol.shop')}</p>
-    <div class="rrows mono"><div><span>Productos</span><span id="sumItems"></span></div><div><span>Subtotal</span><span id="sumSub"></span></div><div><span>Envío</span><span>Se confirma por WhatsApp</span></div><div id="sumRefRow" hidden><span>Código de referido</span><span id="sumRef"></span></div></div>
+    <div class="rrows mono"><div><span>Productos</span><span id="sumItems"></span></div><div><span>Subtotal</span><span id="sumSub"></span></div><div><span>Envío</span><span>Se confirma por WhatsApp</span></div><div id="sumRefRow" hidden><span>Vendedor</span><span id="sumRef"></span></div></div>
     <div class="tot"><span class="mono">Total productos</span><b id="sumTotal"></b></div>
     <div class="paynote">${ico('cash')}<div><strong data-cfg="pago">${esc(pago)}</strong><br><span data-cfg="pagoDetalle">${esc(CFG.pagoDetalle || '')}</span></div></div>
     <form class="form" id="checkout" novalidate>

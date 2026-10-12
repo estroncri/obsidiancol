@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vendedores OBSIDIAN</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#edebe6">
+<link rel="icon" type="image/png" href="img/logo/favicon.png">
+<link rel="apple-touch-icon" href="img/logo/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/panel.css">
+</head>
+<body class="pn">
+
+<!-- acceso -->
+<section class="pn-login" id="login">
+  <div class="pn-login__card">
+    <div class="pn-login__arch arch"><div class="marble"></div><img src="img/logo/obsidian-logo-sm.webp" alt="" width="64" height="64"></div>
+    <p class="mono muted">OBSIDIAN · Vendedores</p>
+    <h1 class="s-md">Portal de <em>vendedores</em></h1>
+    <form id="loginForm" novalidate>
+      <div class="field"><label class="mono" for="codigo">Tu código</label><input id="codigo" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="ej. juan"></div>
+      <div class="field"><label class="mono" for="pin">PIN</label><input id="pin" type="password" inputmode="numeric" autocomplete="current-password" maxlength="8"></div>
+      <label class="pn-check mono" for="recordar"><input type="checkbox" id="recordar" checked> Recordar en este celular</label>
+      <button class="btn btn--block" type="submit" id="loginBtn">Entrar <span class="btn__ico"></span></button>
+      <p class="pn-err mono" id="loginErr" role="alert"></p>
+    </form>
+    <p class="mono muted">¿No tienes código o PIN? <a class="pn-inline" data-wa="Hola OBSIDIAN 👋 Quiero mi acceso de vendedor." href="#">Pídelo por WhatsApp</a></p>
+  </div>
+</section>
+
+<!-- portal -->
+<div id="app" hidden>
+  <header class="pn-top">
+    <div class="wrap pn-top__in">
+      <a class="pn-brand" href="index.html" target="_blank" rel="noopener" title="Abrir la tienda"><img src="img/logo/obsidian-logo-sm.webp" alt="" width="32" height="32"><span>Obsidian</span></a>
+      <span class="pn-status mono" id="status" data-s="off">Sin conexión</span>
+      <div class="pn-actions mono">
+        <span class="muted" id="updated"></span>
+        <button class="chip mono" type="button" id="refreshBtn">Actualizar</button>
+        <button class="chip mono" type="button" id="logoutBtn">Salir</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap pn-main">
+    <div class="pn-head">
+      <div><p class="mono muted">Vendedor OBSIDIAN · código <span id="vCode"></span></p><h1 class="s-lg">Hola, <em id="vName"></em></h1></div>
+      <p class="mono muted" id="vSummary"></p>
+    </div>
+
+    <section class="pn-vlink" aria-label="Tu enlace">
+      <p class="mono muted">Tu enlace · quien compre con él ve tus precios y la venta queda a tu nombre</p>
+      <div class="pn-ref__link"><label class="sr-only" for="vLink">Tu enlace</label><input id="vLink" readonly><button class="chip mono" type="button" id="copyLink">Copiar</button></div>
+      <div class="pn-ref__btns"><a class="btn btn--sm" id="shareWa" target="_blank" rel="noopener" href="#">Compartir por WhatsApp <span class="btn__ico"></span></a><button class="btn btn--line btn--sm" type="button" id="shareNative" hidden>Compartir…</button><a class="link" id="seeStore" target="_blank" rel="noopener" href="#">Ver la tienda con mis precios</a></div>
+    </section>
+
+    <section class="pn-kpis" aria-label="Tus ganancias">
+      <div class="pn-kpi" id="gDue"><p class="mono muted">Por cobrar</p><b>$0</b><p class="mono muted">pedidos entregados</p></div>
+      <div class="pn-kpi" id="gWay"><p class="mono muted">En camino</p><b>$0</b><p class="mono muted">cuando se entreguen</p></div>
+      <div class="pn-kpi" id="gPaid"><p class="mono muted">Ya cobrado</p><b>$0</b><p class="mono muted">histórico</p></div>
+      <div class="pn-kpi" id="gOrders"><p class="mono muted">Pedidos</p><b>0</b><p class="mono muted">sin cancelados</p></div>
+    </section>
+
+    <div class="pn-tabs mono" role="tablist" aria-label="Secciones">
+      <button type="button" role="tab" class="is-on" data-tab="precios" aria-selected="true">Mis precios</button>
+      <button type="button" role="tab" data-tab="ventas" aria-selected="false">Mis ventas <small id="tabVentasN"></small></button>
+    </div>
+
+    <div id="tabPrecios">
+      <p class="pn-costnote"><b>Te cuesta</b> es lo que le pagas a OBSIDIAN por el par. <b>Tu precio</b> es lo que paga tu cliente: la diferencia es tu ganancia. Si lo dejas vacío, tu cliente ve el precio de la tienda.</p>
+      <div class="pn-costs" id="priceList" role="table" aria-label="Tus precios"></div>
+      <p class="mono muted" id="priceNote" style="margin-top:1rem"></p>
+      <div class="pn-savebar" id="priceBar" hidden><p class="mono" id="priceDirty"></p><button class="btn btn--sm" type="button" id="priceSave">Guardar precios <span class="btn__ico"></span></button></div>
+    </div>
+
+    <div id="tabVentas" hidden>
+      <div class="pn-list" id="sales"></div>
+      <div class="empty" id="salesEmpty" hidden><p class="s-md">Aún sin <em>ventas</em></p><p>Comparte tu enlace. Cuando alguien compre con él, el pedido aparece aquí con tu ganancia.</p></div>
+      <div class="pn-help" style="margin-top:2rem">
+        <p>Tu ganancia de cada pedido se vuelve <b>por cobrar</b> cuando el pedido se entrega. Cuando OBSIDIAN te paga, aparece como <b>cobrado</b>.</p>
+        <p>Si un pedido se cancela, no genera ganancia.</p>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="toast" role="status" aria-live="polite"><span class="mono"></span></div>
+
+<script src="js/config.js"></script>
+<script src="js/productos.js"></script>
+<script src="js/vendedor.js"></script>
+</body>
+</html>

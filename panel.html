@@ -59,7 +59,8 @@
   <main class="wrap pn-main">
     <div class="pn-tabs mono" role="tablist" aria-label="Secciones del panel">
       <button type="button" role="tab" class="is-on" data-tab="pedidos" aria-selected="true">Pedidos <small id="tabPedN"></small></button>
-      <button type="button" role="tab" data-tab="referidos" aria-selected="false">Referidos <small id="tabRefN"></small></button>
+      <button type="button" role="tab" data-tab="vendedores" aria-selected="false">Vendedores <small id="tabVenN"></small></button>
+      <button type="button" role="tab" data-tab="costos" aria-selected="false">Costos <small id="tabCosN"></small></button>
     </div>
 
     <div id="tabPedidos">
@@ -72,7 +73,7 @@
       <div class="pn-kpi" id="kNew"><p class="mono muted">Por atender</p><b>0</b><p class="mono muted">pedidos nuevos</p></div>
       <div class="pn-kpi" id="kToday"><p class="mono muted">Hoy</p><b>0</b><p class="mono muted">pedidos recibidos</p></div>
       <div class="pn-kpi" id="kMonth"><p class="mono muted">Ventas del mes</p><b>$0</b><p class="mono muted">sin cancelados</p></div>
-      <div class="pn-kpi" id="kAvg"><p class="mono muted">Ticket promedio</p><b>$0</b><p class="mono muted">por pedido</p></div>
+      <div class="pn-kpi" id="kGain"><p class="mono muted">Mi ganancia del mes</p><b>$0</b><p class="mono muted">sin cancelados</p></div>
     </section>
 
     <div class="pn-tools">
@@ -93,41 +94,61 @@
     </div>
     </div>
 
-    <div id="tabReferidos" hidden>
+    <div id="tabVendedores" hidden>
       <div class="pn-head">
-        <div><p class="mono muted">Ventas por recomendación</p><h1 class="s-lg">Refe<em>ridos</em></h1></div>
-        <p class="mono muted" id="refTotalTxt"></p>
+        <div><p class="mono muted">Tu equipo de venta</p><h1 class="s-lg">Vende<em>dores</em></h1></div>
+        <p class="mono muted" id="venTotalTxt"></p>
       </div>
 
-      <section class="pn-kpis" aria-label="Resumen de referidos">
-        <div class="pn-kpi" id="rkActive"><p class="mono muted">Referidos</p><b>0</b><p class="mono muted">activos</p></div>
-        <div class="pn-kpi" id="rkSales"><p class="mono muted">Ventas entregadas</p><b>$0</b><p class="mono muted">por referidos</p></div>
-        <div class="pn-kpi" id="rkDue"><p class="mono muted">Comisiones por pagar</p><b>$0</b><p class="mono muted">pedidos entregados</p></div>
-        <div class="pn-kpi" id="rkPaid"><p class="mono muted">Comisiones pagadas</p><b>$0</b><p class="mono muted">histórico</p></div>
+      <section class="pn-kpis" aria-label="Resumen de vendedores">
+        <div class="pn-kpi" id="vkActive"><p class="mono muted">Vendedores</p><b>0</b><p class="mono muted">activos</p></div>
+        <div class="pn-kpi" id="vkSales"><p class="mono muted">Ventas entregadas</p><b>$0</b><p class="mono muted">por vendedores</p></div>
+        <div class="pn-kpi" id="vkDue"><p class="mono muted">Por pagarles</p><b>$0</b><p class="mono muted">pedidos entregados</p></div>
+        <div class="pn-kpi" id="vkPaid"><p class="mono muted">Ya pagado</p><b>$0</b><p class="mono muted">histórico</p></div>
       </section>
 
       <div class="pn-refgrid">
-        <div class="pn-reflist" id="refList"></div>
+        <div class="pn-reflist" id="venList"></div>
         <aside class="pn-refform">
-          <h2 id="refFormTitle">Nuevo <em>referido</em></h2>
-          <form class="form" id="refForm" novalidate>
-            <div class="field full"><label class="mono" for="rNombre">Nombre</label><input id="rNombre" name="nombre" autocomplete="off" required></div>
-            <div class="field"><label class="mono" for="rCel">Celular (opcional)</label><input id="rCel" name="celular" type="tel" inputmode="tel" autocomplete="off"></div>
-            <div class="field"><label class="mono" for="rCom">Comisión (%)</label><input id="rCom" name="comision" type="number" min="0" max="90" step="1" value="10"></div>
-            <div class="field full"><label class="mono" for="rCod">Código del enlace</label><input id="rCod" name="codigo" autocomplete="off" required><span class="err" id="rErr"></span></div>
-            <label class="pn-check mono full" for="rAct"><input type="checkbox" id="rAct" name="activo" checked> Activo</label>
-            <p class="mono muted full pn-refprev">Enlace: <span id="rPrev"></span></p>
-            <button class="btn btn--block full" type="submit" id="rSave">Crear enlace <span class="btn__ico"></span></button>
-            <button class="link full" type="button" id="rCancel" hidden>Cancelar edición</button>
+          <h2 id="venFormTitle">Nuevo <em>vendedor</em></h2>
+          <form class="form" id="venForm" novalidate>
+            <div class="field full"><label class="mono" for="vNombre">Nombre</label><input id="vNombre" name="nombre" autocomplete="off" required></div>
+            <div class="field full"><label class="mono" for="vCel">Celular</label><input id="vCel" name="celular" type="tel" inputmode="tel" autocomplete="off"></div>
+            <div class="field"><label class="mono" for="vCod">Código del enlace</label><input id="vCod" name="codigo" autocomplete="off" required></div>
+            <div class="field"><label class="mono" for="vPin">PIN de acceso</label><div class="pn-pin"><input id="vPin" name="pin" inputmode="numeric" autocomplete="off" maxlength="8"><button class="chip mono" type="button" id="vPinNew" title="Generar otro PIN">Nuevo</button></div></div>
+            <span class="err full" id="vErr"></span>
+            <label class="pn-check mono full" for="vAct"><input type="checkbox" id="vAct" name="activo" checked> Activo</label>
+            <p class="mono muted full pn-refprev">Enlace: <span id="vPrev"></span></p>
+            <button class="btn btn--block full" type="submit" id="vSave">Crear vendedor <span class="btn__ico"></span></button>
+            <button class="link full" type="button" id="vCancel" hidden>Cancelar edición</button>
           </form>
           <div class="pn-help" style="margin-top:2rem">
             <h2>Cómo <em>funciona</em></h2>
-            <p>Crea un referido y comparte su enlace. Quien entre por ese enlace queda marcado durante 30 días, aunque compre otro día.</p>
-            <p>El código funciona en cualquier página: por ejemplo <em>obsidiancol.shop/productos/adidas-samba-og.html?ref=juan</em>.</p>
-            <p>La comisión se calcula sobre los pedidos <b>entregados</b>. Cuando le pagues a tu referido, márcalo como pagado.</p>
+            <p>Cada vendedor tiene su <b>enlace</b> y su <b>PIN</b>. Mándale los dos con el botón de WhatsApp de su tarjeta.</p>
+            <p>En <em>obsidiancol.shop/vendedores.html</em> entra con su código y PIN, pone el precio al que va a vender cada modelo y ve sus ventas y lo que ha ganado.</p>
+            <p>Quien compre con su enlace ve <b>sus precios</b>. Él gana la diferencia entre su precio y el precio de vendedor que pones en <b>Costos</b>; nunca puede vender por debajo de ese precio.</p>
+            <p>Su ganancia se suma cuando el pedido está <b>Entregado</b>. Cuando le pagues, márcalo como pagado.</p>
           </div>
         </aside>
       </div>
+    </div>
+
+    <div id="tabCostos" hidden>
+      <div class="pn-head">
+        <div><p class="mono muted">Lo que te cuesta cada par</p><h1 class="s-lg">Cos<em>tos</em></h1></div>
+        <p class="mono muted" id="cosTotalTxt"></p>
+      </div>
+
+      <section class="pn-kpis" aria-label="Resumen de costos">
+        <div class="pn-kpi" id="ckReady"><p class="mono muted">Modelos listos</p><b>0</b><p class="mono muted">con costo y precio vendedor</p></div>
+        <div class="pn-kpi" id="ckMonth"><p class="mono muted">Mi ganancia del mes</p><b>$0</b><p class="mono muted">sin cancelados</p></div>
+        <div class="pn-kpi" id="ckDirect"><p class="mono muted">Venta directa</p><b>$0</b><p class="mono muted">ganancia promedio por par</p></div>
+        <div class="pn-kpi" id="ckVend"><p class="mono muted">Venta por vendedor</p><b>$0</b><p class="mono muted">ganancia promedio por par</p></div>
+      </section>
+
+      <p class="pn-costnote">Escribe lo que te cobra el proveedor (<b>te cuesta</b>) y a cuánto se lo das a tus vendedores (<b>precio vendedor</b>). Esta tabla solo la ves tú: los vendedores ven su precio vendedor, nunca tu costo.</p>
+      <div class="pn-costs" id="costList" role="table" aria-label="Costos por modelo"></div>
+      <div class="pn-savebar" id="costBar" hidden><p class="mono" id="costDirty"></p><button class="btn btn--sm" type="button" id="costSave">Guardar costos <span class="btn__ico"></span></button></div>
     </div>
   </main>
 </div>
