@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Panel OBSIDIAN</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#edebe6">
+<link rel="icon" type="image/png" href="img/logo/favicon.png">
+<link rel="apple-touch-icon" href="img/logo/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/panel.css">
+</head>
+<body class="pn">
+
+<!-- acceso -->
+<section class="pn-login" id="login">
+  <div class="pn-login__card">
+    <div class="pn-login__arch arch"><div class="marble"></div><img src="img/logo/obsidian-logo-sm.webp" alt="" width="64" height="64"></div>
+    <p class="mono muted">OBSIDIAN · Panel privado</p>
+    <h1 class="s-md">Panel de <em>pedidos</em></h1>
+    <form id="loginForm" novalidate>
+      <div class="field"><label class="mono" for="clave">Clave del panel</label><input id="clave" type="password" autocomplete="current-password"></div>
+      <label class="pn-check mono" for="recordar"><input type="checkbox" id="recordar" checked> Recordar en este dispositivo</label>
+      <button class="btn btn--block" type="submit" id="loginBtn">Entrar <span class="btn__ico"></span></button>
+      <p class="pn-err mono" id="loginErr" role="alert"></p>
+    </form>
+    <div class="pn-setup" id="setup" hidden>
+      <p class="mono">Todavía no conectas tu hoja de pedidos</p>
+      <ol>
+        <li><span>Abre <code>herramientas/pedidos-google-apps-script.gs</code> y sigue los pasos (toma unos 5 minutos).</span></li>
+        <li><span>Pega la URL que te da Google en <code>js/config.js</code>, en <code>pedidosApi</code>.</span></li>
+        <li><span>Vuelve a esta página y entra con la clave que pusiste en el script.</span></li>
+      </ol>
+      <button class="btn btn--line btn--block" type="button" id="demoBtn">Ver demostración con pedidos de ejemplo</button>
+    </div>
+  </div>
+</section>
+
+<!-- panel -->
+<div id="app" hidden>
+  <header class="pn-top">
+    <div class="wrap pn-top__in">
+      <a class="pn-brand" href="index.html" target="_blank" rel="noopener" title="Abrir la tienda"><img src="img/logo/obsidian-logo-sm.webp" alt="" width="32" height="32"><span>Obsidian</span></a>
+      <span class="pn-status mono" id="status" data-s="off">Sin conexión</span>
+      <div class="pn-actions mono">
+        <span class="muted" id="updated"></span>
+        <button class="chip mono" type="button" id="refreshBtn">Actualizar</button>
+        <button class="chip mono" type="button" id="csvBtn">Exportar CSV</button>
+        <button class="chip mono" type="button" id="logoutBtn">Salir</button>
+      </div>
+    </div>
+  </header>
+  <p class="pn-demo mono" id="demoBar" hidden>Modo demostración: estos pedidos son de ejemplo y los cambios no se guardan.</p>
+
+  <main class="wrap pn-main">
+    <div class="pn-head">
+      <div><p class="mono muted">Pedidos de la tienda</p><h1 class="s-lg">Pedi<em>dos</em></h1></div>
+      <p class="mono muted" id="totalTxt"></p>
+    </div>
+
+    <section class="pn-kpis" aria-label="Resumen">
+      <div class="pn-kpi" id="kNew"><p class="mono muted">Por atender</p><b>0</b><p class="mono muted">pedidos nuevos</p></div>
+      <div class="pn-kpi" id="kToday"><p class="mono muted">Hoy</p><b>0</b><p class="mono muted">pedidos recibidos</p></div>
+      <div class="pn-kpi" id="kMonth"><p class="mono muted">Ventas del mes</p><b>$0</b><p class="mono muted">sin cancelados</p></div>
+      <div class="pn-kpi" id="kAvg"><p class="mono muted">Ticket promedio</p><b>$0</b><p class="mono muted">por pedido</p></div>
+    </section>
+
+    <div class="pn-tools">
+      <div class="pn-chips" id="chips"></div>
+      <label class="pn-search"><span class="sr-only">Buscar pedidos</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4-4"/></svg><input id="q" type="search" placeholder="Nombre, celular, ciudad o número" autocomplete="off"></label>
+    </div>
+
+    <div class="pn-list" id="list"></div>
+    <div class="empty" id="empty" hidden><p class="s-md">Sin <em>pedidos</em></p><p id="emptyTxt">Cuando alguien haga un pedido en la tienda, aparecerá aquí.</p></div>
+
+    <div class="pn-bottom">
+      <section><h2>Lo más <em>pedido</em></h2><ol class="pn-top5" id="top5"></ol></section>
+      <section class="pn-help"><h2>Cómo <em>funciona</em></h2>
+        <p>Cada pedido que se envía desde la tienda queda guardado en tu hoja de Google Sheets y aparece aquí con estado <b>Nuevo</b>.</p>
+        <p>Abre un pedido para ver los datos del cliente, escribirle por WhatsApp, cambiar el estado o dejar una nota interna. Todo se guarda en la misma hoja.</p>
+        <p>El panel se actualiza solo cada minuto mientras está abierto.</p>
+      </section>
+    </div>
+  </main>
+</div>
+
+<!-- detalle -->
+<div class="dw" id="det" aria-hidden="true">
+  <div class="dw__bg" data-close></div>
+  <aside class="dw__panel" role="dialog" aria-modal="true" aria-labelledby="detTitle">
+    <div class="dw__head"><div><p class="mono muted" id="detDate"></p><p class="dw__title" id="detTitle"></p></div><button class="dw__close mono" type="button" data-close>Cerrar ✕</button></div>
+    <div class="dw__body" id="detBody"></div>
+  </aside>
+</div>
+
+<div class="toast" role="status" aria-live="polite"><span class="mono"></span></div>
+
+<script src="js/config.js"></script>
+<script src="js/productos.js"></script>
+<script src="js/panel.js"></script>
+</body>
+</html>

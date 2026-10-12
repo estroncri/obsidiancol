@@ -1,0 +1,35 @@
+/* ============================================================
+ *  OBSIDIAN — configuración de la tienda
+ *  Edita solo este archivo para cambiar tus datos de contacto.
+ * ============================================================ */
+window.OBSIDIAN_CONFIG = {
+  marca: 'OBSIDIAN',
+  dominio: 'obsidiancol.shop',
+
+  // Número de WhatsApp que recibe los pedidos: código de país + número, sin "+" ni espacios.
+  // Ejemplo Colombia: '573001234567'. Si lo dejas vacío, WhatsApp le pedirá al cliente elegir el contacto.
+  whatsapp: '573192559674',
+
+  // Redes (déjalas vacías para ocultarlas)
+  instagram: '',      // ej: 'https://www.instagram.com/obsidiancol/'
+  instagramUser: '',  // ej: '@obsidiancol'
+  tiktok: '',
+  email: '',          // ej: 'hola@obsidiancol.shop'
+
+  ciudad: 'Colombia',
+
+  // Sistema de pedidos (Google Sheets). Pega aquí la URL de tu Apps Script (termina en /exec).
+  // Instrucciones en herramientas/pedidos-google-apps-script.gs. Vacío = los pedidos solo llegan por WhatsApp.
+  pedidosApi: '',
+
+  // Suma este valor (COP) al precio de cada par. Útil si revendes con margen.
+  aumentoPrecio: 0,
+
+  // Textos de la promesa de compra (ajústalos a lo que acordaste con tu proveedor)
+  pago: 'Pago contraentrega',
+  pagoDetalle: 'No pagas nada ahora: pagas cuando recibes tus tenis.',
+  envio: 'Envíos a toda Colombia',
+  envioDetalle: 'El costo del envío depende de tu ciudad y te lo confirmamos por WhatsApp antes de despachar.',
+  cambios: 'Cambios de talla',
+  cambiosDetalle: '¿No te quedó? Escríbenos por WhatsApp y te ayudamos con el cambio de talla.',
+};

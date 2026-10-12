@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tu bolsa | OBSIDIAN</title>
+<meta name="description" content="Tu bolsa OBSIDIAN. Finaliza tu pedido y paga contraentrega.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#edebe6">
+<link rel="canonical" href="https://obsidiancol.shop/carrito.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="OBSIDIAN">
+<meta property="og:title" content="Tu bolsa | OBSIDIAN">
+<meta property="og:description" content="Tu bolsa OBSIDIAN. Finaliza tu pedido y paga contraentrega.">
+<meta property="og:url" content="https://obsidiancol.shop/carrito.html">
+<meta property="og:image" content="https://obsidiancol.shop/img/logo/obsidian-logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="img/logo/favicon.png">
+<link rel="apple-touch-icon" href="img/logo/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="css/style.css">
+<script>(function(d){if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;var c='is-first';try{if(sessionStorage.getItem('obs-seen'))c='is-nav'}catch(e){}d.className+=' cover '+c})(document.documentElement)</script>
+</head>
+<body data-page="cart" data-section="cart" data-root="" data-title="Tu bolsa">
+<main id="main">
+<section class="lhero" style="padding-bottom:30px"><div class="wrap">
+  <nav class="crumbs mono" aria-label="Ruta"><a href="index.html">Inicio</a><span>/</span><span>Tu bolsa</span></nav>
+  <h1 class="s-xl lhero__title" data-split>Tu <em>bolsa</em> <span class="muted" id="cartCount">00</span></h1>
+</div></section>
+<section class="wrap cartpage">
+  <div class="cartpage__list" id="cartList"></div>
+  <aside class="receipt" id="receipt" hidden>
+    <h2>Recibo</h2>
+    <p class="mono muted">OBSIDIAN · obsidiancol.shop</p>
+    <div class="rrows mono"><div><span>Productos</span><span id="sumItems"></span></div><div><span>Subtotal</span><span id="sumSub"></span></div><div><span>Envío</span><span>Se confirma por WhatsApp</span></div></div>
+    <div class="tot"><span class="mono">Total productos</span><b id="sumTotal"></b></div>
+    <div class="paynote"><i data-icon="cash"></i><div><strong data-cfg="pago">Pago contraentrega</strong><br><span data-cfg="pagoDetalle">No pagas nada ahora: pagas cuando recibes tus tenis.</span></div></div>
+    <form class="form" id="checkout" novalidate>
+      <div class="field full"><label class="mono" for="oNombre">Nombre completo</label><input id="oNombre" name="nombre" autocomplete="name" required><span class="err"></span></div>
+      <div class="field"><label class="mono" for="oCel">Celular</label><input id="oCel" name="celular" type="tel" inputmode="tel" autocomplete="tel" required><span class="err"></span></div>
+      <div class="field"><label class="mono" for="oCiudad">Ciudad</label><input id="oCiudad" name="ciudad" autocomplete="address-level2" required><span class="err"></span></div>
+      <div class="field full"><label class="mono" for="oDir">Dirección</label><input id="oDir" name="direccion" autocomplete="street-address" required><span class="err"></span></div>
+      <div class="field full"><label class="mono" for="oBarrio">Barrio (opcional)</label><input id="oBarrio" name="barrio"></div>
+      <div class="field full"><label class="mono" for="oNotas">Notas para la entrega (opcional)</label><textarea id="oNotas" name="notas" rows="2"></textarea></div>
+      <div class="sr-only" aria-hidden="true"><label for="oWeb">No llenar este campo</label><input id="oWeb" name="website" tabindex="-1" autocomplete="off"></div>
+      <button class="btn btn--block full" type="submit">Enviar pedido <span class="btn__ico"></span></button>
+      <p class="mono muted full">Al enviar aceptas nuestra <a class="link" href="privacidad.html">política de privacidad</a>.</p>
+    </form>
+    <div class="done" id="checkoutDone" hidden>
+      <div class="done__ico"><i data-icon="check"></i></div>
+      <h3 id="doneNum">Pedido listo</h3>
+      <p id="doneTxt"></p>
+      <div class="row"><a class="btn btn--block" id="doneWa" href="#" target="_blank" rel="noopener">Enviar por WhatsApp <i data-icon="wa"></i></a><button class="btn btn--line btn--block btn--sm" type="button" id="doneBack">Volver</button><button class="link" type="button" id="doneClear" style="justify-self:center;margin-top:.6rem">Vaciar bolsa</button></div>
+    </div>
+  </aside>
+</section>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js" defer></script>
+<script src="js/config.js" defer></script>
+<script src="js/productos.js" defer></script>
+<script src="js/main.js" defer></script>
+</body>
+</html>
