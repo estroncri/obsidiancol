@@ -1,3 +1,6 @@
+/**
+ * @OnlyCurrentDoc  El script solo puede acceder a esta hoja, no a tus otros archivos.
+ */
 /* =====================================================================
    OBSIDIAN — sistema de pedidos en Google Sheets (Google Apps Script)
 
