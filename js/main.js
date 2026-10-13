@@ -970,6 +970,26 @@
       .from('.pdp__info > *:not(.pdp__name)', { y: 24, opacity: 0, duration: 1, stagger: .04, ease: 'expo.out', clearProps: 'opacity,transform' }, .35);
   }
 
+  /* ---------- VIDEOS (inicio) ---------- */
+  function initReels() {
+    const vids = $$('.reel video');
+    if (!vids.length) return;
+    const load = v => { if (!v.src && v.dataset.src) v.src = v.dataset.src; };
+    const io = 'IntersectionObserver' in window ? new IntersectionObserver(es => es.forEach(e => {
+      const v = e.target;
+      if (e.isIntersecting) { load(v); if (!REDUCED) v.play().catch(() => {}); } else v.pause();
+    }), { threshold: 0.35 }) : null;
+    vids.forEach(v => { if (io) io.observe(v); else load(v); });
+    const label = (b, on) => { b.textContent = on ? 'Silenciar' : 'Activar sonido'; b.setAttribute('aria-pressed', on); };
+    $$('.reel__snd').forEach(b => b.addEventListener('click', () => {
+      const v = b.closest('.reel').querySelector('video');
+      const on = v.muted;
+      vids.forEach(x => { x.muted = true; label(x.closest('.reel').querySelector('.reel__snd'), false); });
+      load(v); v.muted = !on; label(b, on);
+      if (on) v.play().catch(() => {});
+    }));
+  }
+
   /* ---------- CONTACTO ---------- */
   function initContact() {
     if (!CFG.instagram) $('#chIg')?.remove(); else { $('#chIg').href = CFG.instagram; $('#chIgU').textContent = CFG.instagramUser || 'Instagram'; }
@@ -1079,6 +1099,7 @@
   let pageTl = null;
   try { pageTl = PAGES[PAGE]?.() || null; } catch (err) { console.error('[OBSIDIAN]', err); }
   initAccordions();
+  initReels();
   initCursor();
   initMagnetic();
 

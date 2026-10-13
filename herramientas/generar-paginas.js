@@ -109,6 +109,7 @@ const arrowBtn = '<span class="btn__ico"></span>';
 const img = (R, s, alt = '', extra = '') => `<img src="${R}img/products/${s}.jpg" alt="${esc(alt)}" loading="lazy" width="520" height="650"${extra}>`;
 const pImg = (R, p, i = 0, extra = '') => `<img src="${R}${p.imagenes[i] || p.imagenes[0]}" alt="${esc(fullName(p))}" loading="lazy" width="520" height="650"${extra}>`;
 const crumbs = (R, ...items) => `<nav class="crumbs mono" aria-label="Ruta"><a href="${R}index.html">Inicio</a>${items.map(([l, h]) => `<span>/</span>${h ? `<a href="${R}${h}">${esc(l)}</a>` : `<span>${esc(l)}</span>`}`).join('')}</nav>`;
+const REELS = [['cual-te-llevas', '¿Cuál te llevas?', '5 modelos'], ['uno-o-dos', '¿1 o 2?', '3 duelos'], ['como-pedir', 'Cómo pedir', 'Pagas al recibir']];
 const sh = (left, right, h2, link) => `<div class="sh"><div class="sh__k mono"><span>${left}</span><span>${right}</span></div>${h2 ? `<h2 class="s-lg" data-split>${h2}</h2>` : ''}${link || ''}</div>`;
 const mq = (items, attrs = '') => `<div class="mq" ${attrs} aria-hidden="true"><div class="mq__track"><div class="mq__group">${items.map(t => `<span class="mq__item">${esc(t)}<i></i></span>`).join('')}</div></div></div>`;
 
@@ -183,6 +184,18 @@ ${mq(BRANDS.map(b => b.name), 'data-duration="40"')}
       <a class="tcard" href="hombre.html" data-cursor="Ver"><div class="tcard__img arch" data-img="clip">${img(R, 'j3-black-1')}</div><div class="tcard__row"><h3 class="s-md">Hombre</h3><p class="mono"><span data-count-gen="Hombre">${hm}</span> modelos</p></div></a>
       <a class="tcard" href="mujer.html" data-cursor="Ver"><div class="tcard__img arch" data-img="clip">${img(R, 'phoenix-1')}</div><div class="tcard__row"><h3 class="s-md">Mujer</h3><p class="mono"><span data-count-gen="Mujer">${mj}</span> modelos</p></div></a>
       <a class="tcard" href="novedades.html" data-cursor="Ver"><div class="tcard__img arch" data-img="clip">${img(R, 'tn-aqua-1')}</div><div class="tcard__row"><h3 class="s-md">Novedades</h3><p class="mono"><span data-count-new>${nv}</span> modelos</p></div></a>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec--top0">
+  <div class="wrap">
+    ${sh('En video', 'TikTok · Instagram', 'Míralos en <em>movimiento</em>', CFG.tiktok ? `<a class="link" href="${esc(CFG.tiktok)}" target="_blank" rel="noopener" data-reveal>Síguenos en TikTok ${ico('arrow')}</a>` : '')}
+    <div class="reels">
+      ${REELS.map(([v, t, s]) => `<figure class="reel" data-reveal>
+        <div class="reel__frame"><video muted loop playsinline preload="none" poster="video/${v}.jpg" data-src="video/${v}.mp4" aria-label="${esc(t)}"></video><button class="reel__snd mono" type="button" aria-pressed="false">Activar sonido</button></div>
+        <figcaption class="reel__cap"><span class="s-sm">${esc(t)}</span><span class="mono muted">${esc(s)}</span></figcaption>
+      </figure>`).join('\n      ')}
     </div>
   </div>
 </section>
