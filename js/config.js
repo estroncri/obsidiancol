@@ -11,8 +11,8 @@ window.OBSIDIAN_CONFIG = {
   whatsapp: '573192559674',
 
   // Redes (déjalas vacías para ocultarlas)
-  instagram: '',      // ej: 'https://www.instagram.com/obsidiancol/'
-  instagramUser: '',  // ej: '@obsidiancol'
+  instagram: 'https://www.instagram.com/obsidian.col/',
+  instagramUser: '@obsidian.col',
   tiktok: '',
   email: '',          // ej: 'hola@obsidiancol.shop'
 
