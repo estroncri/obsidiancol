@@ -131,6 +131,7 @@
     swap: sv('<path d="M4 8h13l-3-3M20 16H7l3 3"/>'),
     chat: sv('<path d="M4 5.5h16v10H9l-5 4v-14Z"/><path d="M8 10h8M8 13h5"/>'),
     ig: sv('<rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".6" fill="currentColor"/>'),
+    tk: sv('<path d="M13.5 3.5v11a3.7 3.7 0 1 1-3.4-3.7"/><path d="M13.5 3.5c.4 2.7 2.3 4.5 5.2 4.7"/>'),
     mail: sv('<rect x="3" y="5.5" width="18" height="13"/><path d="m3.5 7 8.5 6 8.5-6"/>'),
     wa: '<svg class="wa-ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.46-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.18-1.41-.08-.13-.28-.2-.57-.35M12.05 21.79h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88 2.64 0 5.12 1.03 6.99 2.9a9.82 9.82 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.88 9.88m8.41-18.3A11.81 11.81 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.69 1.45h.01c6.55 0 11.89-5.34 11.89-11.89a11.82 11.82 0 0 0-3.48-8.41Z"/></svg>',
   };
@@ -162,6 +163,7 @@
       ['nosotros.html', 'Nosotros', 'img/products/j3-fragment-2.jpg'], ['contacto.html', 'Contacto', 'img/products/suede-xl-1.jpg'],
     ];
     const igA = CFG.instagram ? `<a href="${esc(CFG.instagram)}" target="_blank" rel="noopener">Instagram</a>` : '';
+    const tkA = CFG.tiktok ? `<a href="${esc(CFG.tiktok)}" target="_blank" rel="noopener">TikTok</a>` : '';
     document.body.insertAdjacentHTML('afterbegin', `
       <div class="grain" aria-hidden="true"></div>
       <div class="progress" aria-hidden="true"></div>
@@ -196,7 +198,7 @@
             <div class="mn__group"><h4>Ayuda</h4>${HELP.map(([h, l]) => `<a href="${u(h)}">${l}</a>`).join('')}</div>
           </div>
           <div class="mn__preview">${big.map(([, , img], i) => `<img src="${u(img)}" alt=""${i ? '' : ' class="on"'} loading="lazy">`).join('')}</div>
-          <div class="mn__foot mono"><a data-wa href="#">WhatsApp</a>${igA}<span>${esc(CFG.dominio || '')}</span></div>
+          <div class="mn__foot mono"><a data-wa href="#">WhatsApp</a>${igA}${tkA}<span>${esc(CFG.dominio || '')}</span></div>
         </div>
       </div>
       <div class="sr" id="search" aria-hidden="true">
@@ -225,7 +227,7 @@
           </div>
         </div>
         <div class="ft__giant" aria-hidden="true"><span class="chrome">Obsidian</span></div>
-        <div class="wrap ft__bottom mono"><span>© ${new Date().getFullYear()} OBSIDIAN · ${esc(CFG.dominio || '')}</span><a href="${u('privacidad.html')}">Privacidad</a><a href="#top" data-top>Volver arriba ↑</a></div>
+        <div class="wrap ft__bottom mono"><span>© ${new Date().getFullYear()} OBSIDIAN · ${esc(CFG.dominio || '')}</span><a href="${u('privacidad.html')}">Privacidad</a>${igA}${tkA}<a href="#top" data-top>Volver arriba ↑</a></div>
       </footer>
       <div class="dw" id="bag" aria-hidden="true">
         <div class="dw__bg" data-bag-close></div>
@@ -971,6 +973,7 @@
   /* ---------- CONTACTO ---------- */
   function initContact() {
     if (!CFG.instagram) $('#chIg')?.remove(); else { $('#chIg').href = CFG.instagram; $('#chIgU').textContent = CFG.instagramUser || 'Instagram'; }
+    if (!CFG.tiktok) $('#chTk')?.remove(); else { $('#chTk').href = CFG.tiktok; $('#chTkU').textContent = CFG.tiktokUser || 'TikTok'; }
     if (!CFG.email) $('#chMail')?.remove(); else { $('#chMail').href = 'mailto:' + CFG.email; $('#chMailU').textContent = CFG.email; }
     const chan = $('.chan'); if (chan) chan.style.gridTemplateColumns = innerWidth > 980 ? `repeat(${chan.children.length}, minmax(0, 1fr))` : '';
     const form = $('#contactForm'); if (!form) return null;

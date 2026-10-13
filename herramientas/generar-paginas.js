@@ -475,6 +475,7 @@ function helpPages() {
     <div class="chan" data-stagger style="margin-top:clamp(30px,4vw,56px)">
       <a data-wa href="#">${ico('wa')}<div><p class="mono muted">Canal principal</p><p class="s-sm">WhatsApp</p><p class="muted">Pedidos, tallas y disponibilidad.</p></div><span class="link">Escribir ahora</span></a>
       <a id="chIg" href="#" target="_blank" rel="noopener">${ico('ig')}<div><p class="mono muted">Síguenos</p><p class="s-sm">Instagram</p><p class="muted" id="chIgU"></p></div><span class="link">Ver perfil</span></a>
+      <a id="chTk" href="#" target="_blank" rel="noopener">${ico('tk')}<div><p class="mono muted">Síguenos</p><p class="s-sm">TikTok</p><p class="muted" id="chTkU"></p></div><span class="link">Ver perfil</span></a>
       <a id="chMail" href="#">${ico('mail')}<div><p class="mono muted">Correo</p><p class="s-sm">Email</p><p class="muted" id="chMailU"></p></div><span class="link">Escribir correo</span></a>
     </div>
     <section class="dsec" data-reveal><p class="dsec__n">→</p><div><h2>Escríbenos aquí</h2><p style="margin-bottom:1.4rem">Tu mensaje se abre en WhatsApp, listo para enviar.</p>

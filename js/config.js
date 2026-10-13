@@ -13,7 +13,8 @@ window.OBSIDIAN_CONFIG = {
   // Redes (déjalas vacías para ocultarlas)
   instagram: 'https://www.instagram.com/obsidian.col/',
   instagramUser: '@obsidian.col',
-  tiktok: '',
+  tiktok: 'https://www.tiktok.com/@obsidiancol.shop',
+  tiktokUser: '@obsidiancol.shop',
   email: '',          // ej: 'hola@obsidiancol.shop'
 
   ciudad: 'Colombia',
