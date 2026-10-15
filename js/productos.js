@@ -1,4 +1,4 @@
-/* Catálogo OBSIDIAN — 81 modelos (proveedores: korvenoficial.store y BAKAYOCO).
+/* Catálogo OBSIDIAN — 73 modelos (proveedores: korvenoficial.store y BAKAYOCO).
  *
  * Para agregar un par:
  *  1. Copia un bloque completo y cambia: id (único), slug (la dirección de su página,
@@ -44,66 +44,6 @@ window.OBSIDIAN_PRODUCTS = [
     "agotado": false
   },
   {
-    "id": "j3-fragment",
-    "slug": "air-jordan-3-fragment",
-    "marca": "Jordan",
-    "nombre": "Air Jordan 3 x Fragment",
-    "color": "Blanco · Negro",
-    "precio": 180000,
-    "etiqueta": "Edición especial",
-    "descripcion": "Minimalismo puro: capellada blanca perforada, franja negra envolvente y el rayo de Fragment en el talón. Una pieza de colección.",
-    "tallas": [36, 37, 38, 39, 40, 41, 42, 43, 44],
-    "genero": "Unisex",
-    "colecciones": ["luxury"],
-    "imagenes": ["img/products/j3-fragment-1.jpg", "img/products/j3-fragment-2.jpg", "img/products/j3-fragment-3.jpg", "img/products/j3-fragment-4.jpg"],
-    "agotado": false
-  },
-  {
-    "id": "asics-nyc",
-    "slug": "asics-gel-nyc",
-    "marca": "ASICS",
-    "nombre": "Gel-NYC",
-    "color": "Negro · Plata",
-    "precio": 180000,
-    "etiqueta": "Nuevo",
-    "descripcion": "Estética runner de los 2000 con tecnología GEL. Capas de malla, cuero sintético y detalles metalizados que brillan de noche.",
-    "tallas": [40, 41, 42, 43, 44],
-    "genero": "Hombre",
-    "colecciones": ["blackout", "runner"],
-    "imagenes": ["img/products/asics-nyc-1.jpg", "img/products/asics-nyc-2.jpg", "img/products/asics-nyc-3.jpg", "img/products/asics-nyc-4.jpg"],
-    "agotado": false
-  },
-  {
-    "id": "lv-skate-white",
-    "slug": "louis-vuitton-lv-skate-blanco",
-    "marca": "Louis Vuitton",
-    "nombre": "LV Skate Sneaker",
-    "color": "White",
-    "precio": 180000,
-    "etiqueta": "Premium",
-    "descripcion": "Volumen, textura y lujo. Paneles acolchados, cordones gruesos y el monograma en relieve. Llega con su caja naranja.",
-    "tallas": [36, 37, 38, 39, 40, 41, 42, 43, 44],
-    "genero": "Unisex",
-    "colecciones": ["luxury"],
-    "imagenes": ["img/products/lv-skate-white-1.jpg", "img/products/lv-skate-white-2.jpg", "img/products/lv-skate-white-3.jpg", "img/products/lv-skate-white-4.jpg"],
-    "agotado": false
-  },
-  {
-    "id": "tn-white",
-    "slug": "nike-air-max-plus-tn-blanco",
-    "marca": "Nike",
-    "nombre": "Air Max Plus TN",
-    "color": "Triple White",
-    "precio": 180000,
-    "etiqueta": "Premium",
-    "descripcion": "Las líneas onduladas más reconocidas del streetwear, en blanco total. Unidades Tuned Air para amortiguación todo el día.",
-    "tallas": [36, 37, 38, 39, 40, 41, 42, 43, 44],
-    "genero": "Unisex",
-    "colecciones": ["luxury", "runner"],
-    "imagenes": ["img/products/tn-white-1.jpg", "img/products/tn-white-2.jpg", "img/products/tn-white-3.jpg", "img/products/tn-white-4.jpg"],
-    "agotado": false
-  },
-  {
     "id": "suede-xl",
     "slug": "puma-suede-xl",
     "marca": "Puma",
@@ -131,36 +71,6 @@ window.OBSIDIAN_PRODUCTS = [
     "genero": "Hombre",
     "colecciones": ["blackout"],
     "imagenes": ["img/products/j3-black-1.jpg", "img/products/j3-black-2.jpg", "img/products/j3-black-3.jpg", "img/products/j3-black-4.jpg"],
-    "agotado": false
-  },
-  {
-    "id": "amiri",
-    "slug": "amiri-ma-1",
-    "marca": "Amiri",
-    "nombre": "MA-1",
-    "color": "White",
-    "precio": 180000,
-    "etiqueta": "Premium",
-    "descripcion": "Lujo de Los Ángeles. Malla y cuero en tonos marfil, logo MA bordado y suela robusta translúcida.",
-    "tallas": [36, 37, 38, 39, 40, 41, 42, 43, 44],
-    "genero": "Unisex",
-    "colecciones": ["luxury"],
-    "imagenes": ["img/products/amiri-1.jpg", "img/products/amiri-2.jpg", "img/products/amiri-3.jpg", "img/products/amiri-4.jpg"],
-    "agotado": false
-  },
-  {
-    "id": "tn-aqua",
-    "slug": "nike-air-max-plus-tn-aqua",
-    "marca": "Nike",
-    "nombre": "Air Max Plus TN",
-    "color": "Blanco · Aqua",
-    "precio": 180000,
-    "etiqueta": "Nuevo",
-    "descripcion": "Degradado en tonos aqua sobre blanco, insignia TN dorada y el swoosh verde. Frescos y llamativos.",
-    "tallas": [36, 37, 38, 39],
-    "genero": "Mujer",
-    "colecciones": ["runner"],
-    "imagenes": ["img/products/tn-aqua-1.jpg", "img/products/tn-aqua-2.jpg", "img/products/tn-aqua-3.jpg", "img/products/tn-aqua-4.jpg"],
     "agotado": false
   },
   {
@@ -236,36 +146,6 @@ window.OBSIDIAN_PRODUCTS = [
     "genero": "Unisex",
     "colecciones": ["runner"],
     "imagenes": ["img/products/m2k-1.jpg", "img/products/m2k-2.jpg", "img/products/m2k-3.jpg", "img/products/m2k-4.jpg"],
-    "agotado": false
-  },
-  {
-    "id": "forum-bb",
-    "slug": "adidas-forum-low-bad-bunny",
-    "marca": "Adidas",
-    "nombre": "Forum Low x Bad Bunny",
-    "color": "Cloud White",
-    "precio": 180000,
-    "etiqueta": "Colaboración",
-    "descripcion": "La colaboración del Conejo Malo: doble lengüeta, correa en el tobillo y charm del conejo. Incluye cordones extra.",
-    "tallas": [36, 37, 38, 39, 40, 41, 42, 43, 44],
-    "genero": "Unisex",
-    "colecciones": ["luxury"],
-    "imagenes": ["img/products/forum-bb-1.jpg", "img/products/forum-bb-2.jpg", "img/products/forum-bb-3.jpg", "img/products/forum-bb-4.jpg"],
-    "agotado": false
-  },
-  {
-    "id": "phoenix",
-    "slug": "nike-phoenix-waffle",
-    "marca": "Nike",
-    "nombre": "Phoenix Waffle",
-    "color": "Blanco · Negro",
-    "precio": 120000,
-    "etiqueta": "Nuevo",
-    "descripcion": "Inspiración retro-running con suela Waffle elevada. Ligeros, cómodos y con ese toque femenino que estiliza.",
-    "tallas": [36, 37, 38, 39],
-    "genero": "Mujer",
-    "colecciones": ["runner"],
-    "imagenes": ["img/products/phoenix-1.jpg", "img/products/phoenix-2.jpg", "img/products/phoenix-3.jpg", "img/products/phoenix-4.jpg"],
     "agotado": false
   },
   {
@@ -444,7 +324,7 @@ window.OBSIDIAN_PRODUCTS = [
     "descripcion": "El clásico de Reebok en blanco, con suela de goma.",
     "tallas": [40, 41, 42, 43, 44],
     "genero": "Hombre",
-    "colecciones": [],
+    "colecciones": ["icons"],
     "imagenes": ["img/products/reebok-classic-blanco-1.jpg"],
     "agotado": false
   },
@@ -489,7 +369,7 @@ window.OBSIDIAN_PRODUCTS = [
     "descripcion": "Gamuza negra, swoosh blanco y suela color goma. Un básico del skate.",
     "tallas": [40, 41, 42, 43, 44, 45],
     "genero": "Hombre",
-    "colecciones": [],
+    "colecciones": ["blackout"],
     "imagenes": ["img/products/sb-dunk-negro-1.jpg"],
     "agotado": false
   },
@@ -594,7 +474,7 @@ window.OBSIDIAN_PRODUCTS = [
     "descripcion": "El Air Force 1 todo negro. Cuero liso y la suela de siempre.",
     "tallas": [40, 41, 42, 43, 44, 45],
     "genero": "Hombre",
-    "colecciones": [],
+    "colecciones": ["blackout"],
     "imagenes": ["img/products/af1-negro-1.jpg"],
     "agotado": false
   },
@@ -624,7 +504,7 @@ window.OBSIDIAN_PRODUCTS = [
     "descripcion": "El Samba en negro con las tres franjas blancas y suela de goma. Confirma tu talla por WhatsApp antes de pedir.",
     "tallas": [36, 37, 38, 39, 40, 41, 42, 43, 44],
     "genero": "Unisex",
-    "colecciones": [],
+    "colecciones": ["icons"],
     "imagenes": ["img/products/samba-negro-1.jpg"],
     "agotado": false
   },
@@ -654,7 +534,7 @@ window.OBSIDIAN_PRODUCTS = [
     "descripcion": "El Old Skool de toda la vida: lona y gamuza negra con la franja blanca.",
     "tallas": [36, 37, 38, 39, 40, 41, 42, 43, 44],
     "genero": "Unisex",
-    "colecciones": [],
+    "colecciones": ["icons"],
     "imagenes": ["img/products/vans-oldskool-negro-1.jpg"],
     "agotado": false
   },
@@ -744,7 +624,7 @@ window.OBSIDIAN_PRODUCTS = [
     "descripcion": "Tenis de correr negro con swoosh blanco. Liviano y cómodo.",
     "tallas": [40, 41, 42, 43, 44],
     "genero": "Hombre",
-    "colecciones": [],
+    "colecciones": ["runner"],
     "imagenes": ["img/products/nike-running-negro-1.jpg"],
     "agotado": false
   },
@@ -849,7 +729,7 @@ window.OBSIDIAN_PRODUCTS = [
     "descripcion": "Superstar negro con las franjas blancas.",
     "tallas": [40, 41, 42, 43, 44],
     "genero": "Hombre",
-    "colecciones": [],
+    "colecciones": ["blackout"],
     "imagenes": ["img/products/superstar-negro-1.jpg"],
     "agotado": false
   },
@@ -879,7 +759,7 @@ window.OBSIDIAN_PRODUCTS = [
     "descripcion": "El Dunk Low blanco y negro más buscado, en tallas de dama.",
     "tallas": [36, 37, 38, 39],
     "genero": "Mujer",
-    "colecciones": [],
+    "colecciones": ["icons"],
     "imagenes": ["img/products/dunk-panda-1.jpg"],
     "agotado": false
   },
@@ -894,7 +774,7 @@ window.OBSIDIAN_PRODUCTS = [
     "descripcion": "El Jordan 4 todo negro.",
     "tallas": [40, 41, 42, 43, 44],
     "genero": "Hombre",
-    "colecciones": [],
+    "colecciones": ["blackout"],
     "imagenes": ["img/products/j4-negro-1.jpg"],
     "agotado": false
   },
@@ -924,7 +804,7 @@ window.OBSIDIAN_PRODUCTS = [
     "descripcion": "El Superstar clásico: blanco, franjas negras y puntera de concha.",
     "tallas": [35, 36, 37, 38, 39, 40, 41, 42, 43, 44],
     "genero": "Unisex",
-    "colecciones": [],
+    "colecciones": ["icons"],
     "imagenes": ["img/products/superstar-blanco-negro-1.jpg"],
     "agotado": false
   },
@@ -939,7 +819,7 @@ window.OBSIDIAN_PRODUCTS = [
     "descripcion": "Runner ASICS plateado de estilo 2000, con amortiguación Gel.",
     "tallas": [40, 41, 42, 43, 44],
     "genero": "Hombre",
-    "colecciones": [],
+    "colecciones": ["runner"],
     "imagenes": ["img/products/asics-plateado-1.jpg"],
     "agotado": false
   },
@@ -954,7 +834,7 @@ window.OBSIDIAN_PRODUCTS = [
     "descripcion": "Runner ASICS en rosado con plateado, en tallas de dama.",
     "tallas": [36, 37, 38, 39],
     "genero": "Mujer",
-    "colecciones": [],
+    "colecciones": ["runner"],
     "imagenes": ["img/products/asics-rosado-1.jpg"],
     "agotado": false
   },
@@ -969,7 +849,7 @@ window.OBSIDIAN_PRODUCTS = [
     "descripcion": "Runner ASICS plateado con detalles verdes.",
     "tallas": [40, 41, 42, 43, 44],
     "genero": "Hombre",
-    "colecciones": [],
+    "colecciones": ["runner"],
     "imagenes": ["img/products/asics-verde-1.jpg"],
     "agotado": false
   },
@@ -999,7 +879,7 @@ window.OBSIDIAN_PRODUCTS = [
     "descripcion": "El Jordan 3 todo blanco.",
     "tallas": [40, 41, 42, 43, 44, 45],
     "genero": "Hombre",
-    "colecciones": [],
+    "colecciones": ["luxury"],
     "imagenes": ["img/products/j3-blanco-1.jpg"],
     "agotado": false
   },
@@ -1014,7 +894,7 @@ window.OBSIDIAN_PRODUCTS = [
     "descripcion": "Jordan 3 blanco con el estampado de cemento gris.",
     "tallas": [36, 37, 38, 39, 40, 41, 42, 43, 44],
     "genero": "Unisex",
-    "colecciones": [],
+    "colecciones": ["icons"],
     "imagenes": ["img/products/j3-cemento-1.jpg"],
     "agotado": false
   },
@@ -1044,7 +924,7 @@ window.OBSIDIAN_PRODUCTS = [
     "descripcion": "Jordan 1 Mid negro en charol con suela azul translúcida, en tallas de dama.",
     "tallas": [36, 37, 38, 39],
     "genero": "Mujer",
-    "colecciones": [],
+    "colecciones": ["blackout"],
     "imagenes": ["img/products/j1-mid-charol-1.jpg"],
     "agotado": false
   },
@@ -1059,7 +939,7 @@ window.OBSIDIAN_PRODUCTS = [
     "descripcion": "Jordan 3 en gamuza negra con el estampado de cemento y suela blanca.",
     "tallas": [40, 41, 42, 43, 44],
     "genero": "Hombre",
-    "colecciones": [],
+    "colecciones": ["blackout"],
     "imagenes": ["img/products/j3-negro-cemento-1.jpg"],
     "agotado": false
   },
@@ -1119,7 +999,7 @@ window.OBSIDIAN_PRODUCTS = [
     "descripcion": "Nike NOCTA todo blanco con detalles dorados.",
     "tallas": [40, 41, 42, 43, 44, 45],
     "genero": "Hombre",
-    "colecciones": [],
+    "colecciones": ["luxury"],
     "imagenes": ["img/products/nocta-blanco-1.jpg"],
     "agotado": false
   },
@@ -1134,7 +1014,7 @@ window.OBSIDIAN_PRODUCTS = [
     "descripcion": "Nike NOCTA todo negro.",
     "tallas": [40, 41, 42, 43, 44, 45],
     "genero": "Hombre",
-    "colecciones": [],
+    "colecciones": ["blackout", "luxury"],
     "imagenes": ["img/products/nocta-negro-1.jpg"],
     "agotado": false
   },
@@ -1194,7 +1074,7 @@ window.OBSIDIAN_PRODUCTS = [
     "descripcion": "Shox TL negro con las columnas plateadas.",
     "tallas": [40, 41, 42, 43, 44],
     "genero": "Hombre",
-    "colecciones": [],
+    "colecciones": ["blackout", "runner"],
     "imagenes": ["img/products/shox-negro-1.jpg"],
     "agotado": false
   },
@@ -1209,7 +1089,7 @@ window.OBSIDIAN_PRODUCTS = [
     "descripcion": "Shox TL todo blanco.",
     "tallas": [40, 41, 42, 43, 44],
     "genero": "Hombre",
-    "colecciones": [],
+    "colecciones": ["runner"],
     "imagenes": ["img/products/shox-blanco-1.jpg"],
     "agotado": false
   },
@@ -1224,7 +1104,7 @@ window.OBSIDIAN_PRODUCTS = [
     "descripcion": "Chancla con el triángulo de Prada. Viene en negro y en naranja: dinos cuál quieres por WhatsApp.",
     "tallas": [40, 41, 42, 43, 44],
     "genero": "Hombre",
-    "colecciones": [],
+    "colecciones": ["luxury"],
     "imagenes": ["img/products/chanclas-prada-1.jpg", "img/products/chanclas-prada-2.jpg"],
     "agotado": false
   }

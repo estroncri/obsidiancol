@@ -92,8 +92,8 @@
   const COLLECTIONS = {
     blackout: { name: 'Blackout', img: 'img/products/lv-skate-black-4.jpg' },
     icons: { name: 'Icons', img: 'img/products/af1-mid-2.jpg' },
-    luxury: { name: 'Luxury', img: 'img/products/amiri-3.jpg' },
-    runner: { name: 'Runner', img: 'img/products/tn-aqua-2.jpg' },
+    luxury: { name: 'Luxury', img: 'img/products/nocta-blanco-1.jpg' },
+    runner: { name: 'Runner', img: 'img/products/asics-verde-1.jpg' },
   };
   const brands = () => {
     const m = new Map();
@@ -157,11 +157,11 @@
       .map(t => `<span class="tb__item"><span class="dot"></span>${esc(t)}</span>`).join('');
     const nav = [['tienda.html', 'Tienda', 'shop'], ['colecciones.html', 'Colecciones', 'collections'], ['marcas.html', 'Marcas', 'brands'], ['lookbook.html', 'Lookbook', 'lookbook']];
     const big = [
-      ['index.html', 'Inicio', 'img/products/asics-nyc-2.jpg'], ['tienda.html', 'Tienda', 'img/products/af1-white-1.jpg'],
-      ['novedades.html', 'Novedades', 'img/products/tn-aqua-1.jpg'], ['hombre.html', 'Hombre', 'img/products/j3-black-1.jpg'],
-      ['mujer.html', 'Mujer', 'img/products/phoenix-1.jpg'], ...(PRODUCTS.some(p => p.genero === 'Niños') ? [['ninos.html', 'Niños', 'img/products/jordan-ninos-1.jpg']] : []), ['colecciones.html', 'Colecciones', 'img/products/amiri-1.jpg'],
+      ['index.html', 'Inicio', 'img/products/j4-negro-1.jpg'], ['tienda.html', 'Tienda', 'img/products/af1-white-1.jpg'],
+      ['novedades.html', 'Novedades', 'img/products/nocta-negro-1.jpg'], ['hombre.html', 'Hombre', 'img/products/j3-black-1.jpg'],
+      ['mujer.html', 'Mujer', 'img/products/dunk-panda-1.jpg'], ...(PRODUCTS.some(p => p.genero === 'Niños') ? [['ninos.html', 'Niños', 'img/products/jordan-ninos-1.jpg']] : []), ['colecciones.html', 'Colecciones', 'img/products/nocta-blanco-1.jpg'],
       ['marcas.html', 'Marcas', 'img/products/samba-2.jpg'], ['lookbook.html', 'Lookbook', 'img/products/lv-skate-black-4.jpg'],
-      ['nosotros.html', 'Nosotros', 'img/products/j3-fragment-2.jpg'], ['contacto.html', 'Contacto', 'img/products/suede-xl-1.jpg'],
+      ['nosotros.html', 'Nosotros', 'img/products/j3-black-2.jpg'], ['contacto.html', 'Contacto', 'img/products/suede-xl-1.jpg'],
     ];
     const igA = CFG.instagram ? `<a href="${esc(CFG.instagram)}" target="_blank" rel="noopener">Instagram</a>` : '';
     const tkA = CFG.tiktok ? `<a href="${esc(CFG.tiktok)}" target="_blank" rel="noopener">TikTok</a>` : '';
@@ -172,7 +172,7 @@
       <div class="fimg" aria-hidden="true"><img alt=""></div>
       <div class="pl" aria-hidden="true">
         <div class="pl__meta mono"><span>Obsidian — Colección 2026</span><span id="plCount">000</span></div>
-        <div class="pl__frame">${['asics-nyc-2', 'j3-fragment-1', 'lv-skate-black-1', 'samba-1', 'amiri-1', 'tn-aqua-1', 'j1-patent-1', 'af1-white-1'].map((s, i) => `<img src="${u(`img/products/${s}.jpg`)}" alt=""${i ? '' : ' class="on"'}>`).join('')}</div>
+        <div class="pl__frame">${['j4-negro-1', 'lv-skate-black-1', 'samba-1', 'shox-negro-1', 'asics-plateado-1', 'j3-black-1', 'j1-patent-1', 'af1-white-1'].map((s, i) => `<img src="${u(`img/products/${s}.jpg`)}" alt=""${i ? '' : ' class="on"'}>`).join('')}</div>
         <div class="pl__word">${'Obsidian'.split('').map(c => `<span>${c}</span>`).join('')}</div>
       </div>
       <div class="tr" aria-hidden="true"><div class="tr__panel"><div class="tr__line"></div><div class="tr__inner"><img class="tr__logo" src="${u('img/logo/obsidian-logo-sm.webp')}" alt=""><p class="tr__title"><span id="trTitle">${esc(body.dataset.title || 'Obsidian')}</span></p><p class="mono muted">${esc(CFG.dominio || '')}</p></div></div></div>

@@ -42,18 +42,17 @@ const NEW_TAGS = ['Nuevo', 'Tendencia', 'Edición especial', 'Colaboración'];
 const COLS = [
   { k: 'blackout', name: 'Blackout', em: 'Black<em>out</em>', desc: 'Negro sobre negro. Pares oscuros, serios y poderosos, hechos para la noche y para combinar con todo.', img: 'lv-skate-black-4', dark: true },
   { k: 'icons', name: 'Icons', em: 'Ic<em>ons</em>', desc: 'Las siluetas que definieron la cultura sneaker. Clásicos de siempre que nunca fallan.', img: 'af1-mid-2' },
-  { k: 'luxury', name: 'Luxury', em: 'Lux<em>ury</em>', desc: 'Piezas de lujo y colaboraciones. Volumen, textura y presencia en cada paso.', img: 'amiri-3', dark: true },
-  { k: 'runner', name: 'Runner', em: 'Run<em>ner</em>', desc: 'Estética running: capas técnicas, amortiguación y actitud de calle.', img: 'tn-aqua-2' },
+  { k: 'luxury', name: 'Luxury', em: 'Lux<em>ury</em>', desc: 'Piezas de lujo y colaboraciones. Volumen, textura y presencia en cada paso.', img: 'nocta-blanco-1', dark: true },
+  { k: 'runner', name: 'Runner', em: 'Run<em>ner</em>', desc: 'Estética running: capas técnicas, amortiguación y actitud de calle.', img: 'asics-verde-1' },
 ].map(c => ({ ...c, items: P.filter(p => (p.colecciones || []).includes(c.k)) }));
 
 const BRAND_DESC = {
-  Nike: 'Del Air Force 1 al Air Max Plus TN: las siluetas que definieron la calle, en sus colores más buscados.',
-  Jordan: 'El legado Jordan en versiones Low, Black Cat y la colaboración con Fragment.',
-  Adidas: 'Samba, Forum y running: las tres franjas en sus modelos más pedidos.',
-  'Louis Vuitton': 'El LV Skate en blanco y en negro: volumen, textura y la firma Vuitton.',
+  Nike: 'Del Air Force 1 al Shox TL y el NOCTA: las siluetas que definieron la calle, en sus colores más buscados.',
+  Jordan: 'El legado Jordan: Jordan 1, Jordan 3 y Jordan 4 Black Cat, también en tallas de niño.',
+  Adidas: 'Samba, Superstar, running y chanclas: las tres franjas en sus modelos más pedidos.',
+  'Louis Vuitton': 'El LV Skate en negro: volumen, textura y la firma Vuitton.',
   Puma: 'Gamuza XL y estética de terraza retro para el día a día.',
   ASICS: 'Tecnología GEL y estética runner de los 2000.',
-  Amiri: 'Lujo de Los Ángeles en clave sneaker.',
 };
 const BRANDS = [...new Set(P.map(p => p.marca))].map(m => ({ name: m, slug: slugify(m), items: P.filter(p => p.marca === m), desc: BRAND_DESC[m] || `Todos los modelos ${m} de OBSIDIAN.` }))
   .sort((a, b) => b.items.length - a.items.length);
@@ -120,9 +119,9 @@ const mq = (items, attrs = '') => `<div class="mq" ${attrs} aria-hidden="true"><
 /* ======================= INICIO ======================= */
 function home() {
   const R = '';
-  const heroSlides = [['asics-gel-nyc', 1], ['air-jordan-3-fragment', 0], ['louis-vuitton-lv-skate-negro', 0], ['adidas-samba-og', 0], ['amiri-ma-1', 0], ['nike-air-max-plus-tn-aqua', 0]].filter(([s]) => bySlug[s]);
-  const sala = [['louis-vuitton-lv-skate-negro', 1], ['air-jordan-3-fragment', 1], ['amiri-ma-1', 0], ['nike-air-max-plus-tn-blanco', 0], ['adidas-forum-low-bad-bunny', 1]].filter(([s]) => bySlug[s]);
-  const look = [['louis-vuitton-lv-skate-negro', 3], ['asics-gel-nyc', 2], ['nike-air-force-1-mid', 1], ['air-jordan-3-fragment', 1], ['puma-suede-xl', 0]].filter(([s]) => bySlug[s]);
+  const heroSlides = [['air-jordan-4-black-cat', 0], ['louis-vuitton-lv-skate-negro', 0], ['asics-gel-plateado', 0], ['adidas-samba-og', 0], ['nike-shox-tl-negro-plateado', 0], ['air-jordan-3-black-cat', 0]].filter(([s]) => bySlug[s]);
+  const sala = [['louis-vuitton-lv-skate-negro', 1], ['nike-nocta-negro', 0], ['air-jordan-4-black-cat', 0], ['nike-shox-tl-negro-plateado', 0], ['air-jordan-3-black-cat', 1]].filter(([s]) => bySlug[s]);
+  const look = [['louis-vuitton-lv-skate-negro', 3], ['asics-gel-plateado', 0], ['nike-air-force-1-mid', 1], ['air-jordan-3-blanco-gris-cemento', 0], ['puma-suede-xl', 0]].filter(([s]) => bySlug[s]);
   const hm = P.filter(p => forGender(p, 'Hombre')).length, mj = P.filter(p => forGender(p, 'Mujer')).length, nv = P.filter(p => NEW_TAGS.includes(p.etiqueta)).length;
   const body = `
 <section class="hero">
@@ -186,8 +185,8 @@ ${mq(BRANDS.map(b => b.name), 'data-duration="40"')}
     ${sh('Encuentra tu par', `Tallas ${range(ADULT)} EU`, 'Para cada <em>paso</em>')}
     <div class="trio">
       <a class="tcard" href="hombre.html" data-cursor="Ver"><div class="tcard__img arch" data-img="clip">${img(R, 'j3-black-1')}</div><div class="tcard__row"><h3 class="s-md">Hombre</h3><p class="mono"><span data-count-gen="Hombre">${hm}</span> modelos</p></div></a>
-      <a class="tcard" href="mujer.html" data-cursor="Ver"><div class="tcard__img arch" data-img="clip">${img(R, 'phoenix-1')}</div><div class="tcard__row"><h3 class="s-md">Mujer</h3><p class="mono"><span data-count-gen="Mujer">${mj}</span> modelos</p></div></a>
-      <a class="tcard" href="novedades.html" data-cursor="Ver"><div class="tcard__img arch" data-img="clip">${img(R, 'tn-aqua-1')}</div><div class="tcard__row"><h3 class="s-md">Novedades</h3><p class="mono"><span data-count-new>${nv}</span> modelos</p></div></a>
+      <a class="tcard" href="mujer.html" data-cursor="Ver"><div class="tcard__img arch" data-img="clip">${img(R, 'dunk-panda-1')}</div><div class="tcard__row"><h3 class="s-md">Mujer</h3><p class="mono"><span data-count-gen="Mujer">${mj}</span> modelos</p></div></a>
+      <a class="tcard" href="novedades.html" data-cursor="Ver"><div class="tcard__img arch" data-img="clip">${img(R, 'nocta-negro-1')}</div><div class="tcard__row"><h3 class="s-md">Novedades</h3><p class="mono"><span data-count-new>${nv}</span> modelos</p></div></a>
     </div>
   </div>
 </section>
@@ -375,8 +374,8 @@ function brandsIndex() {
 
 /* ======================= LOOKBOOK ======================= */
 function lookbook() {
-  const shots = [['louis-vuitton-lv-skate-negro', 3], ['nike-air-force-1-mid', 1], ['puma-suede-xl', 0], ['asics-gel-nyc', 2], ['louis-vuitton-lv-skate-negro', 2], ['adidas-forum-low-bad-bunny', 0],
-    ['air-jordan-1-low-black-patent', 1], ['nike-air-force-1-mid', 2], ['air-jordan-3-black-cat', 1], ['nike-air-max-plus-tn-aqua', 1], ['amiri-ma-1', 0], ['puma-park-lifestyle', 1]].filter(([s]) => bySlug[s]);
+  const shots = [['louis-vuitton-lv-skate-negro', 3], ['nike-air-force-1-mid', 1], ['puma-suede-xl', 0], ['asics-gel-plateado', 0], ['louis-vuitton-lv-skate-negro', 2], ['nike-dunk-low-panda', 0],
+    ['air-jordan-1-low-black-patent', 1], ['nike-air-force-1-mid', 2], ['air-jordan-3-black-cat', 1], ['nike-shox-tl-negro-plateado', 0], ['air-jordan-4-black-cat', 0], ['puma-park-lifestyle', 1]].filter(([s]) => bySlug[s]);
   const body = `
 <section class="lhero"><div class="wrap">
   ${crumbs('', ['Lookbook'])}
@@ -569,9 +568,9 @@ function notFound() {
 const pages = [
   home(),
   listing({ file: 'tienda.html', title: 'Tienda', h1: 'Tienda', h1html: 'Tien<em>da</em>', lead: `Los ${P.length} modelos de OBSIDIAN. Busca, filtra por marca, colección o precio y cambia entre galería e índice.`, crumbsArr: [['Tienda']], full: true, heroImg: `<img src="img/products/af1-white-1.jpg" alt="" width="520" height="650">`, seoTitle: 'Tienda | OBSIDIAN' }),
-  listing({ file: 'novedades.html', title: 'Novedades', h1: 'Novedades', h1html: 'Nove<em>dades</em>', lead: 'Lo nuevo y lo que está marcando tendencia: lanzamientos, colaboraciones y ediciones especiales.', crumbsArr: [['Tienda', 'tienda.html'], ['Novedades']], preset: { nuevos: true }, heroImg: `<img src="img/products/tn-aqua-1.jpg" alt="" width="520" height="650">` }),
+  listing({ file: 'novedades.html', title: 'Novedades', h1: 'Novedades', h1html: 'Nove<em>dades</em>', lead: 'Lo nuevo y lo que está marcando tendencia: lanzamientos, colaboraciones y ediciones especiales.', crumbsArr: [['Tienda', 'tienda.html'], ['Novedades']], preset: { nuevos: true }, heroImg: `<img src="img/products/nocta-negro-1.jpg" alt="" width="520" height="650">` }),
   listing({ file: 'hombre.html', title: 'Hombre', h1: 'Hombre', h1html: 'Hom<em>bre</em>', lead: `Modelos disponibles en tallas de hombre (${genRange('Hombre')}), incluidos los unisex.`, crumbsArr: [['Tienda', 'tienda.html'], ['Hombre']], preset: { genero: 'Hombre' }, heroImg: `<img src="img/products/j3-black-1.jpg" alt="" width="520" height="650">` }),
-  listing({ file: 'mujer.html', title: 'Mujer', h1: 'Mujer', h1html: 'Mu<em>jer</em>', lead: `Modelos disponibles en tallas de mujer (${genRange('Mujer')}), incluidos los unisex.`, crumbsArr: [['Tienda', 'tienda.html'], ['Mujer']], preset: { genero: 'Mujer' }, heroImg: `<img src="img/products/phoenix-1.jpg" alt="" width="520" height="650">` }),
+  listing({ file: 'mujer.html', title: 'Mujer', h1: 'Mujer', h1html: 'Mu<em>jer</em>', lead: `Modelos disponibles en tallas de mujer (${genRange('Mujer')}), incluidos los unisex.`, crumbsArr: [['Tienda', 'tienda.html'], ['Mujer']], preset: { genero: 'Mujer' }, heroImg: `<img src="img/products/dunk-panda-1.jpg" alt="" width="520" height="650">` }),
   ...(KIDS.length ? [listing({ file: 'ninos.html', title: 'Niños', h1: 'Niños', h1html: 'Ni<em>ños</em>', lead: `Tenis para los más pequeños, en tallas de niño (${genRange('Niños')}).`, crumbsArr: [['Tienda', 'tienda.html'], ['Niños']], preset: { genero: 'Niños' }, heroImg: `<img src="${KIDS[0].imagenes[0]}" alt="" width="520" height="650">` })] : []),
   collectionsIndex(),
   ...COLS.map(c => listing({ file: `colecciones/${c.k}.html`, R: '../', title: c.name, h1: c.name, h1html: c.em, lead: esc(c.desc), crumbsArr: [['Colecciones', 'colecciones.html'], [c.name]], preset: { col: c.k }, section: 'collections',
