@@ -454,6 +454,29 @@
     } finally { btn.disabled = false; }
   }
 
+  /* importa un CSV con columnas producto;costo;precio_vendedor (la lista privada de costos) y deja los cambios listos para guardar */
+  async function importCosts(e) {
+    const file = e.target.files[0]; e.target.value = ''; if (!file) return;
+    const txt = (await file.text()).replace(/^\uFEFF/, '');
+    const lines = txt.split(/\r?\n/).filter(l => l.trim());
+    const sep = (lines[0] || '').includes(';') ? ';' : ',';
+    const head = (lines.shift() || '').split(sep).map(h => norm(h.trim()));
+    const col = names => head.findIndex(h => names.includes(h));
+    const iId = col(['producto', 'id']), iCosto = col(['costo', 'te cuesta']), iBase = col(['precio_vendedor', 'precio vendedor', 'base']);
+    if (iId < 0 || (iCosto < 0 && iBase < 0)) { toast('El archivo necesita las columnas producto, costo y precio_vendedor'); return; }
+    const num = v => Number(String(v || '').replace(/[^\d]/g, '')) || 0;
+    let ok = 0, unknown = 0;
+    lines.forEach(l => {
+      const c = l.split(sep), id = (c[iId] || '').trim();
+      if (!byId[id]) { if (id) unknown++; return; }
+      const cur = costOf(id), vals = { costo: iCosto >= 0 ? num(c[iCosto]) || cur.costo || 0 : cur.costo || 0, base: iBase >= 0 ? num(c[iBase]) || cur.base || 0 : cur.base || 0 };
+      const orig = costos[id] || { costo: 0, base: 0 };
+      if (vals.costo === (orig.costo || 0) && vals.base === (orig.base || 0)) delete dirty[id]; else { dirty[id] = vals; ok++; }
+    });
+    renderCosts();
+    toast(ok ? `${ok} ${ok === 1 ? 'modelo listo' : 'modelos listos'}: revisa y pulsa Guardar costos${unknown ? ` (${unknown} sin coincidencia)` : ''}` : 'No hubo cambios: esos costos ya estaban guardados');
+  }
+
   /* ---------- detalle de pedido ---------- */
   function waText(p) {
     const nombre = firstName(p.nombre);
@@ -578,6 +601,7 @@
   $('#vCancel').addEventListener('click', resetForm);
   $('#costList').addEventListener('input', onCostInput);
   $('#costSave').addEventListener('click', saveCosts);
+  $('#costCsv').addEventListener('change', importCosts);
   document.addEventListener('click', e => {
     const tb = e.target.closest('[data-tab]'); if (tb) { setTab(tb.dataset.tab); return; }
     const f = e.target.closest('[data-f]'); if (f) { filtro = f.dataset.f; renderOrders(); return; }

@@ -104,7 +104,8 @@
   const brandUrl = m => u(`marcas/${slugify(m)}.html`);
   const colUrl = k => u(`colecciones/${k}.html`);
   const sizeRange = p => p.tallas.length ? `${p.tallas[0]}–${p.tallas[p.tallas.length - 1]}` : '—';
-  const forGender = (p, g) => !g || p.genero === g || p.genero === 'Unisex';
+  const adultSizes = () => { const t = PRODUCTS.filter(p => p.genero !== 'Niños').flatMap(p => p.tallas); return t.length ? `${Math.min(...t)}–${Math.max(...t)}` : '36–44'; };
+  const forGender = (p, g) => !g || p.genero === g || (p.genero === 'Unisex' && g !== 'Niños');
   const NEW_TAGS = ['Nuevo', 'Tendencia', 'Edición especial', 'Colaboración'];
 
   const HELP = [
@@ -112,7 +113,7 @@
     ['guia-de-tallas.html', 'Guía de tallas'], ['preguntas-frecuentes.html', 'Preguntas frecuentes'], ['contacto.html', 'Contacto'], ['privacidad.html', 'Privacidad'],
   ];
   const PAGE_TITLES = {
-    'index.html': 'Inicio', '': 'Inicio', 'tienda.html': 'Tienda', 'novedades.html': 'Novedades', 'hombre.html': 'Hombre', 'mujer.html': 'Mujer',
+    'index.html': 'Inicio', '': 'Inicio', 'tienda.html': 'Tienda', 'novedades.html': 'Novedades', 'hombre.html': 'Hombre', 'mujer.html': 'Mujer', 'ninos.html': 'Niños',
     'colecciones.html': 'Colecciones', 'marcas.html': 'Marcas', 'lookbook.html': 'Lookbook', 'nosotros.html': 'Nosotros', 'carrito.html': 'Tu bolsa',
     ...Object.fromEntries(HELP),
   };
@@ -152,13 +153,13 @@
      ===================================================================== */
   function injectChrome() {
     const n = PRODUCTS.length;
-    const tbItems = [CFG.pago || 'Pago contraentrega', CFG.envio || 'Envíos a toda Colombia', CFG.cambios || 'Cambios de talla', 'Pedidos por WhatsApp', `${n} modelos · Tallas 36–44`]
+    const tbItems = [CFG.pago || 'Pago contraentrega', CFG.envio || 'Envíos a toda Colombia', CFG.cambios || 'Cambios de talla', 'Pedidos por WhatsApp', `${n} modelos · Tallas ${adultSizes()}${PRODUCTS.some(p => p.genero === 'Niños') ? ' y niños' : ''}`]
       .map(t => `<span class="tb__item"><span class="dot"></span>${esc(t)}</span>`).join('');
     const nav = [['tienda.html', 'Tienda', 'shop'], ['colecciones.html', 'Colecciones', 'collections'], ['marcas.html', 'Marcas', 'brands'], ['lookbook.html', 'Lookbook', 'lookbook']];
     const big = [
       ['index.html', 'Inicio', 'img/products/asics-nyc-2.jpg'], ['tienda.html', 'Tienda', 'img/products/af1-white-1.jpg'],
       ['novedades.html', 'Novedades', 'img/products/tn-aqua-1.jpg'], ['hombre.html', 'Hombre', 'img/products/j3-black-1.jpg'],
-      ['mujer.html', 'Mujer', 'img/products/phoenix-1.jpg'], ['colecciones.html', 'Colecciones', 'img/products/amiri-1.jpg'],
+      ['mujer.html', 'Mujer', 'img/products/phoenix-1.jpg'], ...(PRODUCTS.some(p => p.genero === 'Niños') ? [['ninos.html', 'Niños', 'img/products/jordan-ninos-1.jpg']] : []), ['colecciones.html', 'Colecciones', 'img/products/amiri-1.jpg'],
       ['marcas.html', 'Marcas', 'img/products/samba-2.jpg'], ['lookbook.html', 'Lookbook', 'img/products/lv-skate-black-4.jpg'],
       ['nosotros.html', 'Nosotros', 'img/products/j3-fragment-2.jpg'], ['contacto.html', 'Contacto', 'img/products/suede-xl-1.jpg'],
     ];
@@ -220,7 +221,7 @@
           <div class="ft__cta"><h2 class="s-lg" data-split>¿Te ayudamos con tu <em>talla</em>?</h2><a class="btn btn--snow" data-wa href="#">${I.wa} Escríbenos</a></div>
           <div class="ft__grid mono">
             <div class="ft__brand"><img src="${u('img/logo/obsidian-logo-sm.webp')}" alt="" width="64" height="64"><p class="ft__about">Sneakers seleccionados para quienes caminan distinto. ${esc(CFG.pago || '')}${CFG.envio ? ' · ' + esc(CFG.envio) : ''}.</p></div>
-            <div><h4>Tienda</h4><ul class="ft__list"><li><a href="${u('tienda.html')}">Todo el catálogo</a></li><li><a href="${u('novedades.html')}">Novedades</a></li><li><a href="${u('hombre.html')}">Hombre</a></li><li><a href="${u('mujer.html')}">Mujer</a></li><li><a href="${u('lookbook.html')}">Lookbook</a></li><li><a href="${u('nosotros.html')}">Nosotros</a></li></ul></div>
+            <div><h4>Tienda</h4><ul class="ft__list"><li><a href="${u('tienda.html')}">Todo el catálogo</a></li><li><a href="${u('novedades.html')}">Novedades</a></li><li><a href="${u('hombre.html')}">Hombre</a></li><li><a href="${u('mujer.html')}">Mujer</a></li>${PRODUCTS.some(p => p.genero === 'Niños') ? `<li><a href="${u('ninos.html')}">Niños</a></li>` : ''}<li><a href="${u('lookbook.html')}">Lookbook</a></li><li><a href="${u('nosotros.html')}">Nosotros</a></li></ul></div>
             <div><h4>Colecciones</h4><ul class="ft__list">${Object.entries(COLLECTIONS).map(([k, c]) => `<li><a href="${colUrl(k)}">${c.name}</a></li>`).join('')}<li><a href="${u('colecciones.html')}">Ver todas</a></li></ul></div>
             <div><h4>Marcas</h4><ul class="ft__list">${brands().map(([b]) => `<li><a href="${brandUrl(b)}">${esc(b)}</a></li>`).join('')}</ul></div>
             <div><h4>Ayuda</h4><ul class="ft__list">${HELP.map(([h, l]) => `<li><a href="${u(h)}">${l}</a></li>`).join('')}</ul></div>
@@ -831,25 +832,27 @@
       precio: full ? params.get('precio') || '' : '', genero: preset.genero ? '' : params.get('genero') || '', orden: params.get('orden') || 'destacados',
       vista: params.get('vista') === 'indice' ? 'indice' : (store.get('obs-vista', 'galeria') === 'indice' ? 'indice' : 'galeria'),
     };
-    const prices = [...new Set(base.map(p => p.precio))].sort((a, b) => a - b);
+    const PRICE_BANDS = [['0-100000', 'Hasta $100.000'], ['100001-130000', 'Entre $100.000 y $130.000'], ['130001-', 'Más de $130.000']];
+    const inBand = (precio, v) => { if (!v.includes('-')) return precio === Number(v); const [lo, hi] = v.split('-'); return precio >= Number(lo) && (!hi || precio <= Number(hi)); };
+    const bands = PRICE_BANDS.filter(([v]) => base.some(p => inBand(p.precio, v)));
     const chip = (k, v, l, n) => `<button type="button" class="chip mono" data-k="${k}" data-v="${esc(v)}">${esc(l)}${n != null ? ` <small>${n}</small>` : ''}</button>`;
     const gWrap = $('#lgen');
-    if (gWrap) gWrap.innerHTML = preset.genero ? '' : [['', 'Todos'], ['Hombre', 'Hombre'], ['Mujer', 'Mujer']].map(([v, l]) => chip('genero', v, l)).join('');
+    if (gWrap) gWrap.innerHTML = preset.genero ? '' : [['', 'Todos'], ['Hombre', 'Hombre'], ['Mujer', 'Mujer'], ...(base.some(p => p.genero === 'Niños') ? [['Niños', 'Niños']] : [])].map(([v, l]) => chip('genero', v, l)).join('');
     if (full) {
       $('#fBrand').innerHTML = [chip('marca', '', 'Todas'), ...brands().map(([b, n]) => chip('marca', b, b, n))].join('');
       $('#fCol').innerHTML = [chip('col', '', 'Todas'), ...Object.entries(COLLECTIONS).map(([k, c]) => chip('col', k, c.name))].join('');
-      $('#fPrice').innerHTML = [chip('precio', '', 'Todos'), ...prices.map(p => chip('precio', String(p), fmt(p)))].join('');
+      $('#fPrice').innerHTML = [chip('precio', '', 'Todos'), ...bands.map(([v, l]) => chip('precio', v, l, base.filter(p => inBand(p.precio, v)).length))].join('');
       $('#lq').value = st.q;
     }
     $('#lsort').value = st.orden;
-    const labels = { q: v => `“${v}”`, marca: v => v, col: v => COLLECTIONS[v]?.name || v, precio: v => fmt(Number(v)), genero: v => v };
+    const labels = { q: v => `“${v}”`, marca: v => v, col: v => COLLECTIONS[v]?.name || v, precio: v => (PRICE_BANDS.find(b => b[0] === v) || [, fmt(Number(v))])[1], genero: v => v };
 
     function apply(animate) {
       const nq = norm(st.q).trim(), terms = nq ? nq.split(/\s+/) : [];
       let list = base.filter(p => {
         const h = norm(`${fullName(p)} ${p.marca} ${p.color} ${p.etiqueta}`);
         return terms.every(t => h.includes(t)) && (!st.marca || p.marca === st.marca) && (!st.col || (p.colecciones || []).includes(st.col)) &&
-          (!st.precio || p.precio === Number(st.precio)) && forGender(p, st.genero);
+          (!st.precio || inBand(p.precio, st.precio)) && forGender(p, st.genero);
       });
       if (st.orden === 'precio-asc') list.sort((a, b) => a.precio - b.precio || a.rank - b.rank);
       else if (st.orden === 'precio-desc') list.sort((a, b) => b.precio - a.precio || a.rank - b.rank);

@@ -32,7 +32,11 @@ const bySlug = Object.fromEntries(P.map(p => [p.slug, p]));
 const byId = Object.fromEntries(P.map(p => [p.id, p]));
 const range = list => { const s = [...new Set(list.flatMap(p => p.tallas))].sort((a, b) => a - b); return s.length ? `${s[0]}–${s[s.length - 1]}` : '—'; };
 const minPrice = list => Math.min(...list.map(p => p.precio));
-const forGender = (p, g) => !g || p.genero === g || p.genero === 'Unisex';
+const forGender = (p, g) => !g || p.genero === g || (p.genero === 'Unisex' && g !== 'Niños');
+const ADULT = P.filter(p => p.genero !== 'Niños'), KIDS = P.filter(p => p.genero === 'Niños');
+const genRange = g => range(P.filter(p => p.genero === g));
+/* botones de talla de la página de cada producto: adultos siempre ven 36–44 (y más si el modelo lo tiene); niños, su rango */
+const sizeGrid = p => { const k = p.genero === 'Niños', lo = Math.min(...p.tallas, k ? Infinity : 36), hi = Math.max(...p.tallas, k ? -Infinity : 44); return Array.from({ length: hi - lo + 1 }, (_, i) => lo + i); };
 const NEW_TAGS = ['Nuevo', 'Tendencia', 'Edición especial', 'Colaboración'];
 
 const COLS = [
@@ -58,7 +62,7 @@ const HELP = [
   ['como-comprar.html', 'Cómo comprar'], ['envios.html', 'Envíos'], ['pagos.html', 'Pagos'], ['cambios.html', 'Cambios'],
   ['guia-de-tallas.html', 'Guía de tallas'], ['preguntas-frecuentes.html', 'Preguntas frecuentes'], ['contacto.html', 'Contacto'], ['privacidad.html', 'Privacidad'],
 ];
-const SIZE_TABLE = [[36, '22,5', 4, 5.5], [37, '23', 4.5, 6], [38, '24', 5.5, 7], [39, '24,5', 6.5, 8], [40, '25', 7, 8.5], [41, '26', 8, 9.5], [42, '26,5', 8.5, 10], [43, '27,5', 9.5, 11], [44, '28', 10, 11.5]];
+const SIZE_TABLE = [[35, '22', 3.5, 5], [36, '22,5', 4, 5.5], [37, '23', 4.5, 6], [38, '24', 5.5, 7], [39, '24,5', 6.5, 8], [40, '25', 7, 8.5], [41, '26', 8, 9.5], [42, '26,5', 8.5, 10], [43, '27,5', 9.5, 11], [44, '28', 10, 11.5], [45, '29', 11, 12.5]];
 const pago = CFG.pago || 'Pago contraentrega', envio = CFG.envio || 'Envíos a toda Colombia', cambios = CFG.cambios || 'Cambios de talla';
 
 /* ---------- plantilla base ---------- */
@@ -123,7 +127,7 @@ function home() {
   const body = `
 <section class="hero">
   <div class="wrap">
-    <div class="hero__top mono"><span>Colección 2026</span><span>Colombia</span><span><b data-n="models">${P.length}</b> modelos</span><span>Tallas 36–44</span></div>
+    <div class="hero__top mono"><span>Colección 2026</span><span>Colombia</span><span><b data-n="models">${P.length}</b> modelos</span><span>Tallas ${range(ADULT)}${KIDS.length ? ' · Niños' : ''}</span></div>
     <div class="hero__grid">
       <h1 class="hero__title s-xl" data-split="manual"><span class="hl">Calzado</span><span class="hl hl--in">con <em>filo</em></span><span class="hl">volcánico.</span></h1>
       <figure class="hero__fig">
@@ -179,7 +183,7 @@ ${mq(BRANDS.map(b => b.name), 'data-duration="40"')}
 
 <section class="sec">
   <div class="wrap">
-    ${sh('Encuentra tu par', 'Tallas 36–44 EU', 'Para cada <em>paso</em>')}
+    ${sh('Encuentra tu par', `Tallas ${range(ADULT)} EU`, 'Para cada <em>paso</em>')}
     <div class="trio">
       <a class="tcard" href="hombre.html" data-cursor="Ver"><div class="tcard__img arch" data-img="clip">${img(R, 'j3-black-1')}</div><div class="tcard__row"><h3 class="s-md">Hombre</h3><p class="mono"><span data-count-gen="Hombre">${hm}</span> modelos</p></div></a>
       <a class="tcard" href="mujer.html" data-cursor="Ver"><div class="tcard__img arch" data-img="clip">${img(R, 'phoenix-1')}</div><div class="tcard__row"><h3 class="s-md">Mujer</h3><p class="mono"><span data-count-gen="Mujer">${mj}</span> modelos</p></div></a>
@@ -301,7 +305,7 @@ function product(p, i) {
     <p class="mono muted"><span data-cfg="pago">${esc(pago)}</span> · <span data-cfg="envio">${esc(envio)}</span></p>
     <div class="pdp__sizes">
       <div class="pdp__lab mono"><span>Talla (EU)</span><a href="${R}guia-de-tallas.html">Guía de tallas</a></div>
-      <div class="sizes" id="sizes" role="group" aria-label="Elige tu talla">${[36, 37, 38, 39, 40, 41, 42, 43, 44].map(t => `<button type="button" class="size" data-size="${t}" aria-pressed="false"${p.tallas.includes(t) && !p.agotado ? '' : ' disabled'}>${t}</button>`).join('')}</div>
+      <div class="sizes${sizeGrid(p).length > 10 ? ' sizes--2' : ''}" id="sizes" role="group" aria-label="Elige tu talla" style="--n:${sizeGrid(p).length > 10 ? Math.ceil(sizeGrid(p).length / 2) : sizeGrid(p).length}">${sizeGrid(p).map(t => `<button type="button" class="size" data-size="${t}" aria-pressed="false"${p.tallas.includes(t) && !p.agotado ? '' : ' disabled'}>${t}</button>`).join('')}</div>
       <p class="size-hint mono" id="sizeHint" role="alert"></p>
     </div>
     <div class="pdp__buy">
@@ -472,7 +476,7 @@ function helpPages() {
     doc('guia-de-tallas.html', 'Guía de <em>tallas</em>', 'Guía de tallas', 'Mide tu pie y busca tu talla EU en la tabla. Es una referencia aproximada: puede variar un poco según la marca.', [
       ['1', 'Cómo medir tu pie', `<div class="measure">${footSvg}<ul><li>Pon una hoja en el piso, contra la pared.</li><li>Párate sobre ella con el talón pegado a la pared.</li><li>Marca la punta de tu dedo más largo.</li><li>Mide en centímetros del borde de la hoja a la marca.</li><li>Mide los dos pies y usa la medida mayor.</li></ul></div>`],
       ['2', 'Tabla de equivalencias', `<div class="tablewrap"><table class="sizetable"><thead><tr><th>EU</th><th>Pie (cm)</th><th>US hombre</th><th>US mujer</th></tr></thead><tbody>${SIZE_TABLE.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`],
-      ['3', 'Consejos', '<ul><li>Mide tu pie al final del día, cuando está un poco más grande.</li><li>Si estás entre dos tallas, escríbenos antes de pedir.</li><li>Algunos modelos solo vienen en tallas de hombre (40–44) o de mujer (36–39). En cada página ves las tallas disponibles.</li></ul>'],
+      ['3', 'Consejos', '<ul><li>Mide tu pie al final del día, cuando está un poco más grande.</li><li>Si estás entre dos tallas, escríbenos antes de pedir.</li><li>Algunos modelos solo vienen en tallas de hombre (40 en adelante) o de mujer (36–39). En cada página ves las tallas disponibles.</li><li>Para niños manejamos tallas de la 24 a la 35: escríbenos la medida del pie y te ayudamos a elegir.</li></ul>'],
     ], waCallout('¿Dudas con tu talla? Te ayudamos.')),
     doc('preguntas-frecuentes.html', 'Preguntas <em>frecuentes</em>', 'Preguntas frecuentes', 'Lo que más nos preguntan. Si no encuentras tu respuesta, escríbenos.', [], `<div class="acc" data-reveal style="margin-top:clamp(30px,4vw,56px)">${[
       ['¿Cómo hago mi pedido?', 'Agrega tus pares a la bolsa, llena tus datos de envío y presiona “Enviar pedido”. Tu pedido queda registrado y se abre WhatsApp con el mensaje listo. <a href="como-comprar.html">Ver la guía</a>.'],
@@ -480,7 +484,7 @@ function helpPages() {
       ['¿Cuánto cuesta el envío?', cfg('envioDetalle', CFG.envioDetalle || '')],
       ['¿A qué ciudades envían?', `${cfg('envio', envio)}.`],
       ['¿Y si no me queda la talla?', cfg('cambiosDetalle', CFG.cambiosDetalle || '')],
-      ['¿Qué tallas manejan?', 'Tallas EU de la 36 a la 44. Algunos modelos solo vienen en tallas de hombre (40–44) o de mujer (36–39). Revisa la <a href="guia-de-tallas.html">guía de tallas</a>.'],
+      ['¿Qué tallas manejan?', 'Tallas EU de la 35 a la 45 para adultos y de la 24 a la 35 para niños. Algunos modelos solo vienen en tallas de hombre (40 en adelante) o de mujer (36–39). Revisa la <a href="guia-de-tallas.html">guía de tallas</a>.'],
       ['¿Tengo que pagar algo en la web?', 'No. En la web solo armas tu pedido; pagas cuando lo recibes.'],
       ['¿Cómo los contacto?', 'Por WhatsApp desde cualquier botón “Escríbenos” o desde la página de <a href="contacto.html">contacto</a>.'],
     ].map(([q, a]) => `<div class="acc__item"><button type="button" class="acc__btn">${q}<i></i></button><div class="acc__panel"><div><p>${a}</p></div></div></div>`).join('')}</div>${waCallout('¿No encontraste tu respuesta?')}`),
@@ -566,8 +570,9 @@ const pages = [
   home(),
   listing({ file: 'tienda.html', title: 'Tienda', h1: 'Tienda', h1html: 'Tien<em>da</em>', lead: `Los ${P.length} modelos de OBSIDIAN. Busca, filtra por marca, colección o precio y cambia entre galería e índice.`, crumbsArr: [['Tienda']], full: true, heroImg: `<img src="img/products/af1-white-1.jpg" alt="" width="520" height="650">`, seoTitle: 'Tienda | OBSIDIAN' }),
   listing({ file: 'novedades.html', title: 'Novedades', h1: 'Novedades', h1html: 'Nove<em>dades</em>', lead: 'Lo nuevo y lo que está marcando tendencia: lanzamientos, colaboraciones y ediciones especiales.', crumbsArr: [['Tienda', 'tienda.html'], ['Novedades']], preset: { nuevos: true }, heroImg: `<img src="img/products/tn-aqua-1.jpg" alt="" width="520" height="650">` }),
-  listing({ file: 'hombre.html', title: 'Hombre', h1: 'Hombre', h1html: 'Hom<em>bre</em>', lead: 'Modelos disponibles en tallas de hombre (40–44), incluidos los unisex.', crumbsArr: [['Tienda', 'tienda.html'], ['Hombre']], preset: { genero: 'Hombre' }, heroImg: `<img src="img/products/j3-black-1.jpg" alt="" width="520" height="650">` }),
-  listing({ file: 'mujer.html', title: 'Mujer', h1: 'Mujer', h1html: 'Mu<em>jer</em>', lead: 'Modelos disponibles en tallas de mujer (36–39), incluidos los unisex.', crumbsArr: [['Tienda', 'tienda.html'], ['Mujer']], preset: { genero: 'Mujer' }, heroImg: `<img src="img/products/phoenix-1.jpg" alt="" width="520" height="650">` }),
+  listing({ file: 'hombre.html', title: 'Hombre', h1: 'Hombre', h1html: 'Hom<em>bre</em>', lead: `Modelos disponibles en tallas de hombre (${genRange('Hombre')}), incluidos los unisex.`, crumbsArr: [['Tienda', 'tienda.html'], ['Hombre']], preset: { genero: 'Hombre' }, heroImg: `<img src="img/products/j3-black-1.jpg" alt="" width="520" height="650">` }),
+  listing({ file: 'mujer.html', title: 'Mujer', h1: 'Mujer', h1html: 'Mu<em>jer</em>', lead: `Modelos disponibles en tallas de mujer (${genRange('Mujer')}), incluidos los unisex.`, crumbsArr: [['Tienda', 'tienda.html'], ['Mujer']], preset: { genero: 'Mujer' }, heroImg: `<img src="img/products/phoenix-1.jpg" alt="" width="520" height="650">` }),
+  ...(KIDS.length ? [listing({ file: 'ninos.html', title: 'Niños', h1: 'Niños', h1html: 'Ni<em>ños</em>', lead: `Tenis para los más pequeños, en tallas de niño (${genRange('Niños')}).`, crumbsArr: [['Tienda', 'tienda.html'], ['Niños']], preset: { genero: 'Niños' }, heroImg: `<img src="${KIDS[0].imagenes[0]}" alt="" width="520" height="650">` })] : []),
   collectionsIndex(),
   ...COLS.map(c => listing({ file: `colecciones/${c.k}.html`, R: '../', title: c.name, h1: c.name, h1html: c.em, lead: esc(c.desc), crumbsArr: [['Colecciones', 'colecciones.html'], [c.name]], preset: { col: c.k }, section: 'collections',
     heroImg: `<img src="../img/products/${c.img}.jpg" alt="" width="520" height="650">`, seoTitle: `Colección ${c.name} | OBSIDIAN`,

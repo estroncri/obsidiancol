@@ -5,6 +5,7 @@
   <url><loc>https://obsidiancol.shop/novedades.html</loc></url>
   <url><loc>https://obsidiancol.shop/hombre.html</loc></url>
   <url><loc>https://obsidiancol.shop/mujer.html</loc></url>
+  <url><loc>https://obsidiancol.shop/ninos.html</loc></url>
   <url><loc>https://obsidiancol.shop/colecciones.html</loc></url>
   <url><loc>https://obsidiancol.shop/colecciones/blackout.html</loc></url>
   <url><loc>https://obsidiancol.shop/colecciones/icons.html</loc></url>
@@ -14,10 +15,16 @@
   <url><loc>https://obsidiancol.shop/marcas/nike.html</loc></url>
   <url><loc>https://obsidiancol.shop/marcas/adidas.html</loc></url>
   <url><loc>https://obsidiancol.shop/marcas/jordan.html</loc></url>
-  <url><loc>https://obsidiancol.shop/marcas/louis-vuitton.html</loc></url>
-  <url><loc>https://obsidiancol.shop/marcas/puma.html</loc></url>
+  <url><loc>https://obsidiancol.shop/marcas/vans.html</loc></url>
   <url><loc>https://obsidiancol.shop/marcas/asics.html</loc></url>
+  <url><loc>https://obsidiancol.shop/marcas/puma.html</loc></url>
+  <url><loc>https://obsidiancol.shop/marcas/le-coq-sportif.html</loc></url>
+  <url><loc>https://obsidiancol.shop/marcas/louis-vuitton.html</loc></url>
+  <url><loc>https://obsidiancol.shop/marcas/armani-exchange.html</loc></url>
+  <url><loc>https://obsidiancol.shop/marcas/reebok.html</loc></url>
   <url><loc>https://obsidiancol.shop/marcas/amiri.html</loc></url>
+  <url><loc>https://obsidiancol.shop/marcas/on.html</loc></url>
+  <url><loc>https://obsidiancol.shop/marcas/prada.html</loc></url>
   <url><loc>https://obsidiancol.shop/productos/nike-air-force-1-triple-white.html</loc></url>
   <url><loc>https://obsidiancol.shop/productos/adidas-samba-og.html</loc></url>
   <url><loc>https://obsidiancol.shop/productos/air-jordan-3-fragment.html</loc></url>
@@ -39,6 +46,66 @@
   <url><loc>https://obsidiancol.shop/productos/nike-air-force-1-mid.html</loc></url>
   <url><loc>https://obsidiancol.shop/productos/adidas-adizero.html</loc></url>
   <url><loc>https://obsidiancol.shop/productos/adidas-runfalcon.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/armani-exchange-ax-runner-negro-blanco.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/armani-exchange-ax-runner-negro-dorado.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/vans-knu-skool-negro-blanco.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/adidas-superstar-negro-dorado.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/le-coq-sportif-azul-marino.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/le-coq-sportif-negro-blanco.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/le-coq-sportif-blanco-negro.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/reebok-classic-blanco.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/reebok-classic-gris-azul.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/adidas-originals-blanco-gris.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/nike-sb-dunk-low-negro-blanco.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/nike-futsal-rosado.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/nike-futsal-plateado-rojo.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/nike-futsal-amarillo.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/nike-futsal-negro-dorado.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/nike-futsal-rojo.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/nike-futsal-naranja-azul.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/nike-air-force-1-triple-black.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/puma-court-blanco-gris.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/adidas-samba-negro-blanco.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/vans-knu-skool-negro.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/vans-old-skool-negro-blanco.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/vans-old-skool-beige-negro.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/vans-old-skool-blanco.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/vans-old-skool-azul-marino.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/nike-runner-crema-rosado.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/on-cloud-ninos-varios-colores.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/nike-running-negro-blanco.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/adidas-running-crema-aqua.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/air-jordan-1-low-beige-blanco.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/adidas-superstar-blanco-azul.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/nike-comfort-gris-naranja.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/air-jordan-1-low-gris-azul-claro.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/nike-chancla-menta.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/adidas-superstar-core-black.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/nike-dunk-low-blanco-cafe.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/nike-dunk-low-panda.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/air-jordan-4-black-cat.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/nike-sb-dunk-low-gris-suela-goma.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/adidas-superstar-blanco-negro.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/asics-gel-plateado.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/asics-gel-rosado-plateado.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/asics-gel-verde-plateado.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/nike-chanclas-varios-colores.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/air-jordan-3-blanco.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/air-jordan-3-blanco-gris-cemento.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/air-jordan-1-mid-rosado-crema.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/air-jordan-1-mid-negro-charol.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/air-jordan-3-negro-cemento.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/jordan-ninos-varios-colores.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/adidas-adilette-varios-colores.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/nike-ninos-varios-colores.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/nike-nocta-blanco.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/nike-nocta-negro.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/nike-offcourt-verde-azul.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/adidas-chanclas-originals-varios-colores.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/adidas-ninos-varios-colores.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/nike-shox-tl-negro-plateado.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/nike-shox-tl-blanco.html</loc></url>
+  <url><loc>https://obsidiancol.shop/productos/prada-chanclas-negro-naranja.html</loc></url>
   <url><loc>https://obsidiancol.shop/lookbook.html</loc></url>
   <url><loc>https://obsidiancol.shop/nosotros.html</loc></url>
   <url><loc>https://obsidiancol.shop/como-comprar.html</loc></url>

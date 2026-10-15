@@ -168,6 +168,7 @@
 
 /* costos */
 .pn-costnote { max-width: 70ch; color: var(--ink-2); margin-bottom: 1.4rem; }
+.pn-import { cursor: pointer; white-space: nowrap; }
 .pn-costs { border-top: 1px solid var(--ink); }
 .pn-cost { display: grid; grid-template-columns: minmax(0, 2.3fr) minmax(0, .8fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, .9fr) minmax(0, .9fr); gap: 14px; align-items: center; padding: .7rem .4rem; border-bottom: 1px solid var(--line); }
 .pn-cost--head { color: var(--muted); padding-block: .8rem; font-size: .66rem; }

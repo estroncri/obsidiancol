@@ -1,6 +1,6 @@
 # OBSIDIAN — tienda de sneakers + panel de pedidos
 
-Sitio estático (HTML, CSS y JS) con 53 páginas, publicado en **https://obsidiancol.shop**. Los pedidos se registran en tu hoja de Google Sheets **OBSIDIAN Pedidos**, los ves en tu panel privado y te llegan por WhatsApp al 319 255 9674. El cliente paga contraentrega.
+Sitio estático (HTML, CSS y JS) con 118 páginas, publicado en **https://obsidiancol.shop**. Los pedidos se registran en tu hoja de Google Sheets **OBSIDIAN Pedidos**, los ves en tu panel privado y te llegan por WhatsApp al 319 255 9674. El cliente paga contraentrega.
 
 ## Dónde está cada cosa
 
@@ -39,7 +39,7 @@ Abre la hoja **OBSIDIAN Pedidos** en Google Sheets (en el computador) → menú 
 
 Ejemplo con el Air Force 1: al proveedor le pagas **$90.000** (te cuesta), al vendedor se lo das en **$100.000** (precio vendedor) y él lo vende al precio que quiera, por ejemplo $140.000. Él gana $40.000 y tú $10.000.
 
-1. **Costos** (pestaña del panel): escribe en cada modelo cuánto te cuesta y cuál es el precio vendedor. Solo tú ves esta tabla; los modelos sin precio vendedor no aparecen para los vendedores.
+1. **Costos** (pestaña del panel): escribe en cada modelo cuánto te cuesta y cuál es el precio vendedor. Solo tú ves esta tabla; los modelos sin precio vendedor no aparecen para los vendedores. Si tienes la lista en un archivo CSV (columnas `producto;costo;precio_vendedor`), usa **Importar CSV** en esa misma pestaña y luego **Guardar costos**. Ese archivo nunca va en la carpeta del sitio: el repositorio es público.
 2. **Vendedores** (pestaña del panel): escribe nombre y celular. Se crea su código, su enlace (`https://obsidiancol.shop/?ref=juan`) y un PIN de 6 números. Mándale todo con el botón **Enviar acceso por WhatsApp**.
 3. El vendedor entra a **obsidiancol.shop/vendedores.html** con su código y PIN, pone su precio en cada modelo (nunca por debajo del precio vendedor) y ve sus ventas y lo que ha ganado.
 4. Quien entra por su enlace ve **los precios de ese vendedor** durante 30 días (`referidoDias` en `js/config.js`). Sin enlace, la tienda muestra el precio normal. El pedido llega con el vendedor en la hoja, en el panel y en el mensaje de WhatsApp.
