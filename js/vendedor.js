@@ -120,7 +120,7 @@
   }
 
   /* ---------- render ---------- */
-  function render() { renderTop(); renderPrices(); renderSales(); }
+  function render() { renderTop(); renderPrices(); renderSales(); renderPhotos(); }
   function renderTop() {
     const v = data.vendedor;
     $('#vName').textContent = String(v.nombre || v.codigo).split(' ')[0];
@@ -195,7 +195,7 @@
       if (!j.ok) { if (ERR[j.error]) { logout(ERR[j.error]); return; } throw new Error(j.error); }
       const fallaron = new Set(j.errores || []);
       ids.forEach(id => { if (!fallaron.has(id)) { data.precios[id] = dirty[id]; delete dirty[id]; } });
-      renderPrices(); renderTop();
+      renderPrices(); renderTop(); renderPhotos();
       toast(fallaron.size ? `${fallaron.size} ${fallaron.size === 1 ? 'precio no se guardó' : 'precios no se guardaron'}: revisa el mínimo` : 'Precios guardados: tus clientes ya los ven');
     } catch (e) {
       toast('No se pudo guardar. Intenta de nuevo.');
@@ -219,9 +219,126 @@
     $('#salesEmpty').hidden = peds.length > 0;
   }
 
+  /* ---------- fotos para compartir ---------- */
+  const NEW_TAGS = ['Nuevo', 'Tendencia', 'Edición especial', 'Colaboración'];
+  const FILTERS = [['todos', 'Todos'], ['nuevos', 'Nuevos'], ['Hombre', 'Hombre'], ['Mujer', 'Mujer'], ['Niños', 'Niños'], ['chanclas', 'Chanclas']];
+  const fullName = p => (norm(p.nombre).startsWith(norm(p.marca)) || /^air jordan/i.test(p.nombre)) ? p.nombre : `${p.marca} ${p.nombre}`;
+  const slug = s => norm(s).replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  const ph = { q: '', f: 'todos', sel: new Set(), pending: null };
+  const salePrice = p => { const mine = Number(data.precios[p.id]) || 0; return { v: mine || p.precio, mine: !!mine }; };
+  const productLink = p => `${SITE}/productos/${p.slug}.html?ref=${data.vendedor.codigo}`;
+  const tallas = p => (p.tallas.length ? `${p.tallas[0]} a la ${p.tallas[p.tallas.length - 1]}` : '');
+  const shareText = p => `👟 ${fullName(p)} · ${p.color}` +
+    (p.colores?.length ? `\nColores: ${p.colores.map(c => c.nombre).join(', ')}` : '') +
+    `\nTallas: ${tallas(p)}\nPrecio: ${fmt(salePrice(p).v)}\nPagas contraentrega · envíos a toda Colombia\nPídelo aquí 👉 ${productLink(p)}`;
+  const matches = p => {
+    if (p.agotado) return false;
+    const f = ph.f;
+    if (f === 'nuevos' && !NEW_TAGS.includes(p.etiqueta)) return false;
+    if (f === 'chanclas' && p.etiqueta !== 'Chanclas') return false;
+    if (['Hombre', 'Mujer'].includes(f) && !(p.genero === f || p.genero === 'Unisex')) return false;
+    if (f === 'Niños' && p.genero !== 'Niños') return false;
+    const terms = norm(ph.q).trim().split(/\s+/).filter(Boolean);
+    const h = norm(`${fullName(p)} ${p.marca} ${p.color} ${(p.colores || []).map(c => c.nombre).join(' ')}`);
+    return terms.every(t => h.includes(t));
+  };
+  const visible = () => PRODUCTS.filter(matches);
+  function phCard(p) {
+    const s = salePrice(p), on = ph.sel.has(p.id);
+    return `<article class="ph${on ? ' is-sel' : ''}" data-id="${esc(p.id)}">
+      <label class="ph__pick"><input type="checkbox"${on ? ' checked' : ''} aria-label="Elegir ${esc(fullName(p))}"></label>
+      ${p.imagenes.length > 1 ? `<span class="ph__n mono">${p.imagenes.length} fotos</span>` : ''}
+      <div class="ph__img"><img src="${esc(p.imagenes[0])}" alt="${esc(fullName(p))}" loading="lazy" width="520" height="650"></div>
+      <div class="ph__body">
+        <p class="mono muted">${esc(p.marca)}</p>
+        <p class="serif ph__name">${esc(p.nombre)}</p>
+        <p class="mono muted">${esc(p.colores?.length ? `${p.colores.length} colores` : p.color)} · ${tallas(p)}</p>
+        <p class="ph__price">${fmt(s.v)} <small>${s.mine ? 'tu precio' : 'precio tienda'}</small></p>
+        <div class="ph__btns"><button class="btn btn--sm" type="button" data-act="share">Compartir</button><button class="chip mono" type="button" data-act="dl">Fotos</button><button class="chip mono" type="button" data-act="copy">Texto</button></div>
+      </div>
+    </article>`;
+  }
+  function renderPhotos() {
+    $('#phChips').innerHTML = FILTERS.map(([k, l]) => `<button type="button" class="chip mono${ph.f === k ? ' is-on' : ''}" data-f="${k}" aria-pressed="${ph.f === k}">${l}</button>`).join('');
+    const list = visible();
+    $('#phGrid').innerHTML = list.map(phCard).join('') || '<div class="empty"><p class="s-md">Sin <em>resultados</em></p><p>Prueba con otra búsqueda.</p></div>';
+    $('#phCount').textContent = `${list.length} ${list.length === 1 ? 'modelo' : 'modelos'}`;
+    phBar();
+  }
+  function phBar() {
+    const n = ph.sel.size;
+    $('#phBar').hidden = !n;
+    $('#phSel').textContent = `${n} ${n === 1 ? 'elegido' : 'elegidos'}${n > 20 ? ' · se comparten de a 20' : ''}`;
+  }
+  const blobs = new Map();
+  const getBlob = src => { if (!blobs.has(src)) blobs.set(src, fetch(src).then(r => { if (!r.ok) throw new Error(r.status); return r.blob(); })); return blobs.get(src); };
+  const fileName = (p, i) => `${slug(`${fullName(p)} ${p.color}`)}${i ? '-' + (i + 1) : ''}.jpg`;
+  async function payload(list, todas) {
+    const pairs = todas ? list[0].imagenes.map((src, i) => [list[0], src, i]) : list.map(p => [p, p.imagenes[0], 0]);
+    const files = await Promise.all(pairs.slice(0, 20).map(async ([p, src, i]) => { const b = await getBlob(src); return new File([b], fileName(p, i), { type: b.type || 'image/jpeg' }); }));
+    return { files, text: list.slice(0, 20).map(shareText).join('\n\n') };
+  }
+  function downloadFiles(files) {
+    files.forEach((f, i) => setTimeout(() => {
+      const a = document.createElement('a'); a.href = URL.createObjectURL(f); a.download = f.name;
+      document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+    }, i * 350));
+  }
+  async function share(list, todas, key) {
+    try {
+      const pl = ph.pending && ph.pending.key === key ? ph.pending : { ...(await payload(list, todas)), key };
+      if (navigator.canShare && navigator.share && navigator.canShare({ files: pl.files })) {
+        try { await navigator.share({ files: pl.files, text: pl.text }); ph.pending = null; }
+        catch (e) {
+          if (e.name === 'NotAllowedError') { ph.pending = pl; toast('Listo: toca Compartir otra vez'); }
+          else if (e.name !== 'AbortError') throw e;
+        }
+      } else {
+        downloadFiles(pl.files);
+        copyText(pl.text, `${pl.files.length === 1 ? 'Foto descargada' : 'Fotos descargadas'} y texto copiado: pégalo en WhatsApp`);
+      }
+    } catch (e) { toast('No se pudo preparar la foto. Revisa tu conexión.'); }
+  }
+  let zipLib = null;
+  const loadZip = () => zipLib || (zipLib = new Promise((ok, bad) => {
+    if (window.JSZip) return ok(window.JSZip);
+    const s = document.createElement('script'); s.src = 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';
+    s.onload = () => ok(window.JSZip); s.onerror = () => { zipLib = null; bad(new Error('zip')); }; document.head.appendChild(s);
+  }));
+  async function zip(list, btn) {
+    if (!list.length) return;
+    const label = btn.innerHTML; btn.disabled = true;
+    try {
+      const JSZip = await loadZip(), z = new JSZip();
+      let done = 0;
+      for (const p of list) {
+        z.file(`${slug(p.marca)}/${fileName(p, 0)}`, await getBlob(p.imagenes[0]));
+        btn.textContent = `Preparando ${++done} de ${list.length}…`;
+      }
+      z.file('precios-y-enlaces.txt', list.map(shareText).join('\n\n'));
+      const out = await z.generateAsync({ type: 'blob' });
+      downloadFiles([new File([out], `obsidian-fotos-${data.vendedor.codigo}.zip`, { type: 'application/zip' })]);
+      toast('ZIP descargado: adentro van las fotos y un archivo con tus precios y enlaces');
+    } catch (e) { toast('No se pudo armar el ZIP. Intenta de nuevo.'); }
+    finally { btn.disabled = false; btn.innerHTML = label; }
+  }
+  function onPhotoClick(e) {
+    const chip = e.target.closest('[data-f]');
+    if (chip) { ph.f = chip.dataset.f; renderPhotos(); return; }
+    const card = e.target.closest('.ph'); if (!card) return;
+    const p = PRODUCTS.find(x => x.id === card.dataset.id);
+    const pick = e.target.closest('.ph__pick input');
+    if (pick) { if (pick.checked) ph.sel.add(p.id); else ph.sel.delete(p.id); card.classList.toggle('is-sel', pick.checked); phBar(); return; }
+    const act = e.target.closest('[data-act]')?.dataset.act;
+    if (act === 'share') share([p], true, 'uno:' + p.id);
+    else if (act === 'dl') payload([p], true).then(pl => { downloadFiles(pl.files); toast(`${pl.files.length === 1 ? 'Foto descargada' : pl.files.length + ' fotos descargadas'}`); }).catch(() => toast('No se pudieron descargar las fotos.'));
+    else if (act === 'copy') copyText(shareText(p), 'Texto copiado con tu precio y tu enlace');
+  }
+  const selected = () => PRODUCTS.filter(p => ph.sel.has(p.id));
+
   function setTab(t) {
     $$('.pn-tabs [data-tab]').forEach(b => { const on = b.dataset.tab === t; b.classList.toggle('is-on', on); b.setAttribute('aria-selected', on); });
-    $('#tabPrecios').hidden = t !== 'precios'; $('#tabVentas').hidden = t !== 'ventas';
+    $('#tabFotos').hidden = t !== 'fotos'; $('#tabPrecios').hidden = t !== 'precios'; $('#tabVentas').hidden = t !== 'ventas';
   }
 
   /* ---------- eventos ---------- */
@@ -235,6 +352,12 @@
   $('#copyLink').addEventListener('click', () => copyText($('#vLink').value, 'Enlace copiado'));
   $('#priceList').addEventListener('input', onPriceInput);
   $('#priceSave').addEventListener('click', savePrices);
+  $('#tabFotos').addEventListener('click', onPhotoClick);
+  $('#phQ').addEventListener('input', e => { ph.q = e.target.value; renderPhotos(); });
+  $('#phShare').addEventListener('click', () => { const l = selected(); share(l, false, 'sel:' + l.map(p => p.id).join(',')); });
+  $('#phZip').addEventListener('click', e => zip(selected(), e.currentTarget));
+  $('#phZipAll').addEventListener('click', e => zip(visible(), e.currentTarget));
+  $('#phClear').addEventListener('click', () => { ph.sel.clear(); renderPhotos(); });
   document.addEventListener('click', e => { const tb = e.target.closest('[data-tab]'); if (tb) setTab(tb.dataset.tab); });
   addEventListener('beforeunload', e => { if (Object.keys(dirty).length) { e.preventDefault(); e.returnValue = ''; } });
   document.addEventListener('visibilitychange', () => { if (!document.hidden && cred) load(true); });

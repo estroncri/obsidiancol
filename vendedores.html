@@ -67,11 +67,24 @@
     </section>
 
     <div class="pn-tabs mono" role="tablist" aria-label="Secciones">
-      <button type="button" role="tab" class="is-on" data-tab="precios" aria-selected="true">Mis precios</button>
+      <button type="button" role="tab" class="is-on" data-tab="fotos" aria-selected="true">Fotos para compartir</button>
+      <button type="button" role="tab" data-tab="precios" aria-selected="false">Mis precios</button>
       <button type="button" role="tab" data-tab="ventas" aria-selected="false">Mis ventas <small id="tabVentasN"></small></button>
     </div>
 
-    <div id="tabPrecios">
+    <div id="tabFotos">
+      <p class="pn-costnote">Comparte cualquier par con su foto, <b>tu precio</b> y <b>tu enlace</b>: si el cliente compra desde ahí, la venta queda a tu nombre. En el celular, <b>Compartir</b> te deja mandarlo directo a WhatsApp o subirlo a tu estado.</p>
+      <div class="ph-tools">
+        <label class="lsearch ph-search" for="phQ"><span class="sr-only">Buscar</span><input id="phQ" type="search" placeholder="Buscar modelo, marca o color" autocomplete="off"></label>
+        <div class="pn-chips" id="phChips" role="group" aria-label="Filtrar"></div>
+      </div>
+      <p class="mono muted ph-count" id="phCount"></p>
+      <div class="ph-grid" id="phGrid"></div>
+      <div class="ph-all"><button class="btn btn--line btn--sm" type="button" id="phZipAll">Descargar las fotos que ves (ZIP) <span class="btn__ico"></span></button></div>
+      <div class="pn-savebar ph-bar" id="phBar" hidden><p class="mono" id="phSel"></p><div class="ph-bar__btns"><button class="btn btn--sm" type="button" id="phShare">Compartir</button><button class="btn btn--line btn--sm" type="button" id="phZip">Descargar</button><button class="chip mono" type="button" id="phClear">Quitar</button></div></div>
+    </div>
+
+    <div id="tabPrecios" hidden>
       <p class="pn-costnote"><b>Te cuesta</b> es lo que le pagas a OBSIDIAN por el par. <b>Tu precio</b> es lo que paga tu cliente: la diferencia es tu ganancia. Si lo dejas vacío, tu cliente ve el precio de la tienda.</p>
       <div class="pn-costs" id="priceList" role="table" aria-label="Tus precios"></div>
       <p class="mono muted" id="priceNote" style="margin-top:1rem"></p>
