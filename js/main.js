@@ -49,7 +49,9 @@
   (() => {
     let incoming = '';
     try { incoming = cleanRef(new URLSearchParams(location.search).get('ref')); } catch (e) { incoming = ''; }
-    if (incoming) store.set(REF_KEY, { c: incoming, t: Date.now() });
+    /* ?ref=tienda borra el enlace guardado y vuelve a los precios de la tienda */
+    if (incoming === 'tienda') { try { localStorage.removeItem(REF_KEY); localStorage.removeItem('obs-refp'); } catch (e) { /* bloqueado */ } }
+    else if (incoming) store.set(REF_KEY, { c: incoming, t: Date.now() });
   })();
   const getRef = () => { const o = store.get(REF_KEY, null); return o && o.c && Date.now() - o.t < REF_DAYS * 864e5 ? o.c : ''; };
   const refLine = () => (getRef() ? `\nVendedor: ${getRef()}` : '');
