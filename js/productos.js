@@ -49,7 +49,7 @@ window.OBSIDIAN_PRODUCTS = [
     "marca": "Puma",
     "nombre": "Suede XL",
     "color": "Negro · Marfil",
-    "precio": 120000,
+    "precio": 130000,
     "etiqueta": "Tendencia",
     "descripcion": "La Suede de siempre, versión XL: gamuza negra, cordones anchos y suela gruesa color marfil. Estilo skater de los 90.",
     "tallas": [36, 37, 38, 39, 40, 41, 42, 43, 44],
