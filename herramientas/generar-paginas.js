@@ -66,6 +66,10 @@ const HELP = [
 ];
 const SIZE_TABLE = [[35, '22', 3.5, 5], [36, '22,5', 4, 5.5], [37, '23', 4.5, 6], [38, '24', 5.5, 7], [39, '24,5', 6.5, 8], [40, '25', 7, 8.5], [41, '26', 8, 9.5], [42, '26,5', 8.5, 10], [43, '27,5', 9.5, 11], [44, '28', 10, 11.5], [45, '29', 11, 12.5]];
 const pago = CFG.pago || 'Pago contraentrega', envio = CFG.envio || 'Envíos a toda Colombia', cambios = CFG.cambios || 'Cambios de talla';
+/* forma de pago: solo los modelos de CFG.contraentrega se pagan al recibir; el resto, por adelantado */
+const COD = (CFG.contraentrega || []).map(norm), isCOD = p => COD.some(k => norm(p.nombre).includes(k));
+const payFact = b => { const c = b.filter(isCOD).length; return c && c < b.length ? '<dt class="mono">Contraentrega</dt><dd>Air Force 1</dd>' : `<dt class="mono">Pago</dt><dd>${c ? 'Contraentrega' : 'Anticipado'}</dd>`; };
+const waNum = String(CFG.whatsapp || '').replace(/^57/, '').replace(/(\d{3})(\d{3})(\d{4})/, '$1 $2 $3');
 
 /* ---------- plantilla base ---------- */
 const FONTS = 'https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap';
@@ -115,7 +119,7 @@ const arrowBtn = '<span class="btn__ico"></span>';
 const img = (R, s, alt = '', extra = '') => `<img src="${R}img/products/${s}.jpg" alt="${esc(alt)}" loading="lazy" width="520" height="650"${extra}>`;
 const pImg = (R, p, i = 0, extra = '') => `<img src="${R}${p.imagenes[i] || p.imagenes[0]}" alt="${esc(fullName(p))}" loading="lazy" width="520" height="650"${extra}>`;
 const crumbs = (R, ...items) => `<nav class="crumbs mono" aria-label="Ruta"><a href="${R}index.html">Inicio</a>${items.map(([l, h]) => `<span>/</span>${h ? `<a href="${R}${h}">${esc(l)}</a>` : `<span>${esc(l)}</span>`}`).join('')}</nav>`;
-const REELS = [['cual-te-llevas', '¿Cuál te llevas?', '5 modelos'], ['uno-o-dos', '¿1 o 2?', '3 duelos'], ['como-pedir', 'Cómo pedir', 'Pagas al recibir']];
+const REELS = [['cual-te-llevas', '¿Cuál te llevas?', '5 modelos'], ['uno-o-dos', '¿1 o 2?', '3 duelos'], ['como-pedir', 'Cómo pedir', 'Paso a paso']];
 const sh = (left, right, h2, link) => `<div class="sh"><div class="sh__k mono"><span>${left}</span><span>${right}</span></div>${h2 ? `<h2 class="s-lg" data-split>${h2}</h2>` : ''}${link || ''}</div>`;
 const mq = (items, attrs = '') => `<div class="mq" ${attrs} aria-hidden="true"><div class="mq__track"><div class="mq__group">${items.map(t => `<span class="mq__item">${esc(t)}<i></i></span>`).join('')}</div></div></div>`;
 
@@ -141,7 +145,7 @@ function home() {
         <figcaption class="hero__cap mono"><span id="heroCap"></span><span id="heroCapP"></span></figcaption>
       </figure>
       <div class="hero__side">
-        <p class="lead">Sneakers seleccionados de Nike, Jordan, Adidas, Louis Vuitton y más. Pides por WhatsApp y <strong>pagas cuando los recibes</strong>.</p>
+        <p class="lead">Sneakers seleccionados de Nike, Jordan, Adidas, Louis Vuitton y más. Pides por WhatsApp y te llegan a toda Colombia. <strong>Los Air Force 1 los pagas al recibir</strong>.</p>
         <div class="hero__ctas"><a class="btn" href="tienda.html" data-magnetic=".15">Ver la tienda ${arrowBtn}</a><a class="btn btn--line" href="novedades.html">Novedades</a></div>
       </div>
       <a class="cbtn hero__cbtn" href="tienda.html" data-magnetic=".25" aria-label="Comprar ahora">
@@ -232,7 +236,7 @@ ${mq(BRANDS.map(b => b.name), 'data-duration="40"')}
       <div class="st4"><p class="serif">1</p><h3>Elige</h3><p>Entra a la página de cada modelo, mira todas sus fotos y escoge tu talla.</p></div>
       <div class="st4"><p class="serif">2</p><h3>Pide</h3><p>Llena tus datos de envío en la bolsa. El pedido nos llega por WhatsApp.</p></div>
       <div class="st4"><p class="serif">3</p><h3>Confirmamos</h3><p>Te escribimos con la disponibilidad y el costo del envío a tu ciudad.</p></div>
-      <div class="st4"><p class="serif">4</p><h3>Recibe y paga</h3><p>Te llega a la puerta y pagas en ese momento.</p></div>
+      <div class="st4"><p class="serif">4</p><h3>Paga y recibe</h3><p>Los Air Force 1 los pagas al recibir. Los demás modelos, por transferencia antes del envío.</p></div>
     </div>
     <div class="helplinks mono">${HELP.slice(1, 6).map(([h, l]) => `<a class="hlink" href="${h}">${l} ${ico('arrow')}</a>`).join('')}</div>
   </div>
@@ -259,7 +263,7 @@ function listing({ file, R = '', title, h1, h1html, lead, crumbsArr, preset = {}
       ${crumbs(R, ...crumbsArr)}
       <h1 class="s-xl lhero__title" data-split>${h1html || esc(h1)}</h1>
       <p class="lead" data-reveal>${lead}</p>
-      <dl class="facts" data-stagger><div><dt class="mono">Modelos</dt><dd><span data-lcount>${base.length}</span></dd></div><div><dt class="mono">Tallas</dt><dd>${range(base)}</dd></div><div><dt class="mono">Desde</dt><dd>${base.length ? fmt(minPrice(base)) : '—'}</dd></div><div><dt class="mono">Pago</dt><dd>Contraentrega</dd></div></dl>
+      <dl class="facts" data-stagger><div><dt class="mono">Modelos</dt><dd><span data-lcount>${base.length}</span></dd></div><div><dt class="mono">Tallas</dt><dd>${range(base)}</dd></div><div><dt class="mono">Desde</dt><dd>${base.length ? fmt(minPrice(base)) : '—'}</dd></div><div>${payFact(base)}</div></dl>
     </div>
     <div class="lhero__arch arch" data-img>${heroImg}</div>
   </div>
@@ -320,7 +324,7 @@ function product(p, i) {
     <h1 class="s-lg pdp__name" data-split="manual">${esc(p.nombre)}</h1>
     <p class="pdp__color">${esc(p.color)} · ${gen} · Tallas ${range([p])}</p>
     <p class="pdp__price" data-price>${fmt(p.precio)}</p>
-    <p class="mono muted"><span data-cfg="pago">${esc(pago)}</span> · <span data-cfg="envio">${esc(envio)}</span></p>
+    <p class="mono muted">${isCOD(p) ? 'Pago contraentrega' : 'Pago anticipado por transferencia'} · <span data-cfg="envio">${esc(envio)}</span></p>
     ${colorBlock(R, p)}
     <div class="pdp__sizes">
       <div class="pdp__lab mono"><span>Talla (EU)</span><a href="${R}guia-de-tallas.html">Guía de tallas</a></div>
@@ -427,7 +431,7 @@ function about() {
   <div class="doc__body" style="margin-inline:auto">
     <div class="dsec"><p class="dsec__n">I</p><div><h2>El nombre</h2><p>La obsidiana es vidrio volcánico: nace del fuego, se enfría en segundos y queda negra, brillante y afilada.</p><p>Esa es la idea detrás de OBSIDIAN: pares con carácter, elegidos uno por uno, para quienes quieren que sus tenis hablen antes que ellos.</p></div></div>
     <div class="dsec"><p class="dsec__n">II</p><div><h2>Cómo elegimos</h2><p>Seleccionamos los modelos que marcan tendencia, de los clásicos de siempre a las piezas más buscadas. Cada uno tiene su propia página con todas sus fotos, sus tallas y su precio.</p></div></div>
-    <div class="dsec"><p class="dsec__n">III</p><div><h2>Cómo vendemos</h2><p>Sin pagos por adelantado. Haces tu pedido en la web, nos llega por WhatsApp, te confirmamos disponibilidad y envío, y pagas cuando recibes. <a href="como-comprar.html">Ver cómo comprar</a>.</p></div></div>
+    <div class="dsec"><p class="dsec__n">III</p><div><h2>Cómo vendemos</h2><p>Haces tu pedido en la web, nos llega por WhatsApp y te confirmamos disponibilidad y envío. Los Air Force 1 los pagas cuando los recibes; los demás modelos, por transferencia antes del despacho. <a href="como-comprar.html">Ver cómo comprar</a>.</p></div></div>
   </div>
 </section>
 ${mq(['Curaduría', 'Confianza', 'Cercanía', 'Actitud'], 'data-duration="34"')}
@@ -436,7 +440,7 @@ ${mq(['Curaduría', 'Confianza', 'Cercanía', 'Actitud'], 'data-duration="34"')}
     ${sh('Lo que nos mueve', '4 valores', 'Nuestros <em>valores</em>')}
     <div class="steps4" data-stagger>
       <div class="st4"><p class="serif">C</p><h3>Curaduría</h3><p>Solo entra al catálogo lo que nosotros mismos usaríamos.</p></div>
-      <div class="st4"><p class="serif">C</p><h3>Confianza</h3><p>${esc(pago)}: pagas cuando tienes tus tenis en la mano.</p></div>
+      <div class="st4"><p class="serif">C</p><h3>Confianza</h3><p>Los Air Force 1 los pagas cuando los tienes en la mano. En los demás modelos pagas solo a la cuenta que te enviamos desde nuestro WhatsApp.</p></div>
       <div class="st4"><p class="serif">C</p><h3>Cercanía</h3><p>Hablas con una persona real por WhatsApp, antes y después de tu compra.</p></div>
       <div class="st4"><p class="serif">A</p><h3>Actitud</h3><p>Estética oscura, limpia y pares con presencia.</p></div>
     </div>
@@ -468,12 +472,12 @@ const cfg = (k, v) => `<span data-cfg="${k}">${esc(v)}</span>`;
 function helpPages() {
   const footSvg = `<svg viewBox="0 0 200 320" role="img" aria-label="Cómo medir el pie: del talón a la punta del dedo más largo"><rect x="20" y="10" width="160" height="300" fill="none" stroke="currentColor" stroke-opacity=".25"/><path d="M100 290c-34 0-50-30-50-80 0-40 6-70 12-100 6-34 12-70 40-70 26 0 34 30 36 64 2 30 10 60 10 106 0 50-14 80-48 80Z" fill="none" stroke="currentColor" stroke-width="2"/><line x1="160" y1="30" x2="160" y2="292" stroke="#ff4f1f" stroke-width="2"/><path d="M154 38l6-8 6 8M154 284l6 8 6-8" fill="none" stroke="#ff4f1f" stroke-width="2"/><text x="146" y="166" font-family="JetBrains Mono, monospace" font-size="11" fill="currentColor" text-anchor="end" transform="rotate(-90 146 166)">TALÓN → PUNTA</text></svg>`;
   return [
-    doc('como-comprar.html', 'Cómo <em>comprar</em>', 'Cómo comprar', 'Comprar en OBSIDIAN toma unos minutos y no pagas nada por adelantado.', [
+    doc('como-comprar.html', 'Cómo <em>comprar</em>', 'Cómo comprar', 'Comprar en OBSIDIAN toma unos minutos. Los Air Force 1 se pagan al recibir y los demás modelos, por transferencia.', [
       ['1', 'Elige tu par', '<p>Explora la <a href="tienda.html">tienda</a>, filtra por marca, colección o género y entra a la página de cada modelo para ver todas sus fotos.</p>'],
       ['2', 'Escoge tu talla', '<p>Selecciona tu talla en formato EU. Si dudas, revisa la <a href="guia-de-tallas.html">guía de tallas</a> o escríbenos antes de pedir.</p>'],
       ['3', 'Completa tus datos', '<p>En tu bolsa escribes nombre, celular, ciudad y dirección. En la web nunca te pedimos datos de tarjetas ni de cuentas bancarias.</p>'],
       ['4', 'Envía el pedido', '<p>Tu pedido queda registrado y se arma un mensaje de WhatsApp con todo el detalle. Lo envías y te respondemos con disponibilidad y costo de envío.</p>'],
-      ['5', 'Recibe y paga', `<p>${cfg('pagoDetalle', CFG.pagoDetalle || 'Pagas cuando recibes tus tenis.')}</p>`],
+      ['5', 'Paga y recibe', `<p>${cfg('pagoDetalle', CFG.pagoDetalle || 'Pagas cuando recibes tus tenis.')}</p>`],
     ], waCallout()),
     doc('envios.html', 'En<em>víos</em>', 'Envíos', `${esc(envio)}. Te confirmamos el costo y el tiempo antes de despachar.`, [
       ['1', 'Cobertura', `<p>${cfg('envio', envio)}.</p>`],
@@ -482,10 +486,11 @@ function helpPages() {
       ['4', 'Seguimiento', '<p>Cuando despachamos tu pedido te avisamos por WhatsApp.</p>'],
       ['5', 'Tu dirección', '<p>Revisa que tu dirección, barrio y celular estén completos. Así evitamos retrasos en la entrega.</p>'],
     ], waCallout('¿Quieres saber cuánto cuesta el envío a tu ciudad?')),
-    doc('pagos.html', 'Pa<em>gos</em>', 'Pagos', `${esc(pago)}: pagas cuando recibes tu pedido.`, [
-      ['1', 'Pago contraentrega', `<p>${cfg('pagoDetalle', CFG.pagoDetalle || 'Pagas cuando recibes tus tenis.')}</p>`],
-      ['2', 'Cuánto pagas', '<p>El valor de tus productos más el envío. Te confirmamos el total por WhatsApp antes de despachar, así no hay sorpresas.</p>'],
-      ['3', 'Sin datos bancarios en la web', '<p>En esta página nunca te pedimos números de tarjeta, claves ni datos de cuentas bancarias.</p>'],
+    doc('pagos.html', 'Pa<em>gos</em>', 'Pagos', 'Los Air Force 1 se pagan contraentrega. Los demás modelos se pagan por adelantado, por transferencia.', [
+      ['1', 'Air Force 1: contraentrega', '<p>Pagas en efectivo cuando recibes tus tenis.</p>'],
+      ['2', 'Demás modelos: pago anticipado', `<p>Pagas por transferencia antes del envío. Te mandamos los datos de pago por WhatsApp${waNum ? ` desde nuestro número oficial, ${waNum}` : ''}: paga solo a esa cuenta y mándanos el comprobante. Despachamos apenas confirmamos el pago.</p>`],
+      ['3', 'Cuánto pagas', '<p>El valor de tus productos más el envío. Te confirmamos el total por WhatsApp antes de despachar, así no hay sorpresas.</p>'],
+      ['4', 'Sin datos bancarios en la web', '<p>En esta página nunca te pedimos números de tarjeta, claves ni datos de cuentas bancarias.</p>'],
     ], waCallout('¿Tienes una duda sobre el pago?')),
     doc('cambios.html', 'Cam<em>bios</em>', 'Cambios', `${esc(cambios)}. Si no te quedó, te ayudamos.`, [
       ['1', 'Cambios de talla', `<p>${cfg('cambiosDetalle', CFG.cambiosDetalle || 'Escríbenos y te ayudamos con el cambio.')}</p>`],
@@ -504,7 +509,7 @@ function helpPages() {
       ['¿A qué ciudades envían?', `${cfg('envio', envio)}.`],
       ['¿Y si no me queda la talla?', cfg('cambiosDetalle', CFG.cambiosDetalle || '')],
       ['¿Qué tallas manejan?', 'Tallas EU de la 35 a la 45 para adultos y de la 24 a la 35 para niños. Algunos modelos solo vienen en tallas de hombre (40 en adelante) o de mujer (36–39). Revisa la <a href="guia-de-tallas.html">guía de tallas</a>.'],
-      ['¿Tengo que pagar algo en la web?', 'No. En la web solo armas tu pedido; pagas cuando lo recibes.'],
+      ['¿Tengo que pagar algo en la web?', 'No. En la web solo armas tu pedido. Los Air Force 1 los pagas al recibir; para los demás modelos te mandamos los datos de pago por WhatsApp.'],
       ['¿Cómo los contacto?', 'Por WhatsApp desde cualquier botón “Escríbenos” o desde la página de <a href="contacto.html">contacto</a>.'],
     ].map(([q, a]) => `<div class="acc__item"><button type="button" class="acc__btn">${q}<i></i></button><div class="acc__panel"><div><p>${a}</p></div></div></div>`).join('')}</div>${waCallout('¿No encontraste tu respuesta?')}`),
     doc('contacto.html', 'Con<em>tacto</em>', 'Contacto', '¿Dudas con tu talla, un modelo o tu pedido? Escríbenos y te respondemos por WhatsApp.', [], `
@@ -548,7 +553,7 @@ function cartPage() {
     <p class="mono muted">OBSIDIAN · ${esc(CFG.dominio || 'obsidiancol.shop')}</p>
     <div class="rrows mono"><div><span>Productos</span><span id="sumItems"></span></div><div><span>Subtotal</span><span id="sumSub"></span></div><div><span>Envío</span><span>Se confirma por WhatsApp</span></div><div id="sumRefRow" hidden><span>Vendedor</span><span id="sumRef"></span></div></div>
     <div class="tot"><span class="mono">Total productos</span><b id="sumTotal"></b></div>
-    <div class="paynote">${ico('cash')}<div><strong data-cfg="pago">${esc(pago)}</strong><br><span data-cfg="pagoDetalle">${esc(CFG.pagoDetalle || '')}</span></div></div>
+    <div class="paynote">${ico('cash')}<div><strong id="payTitle">${esc(pago)}</strong><br><span id="payDetail">${esc(CFG.pagoDetalle || '')}</span></div></div>
     <form class="form" id="checkout" novalidate>
       <div class="field full"><label class="mono" for="oNombre">Nombre completo</label><input id="oNombre" name="nombre" autocomplete="name" required><span class="err"></span></div>
       <div class="field"><label class="mono" for="oCel">Celular</label><input id="oCel" name="celular" type="tel" inputmode="tel" autocomplete="tel" required><span class="err"></span></div>
@@ -568,7 +573,7 @@ function cartPage() {
     </div>
   </aside>
 </section>`;
-  return { file: 'carrito.html', key: 'cart', section: 'cart', title: 'Tu bolsa | OBSIDIAN', h1: 'Tu bolsa', desc: 'Tu bolsa OBSIDIAN. Finaliza tu pedido y paga contraentrega.', body, robots: 'noindex' };
+  return { file: 'carrito.html', key: 'cart', section: 'cart', title: 'Tu bolsa | OBSIDIAN', h1: 'Tu bolsa', desc: 'Tu bolsa OBSIDIAN. Finaliza tu pedido por WhatsApp.', body, robots: 'noindex' };
 }
 
 /* ======================= 404 ======================= */

@@ -128,7 +128,7 @@
     const l = link();
     $('#vLink').value = l;
     $('#seeStore').href = l;
-    const msg = `Mira los tenis de OBSIDIAN 👟 Pide aquí y te llegan a tu casa, pagas contraentrega:\n${l}`;
+    const msg = `Mira los tenis de OBSIDIAN 👟 Pide aquí y te llegan a tu casa (los Air Force 1 los pagas al recibir):\n${l}`;
     $('#shareWa').href = `https://wa.me/?text=${encodeURIComponent(msg)}`;
     $('#shareNative').hidden = !navigator.share;
     $('#shareNative').onclick = () => navigator.share({ title: 'OBSIDIAN', text: 'Mira los tenis de OBSIDIAN 👟', url: l }).catch(() => {});
@@ -225,12 +225,13 @@
   const fullName = p => (norm(p.nombre).startsWith(norm(p.marca)) || /^air jordan/i.test(p.nombre)) ? p.nombre : `${p.marca} ${p.nombre}`;
   const slug = s => norm(s).replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
   const ph = { q: '', f: 'todos', sel: new Set(), pending: null };
+  const COD = (CFG.contraentrega || []).map(norm), isCOD = p => COD.some(k => norm(p.nombre).includes(k));
   const salePrice = p => { const mine = Number(data.precios[p.id]) || 0; return { v: mine || p.precio, mine: !!mine }; };
   const productLink = p => `${SITE}/productos/${p.slug}.html?ref=${data.vendedor.codigo}`;
   const tallas = p => (p.tallas.length ? `${p.tallas[0]} a la ${p.tallas[p.tallas.length - 1]}` : '');
   const shareText = p => `👟 ${fullName(p)} · ${p.color}` +
     (p.colores?.length ? `\nColores: ${p.colores.map(c => c.nombre).join(', ')}` : '') +
-    `\nTallas: ${tallas(p)}\nPrecio: ${fmt(salePrice(p).v)}\nPagas contraentrega · envíos a toda Colombia\nPídelo aquí 👉 ${productLink(p)}`;
+    `\nTallas: ${tallas(p)}\nPrecio: ${fmt(salePrice(p).v)}\n${isCOD(p) ? 'Pagas contraentrega' : 'Pago anticipado por transferencia'} · envíos a toda Colombia\nPídelo aquí 👉 ${productLink(p)}`;
   const matches = p => {
     if (p.agotado) return false;
     const f = ph.f;

@@ -26,6 +26,10 @@
   const EXTRA = Number(CFG.aumentoPrecio) || 0;
   const PRODUCTS = (window.OBSIDIAN_PRODUCTS || []).map((p, i) => ({ ...p, precio: p.precio + EXTRA, rank: i, n: i + 1, slug: p.slug || slugify(`${fullName(p)} ${p.color}`) }));
   const byId = Object.fromEntries(PRODUCTS.map(p => [p.id, p]));
+  /* forma de pago: solo los modelos de CFG.contraentrega se pagan al recibir; el resto, por adelantado */
+  const COD = (CFG.contraentrega || []).map(norm);
+  const isCOD = p => !!p && COD.some(k => norm(p.nombre).includes(k));
+  const cartCOD = () => Cart.items.every(i => isCOD(byId[i.id]));
   const bySlug = Object.fromEntries(PRODUCTS.map(p => [p.slug, p]));
   const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const FINE = matchMedia('(hover: hover) and (pointer: fine)').matches;
@@ -307,7 +311,7 @@
         ft.hidden = false;
         bd.innerHTML = Cart.items.map(lineHTML).join('');
         ft.innerHTML = `<div class="tot"><span class="mono">Subtotal · ${n} ${n === 1 ? 'par' : 'pares'}</span><b>${fmt(Cart.total())}</b></div>
-          <p class="mono muted">${esc(CFG.pago || '')}. El envío se confirma por WhatsApp.</p>
+          <p class="mono muted">${cartCOD() ? 'Pago contraentrega' : 'Pago anticipado por transferencia'}. El envío se confirma por WhatsApp.</p>
           <a class="btn btn--block" href="${u('carrito.html')}">Finalizar pedido ${btnIco}</a>
           <button class="btn btn--line btn--block btn--sm" type="button" data-bag-close>Seguir comprando</button>`;
       }
@@ -1058,6 +1062,10 @@
       $('#sumTotal').textContent = fmt(Cart.total());
       const ref = getRef(), refRow = $('#sumRefRow');
       if (refRow) { refRow.hidden = !ref; $('#sumRef').textContent = ref; }
+      const cod = cartCOD(), mixed = !cod && Cart.items.some(i => isCOD(byId[i.id]));
+      $('#payTitle').textContent = cod ? 'Pago contraentrega' : 'Pago anticipado por transferencia';
+      $('#payDetail').textContent = cod ? 'Pagas cuando recibes tus tenis.'
+        : `${mixed ? 'Tu pedido trae modelos que no son contraentrega, así que todo se paga por adelantado. ' : ''}Te mandamos los datos de pago por WhatsApp y despachamos apenas confirmemos el pago.`;
     };
     document.addEventListener('cart:change', render);
     render();
@@ -1084,7 +1092,7 @@
       if (bad) { bad.focus(); return; }
       await RefPrices.ready;
       const items = Cart.items.map(i => { const p = byId[i.id]; return { id: p.id, slug: p.slug, marca: p.marca, nombre: p.nombre, color: i.color || p.color, talla: i.talla, cantidad: i.qty, precio: p.precio }; });
-      const pedido = { nombre: d.nombre.trim(), celular: d.celular.trim(), ciudad: d.ciudad.trim(), direccion: d.direccion.trim(), barrio: (d.barrio || '').trim(), notas: (d.notas || '').trim(), items, subtotal: Cart.total(), origen: location.host || 'local', ref: getRef() };
+      const pedido = { nombre: d.nombre.trim(), celular: d.celular.trim(), ciudad: d.ciudad.trim(), direccion: d.direccion.trim(), barrio: (d.barrio || '').trim(), notas: (d.notas || '').trim(), items, subtotal: Cart.total(), origen: location.host || 'local', ref: getRef(), pago: cartCOD() ? 'Contraentrega' : 'Anticipado' };
       const btn = $('button[type="submit"]', form), btnHTML = btn.innerHTML;
       let numero = '';
       if (CFG.pedidosApi) {
@@ -1100,12 +1108,13 @@
       const lines = items.map(i => `• ${i.cantidad} × ${fullName(byId[i.id])} (${i.color}) — Talla ${i.talla} — ${fmt(i.precio * i.cantidad)}`).join('\n');
       const msg = `Hola OBSIDIAN 👋 ${numero ? `Acabo de hacer el pedido *${numero}*` : 'Quiero hacer este pedido'}:\n\n${lines}\n\nSubtotal: ${fmt(pedido.subtotal)}\nEnvío: por confirmar\n\n` +
         `Nombre: ${pedido.nombre}\nCelular: ${pedido.celular}\nCiudad: ${pedido.ciudad}\nDirección: ${pedido.direccion}` +
-        (pedido.barrio ? `\nBarrio: ${pedido.barrio}` : '') + (pedido.notas ? `\nNotas: ${pedido.notas}` : '') + `\n\nForma de pago: ${CFG.pago || 'Contraentrega'}` + (pedido.ref ? `\nVendedor: ${pedido.ref}` : '');
+        (pedido.barrio ? `\nBarrio: ${pedido.barrio}` : '') + (pedido.notas ? `\nNotas: ${pedido.notas}` : '') + `\n\nForma de pago: ${pedido.pago === 'Contraentrega' ? 'Contraentrega' : 'Pago anticipado por transferencia'}` + (pedido.ref ? `\nVendedor: ${pedido.ref}` : '');
       const wa = waLink(msg);
       $('#doneNum').textContent = numero ? `Pedido ${numero}` : 'Pedido listo';
+      const pre = pedido.pago !== 'Contraentrega';
       $('#doneTxt').textContent = numero
-        ? 'Registramos tu pedido. Envíanos el mensaje por WhatsApp y te confirmamos disponibilidad y envío.'
-        : 'Envíanos el mensaje por WhatsApp para confirmar tu pedido. Te respondemos con disponibilidad y costo de envío.';
+        ? `Registramos tu pedido. Envíanos el mensaje por WhatsApp y te confirmamos disponibilidad y envío${pre ? ', y te mandamos los datos para pagar' : ''}.`
+        : `Envíanos el mensaje por WhatsApp para confirmar tu pedido. Te respondemos con disponibilidad y costo de envío${pre ? ', y con los datos para pagar' : ''}.`;
       $('#doneWa').href = wa;
       form.hidden = true; done.hidden = false;
       openWA(wa);

@@ -1,6 +1,6 @@
 # OBSIDIAN — tienda de sneakers + panel de pedidos
 
-Sitio estático (HTML, CSS y JS) con 118 páginas, publicado en **https://obsidiancol.shop**. Los pedidos se registran en tu hoja de Google Sheets **OBSIDIAN Pedidos**, los ves en tu panel privado y te llegan por WhatsApp al 319 255 9674. El cliente paga contraentrega.
+Sitio estático (HTML, CSS y JS) con 118 páginas, publicado en **https://obsidiancol.shop**. Los pedidos se registran en tu hoja de Google Sheets **OBSIDIAN Pedidos**, los ves en tu panel privado y te llegan por WhatsApp al 319 255 9674. Los Air Force 1 se pagan contraentrega y los demás modelos por adelantado (la lista está en `contraentrega` de `js/config.js`).
 
 ## Dónde está cada cosa
 

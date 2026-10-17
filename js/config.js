@@ -30,8 +30,10 @@ window.OBSIDIAN_CONFIG = {
   aumentoPrecio: 0,
 
   // Textos de la promesa de compra (ajústalos a lo que acordaste con tu proveedor)
-  pago: 'Pago contraentrega',
-  pagoDetalle: 'No pagas nada ahora: pagas cuando recibes tus tenis.',
+  pago: 'Air Force 1 contraentrega',
+  pagoDetalle: 'Los Air Force 1 los pagas cuando te llegan. Los demás modelos se pagan por adelantado, por transferencia: te mandamos los datos por WhatsApp y despachamos apenas confirmemos el pago.',
+  // Modelos que se pagan contraentrega (palabras que debe tener el nombre del producto). Los demás se pagan por adelantado.
+  contraentrega: ['Air Force 1'],
   envio: 'Envíos a toda Colombia',
   envioDetalle: 'El costo del envío depende de tu ciudad y te lo confirmamos por WhatsApp antes de despachar.',
   cambios: 'Cambios de talla',
