@@ -9,6 +9,9 @@
  *
  * "colecciones" acepta: blackout, icons, luxury, runner.
  * "agotado": true lo muestra como agotado y bloquea la compra.
+ * "colores" (opcional): si un mismo producto viene en varios colores, una lista de
+ *   { "nombre": "Azul marino", "foto": 2 } (foto = número de la foto en "imagenes").
+ *   El cliente debe elegir el color antes de agregarlo a la bolsa.
  * Cambiar precios, textos o "agotado" NO requiere volver a generar páginas.
  * Lo que te cuesta cada par y el precio para vendedores NO va aquí (este archivo es público):
  * se pone en el panel, pestaña Costos. */
@@ -611,6 +614,18 @@ window.OBSIDIAN_PRODUCTS = [
     "genero": "Niños",
     "colecciones": [],
     "imagenes": ["img/products/on-cloud-ninos-1.jpg", "img/products/on-cloud-ninos-2.jpg", "img/products/on-cloud-ninos-3.jpg", "img/products/on-cloud-ninos-4.jpg", "img/products/on-cloud-ninos-5.jpg", "img/products/on-cloud-ninos-6.jpg", "img/products/on-cloud-ninos-7.jpg", "img/products/on-cloud-ninos-8.jpg", "img/products/on-cloud-ninos-9.jpg", "img/products/on-cloud-ninos-10.jpg"],
+    "colores": [
+      { "nombre": "Blanco · Rosado", "foto": 1 },
+      { "nombre": "Blanco · Naranja", "foto": 2 },
+      { "nombre": "Blanco · Gris", "foto": 3 },
+      { "nombre": "Negro · Blanco", "foto": 4 },
+      { "nombre": "Blanco · Negro", "foto": 5 },
+      { "nombre": "Negro total", "foto": 6 },
+      { "nombre": "Blanco · Fucsia", "foto": 7 },
+      { "nombre": "Crema · Negro", "foto": 8 },
+      { "nombre": "Negro · Suela blanca", "foto": 9 },
+      { "nombre": "Blanco · Lila", "foto": 10 }
+    ],
     "agotado": false
   },
   {
@@ -866,6 +881,18 @@ window.OBSIDIAN_PRODUCTS = [
     "genero": "Hombre",
     "colecciones": [],
     "imagenes": ["img/products/chanclas-nike-1.jpg", "img/products/chanclas-nike-2.jpg", "img/products/chanclas-nike-3.jpg", "img/products/chanclas-nike-4.jpg", "img/products/chanclas-nike-5.jpg", "img/products/chanclas-nike-6.jpg", "img/products/chanclas-nike-7.jpg", "img/products/chanclas-nike-8.jpg", "img/products/chanclas-nike-9.jpg", "img/products/chanclas-nike-10.jpg"],
+    "colores": [
+      { "nombre": "Negro (una pieza)", "foto": 1 },
+      { "nombre": "Crema (una pieza)", "foto": 2 },
+      { "nombre": "Beige (una pieza)", "foto": 3 },
+      { "nombre": "Verde (una pieza)", "foto": 4 },
+      { "nombre": "Gris oscuro", "foto": 5 },
+      { "nombre": "Blanco · Negro", "foto": 6 },
+      { "nombre": "Negro · Swoosh negro", "foto": 7 },
+      { "nombre": "Negro · Swoosh blanco", "foto": 8 },
+      { "nombre": "Blanco · Letras NIKE", "foto": 9 },
+      { "nombre": "Negro · Letras NIKE", "foto": 10 }
+    ],
     "agotado": false
   },
   {
@@ -956,6 +983,13 @@ window.OBSIDIAN_PRODUCTS = [
     "genero": "Niños",
     "colecciones": [],
     "imagenes": ["img/products/jordan-ninos-1.jpg", "img/products/jordan-ninos-2.jpg", "img/products/jordan-ninos-3.jpg", "img/products/jordan-ninos-4.jpg", "img/products/jordan-ninos-5.jpg"],
+    "colores": [
+      { "nombre": "Negro total", "foto": 1 },
+      { "nombre": "Negro · Blanco", "foto": 2 },
+      { "nombre": "Negro · Gris", "foto": 3 },
+      { "nombre": "Blanco · Gris", "foto": 4 },
+      { "nombre": "Negro · Amarillo", "foto": 5 }
+    ],
     "agotado": false
   },
   {
@@ -971,6 +1005,13 @@ window.OBSIDIAN_PRODUCTS = [
     "genero": "Hombre",
     "colecciones": [],
     "imagenes": ["img/products/adilette-1.jpg", "img/products/adilette-2.jpg", "img/products/adilette-3.jpg", "img/products/adilette-4.jpg", "img/products/adilette-5.jpg"],
+    "colores": [
+      { "nombre": "Negro · Blanco", "foto": 1 },
+      { "nombre": "Rojo", "foto": 2 },
+      { "nombre": "Azul rey", "foto": 3 },
+      { "nombre": "Negro total", "foto": 4 },
+      { "nombre": "Blanco · Negro", "foto": 5 }
+    ],
     "agotado": false
   },
   {
@@ -986,6 +1027,11 @@ window.OBSIDIAN_PRODUCTS = [
     "genero": "Niños",
     "colecciones": [],
     "imagenes": ["img/products/nike-ninos-1.jpg", "img/products/nike-ninos-2.jpg", "img/products/nike-ninos-3.jpg"],
+    "colores": [
+      { "nombre": "Negro · Blanco", "foto": 1 },
+      { "nombre": "Blanco · Negro", "foto": 2 },
+      { "nombre": "Blanco", "foto": 3 }
+    ],
     "agotado": false
   },
   {
@@ -1031,6 +1077,10 @@ window.OBSIDIAN_PRODUCTS = [
     "genero": "Hombre",
     "colecciones": [],
     "imagenes": ["img/products/chancla-offcourt-1.jpg", "img/products/chancla-offcourt-2.jpg"],
+    "colores": [
+      { "nombre": "Verde", "foto": 1 },
+      { "nombre": "Azul", "foto": 2 }
+    ],
     "agotado": false
   },
   {
@@ -1046,6 +1096,15 @@ window.OBSIDIAN_PRODUCTS = [
     "genero": "Hombre",
     "colecciones": [],
     "imagenes": ["img/products/chanclas-adidas-1.jpg", "img/products/chanclas-adidas-2.jpg", "img/products/chanclas-adidas-3.jpg", "img/products/chanclas-adidas-4.jpg", "img/products/chanclas-adidas-5.jpg", "img/products/chanclas-adidas-6.jpg", "img/products/chanclas-adidas-7.jpg"],
+    "colores": [
+      { "nombre": "Negro · Relieve", "foto": 1 },
+      { "nombre": "Beige", "foto": 2 },
+      { "nombre": "Negro (una pieza)", "foto": 3 },
+      { "nombre": "Rojo · Negro", "foto": 4 },
+      { "nombre": "Gris · Negro", "foto": 5 },
+      { "nombre": "Negro · Rojo", "foto": 6 },
+      { "nombre": "Negro · Blanco", "foto": 7 }
+    ],
     "agotado": false
   },
   {
@@ -1061,6 +1120,11 @@ window.OBSIDIAN_PRODUCTS = [
     "genero": "Niños",
     "colecciones": [],
     "imagenes": ["img/products/adidas-ninos-1.jpg", "img/products/adidas-ninos-2.jpg", "img/products/adidas-ninos-3.jpg"],
+    "colores": [
+      { "nombre": "Blanco · Negro", "foto": 1 },
+      { "nombre": "Negro · Blanco", "foto": 2 },
+      { "nombre": "Blanco · Rosado", "foto": 3 }
+    ],
     "agotado": false
   },
   {
@@ -1106,6 +1170,10 @@ window.OBSIDIAN_PRODUCTS = [
     "genero": "Hombre",
     "colecciones": ["luxury"],
     "imagenes": ["img/products/chanclas-prada-1.jpg", "img/products/chanclas-prada-2.jpg"],
+    "colores": [
+      { "nombre": "Negro", "foto": 1 },
+      { "nombre": "Naranja", "foto": 2 }
+    ],
     "agotado": false
   },
   {
@@ -1856,6 +1924,18 @@ window.OBSIDIAN_PRODUCTS = [
     "genero": "Hombre",
     "colecciones": [],
     "imagenes": ["img/products/b3-chanclas-lacoste-1.jpg", "img/products/b3-chanclas-lacoste-2.jpg", "img/products/b3-chanclas-lacoste-3.jpg", "img/products/b3-chanclas-lacoste-4.jpg", "img/products/b3-chanclas-lacoste-5.jpg", "img/products/b3-chanclas-lacoste-6.jpg", "img/products/b3-chanclas-lacoste-7.jpg", "img/products/b3-chanclas-lacoste-8.jpg", "img/products/b3-chanclas-lacoste-9.jpg", "img/products/b3-chanclas-lacoste-10.jpg"],
+    "colores": [
+      { "nombre": "Azul marino", "foto": 1 },
+      { "nombre": "Verde", "foto": 2 },
+      { "nombre": "Negro · Letras", "foto": 3 },
+      { "nombre": "Beige", "foto": 4 },
+      { "nombre": "Blanco", "foto": 5 },
+      { "nombre": "Negro · Letras y cocodrilo", "foto": 6 },
+      { "nombre": "Verde · Cocodrilo", "foto": 7 },
+      { "nombre": "Negro · Cocodrilo", "foto": 8 },
+      { "nombre": "Azul · Cocodrilo", "foto": 9 },
+      { "nombre": "Beige · Cocodrilo", "foto": 10 }
+    ],
     "agotado": false
   },
   {
@@ -1871,6 +1951,12 @@ window.OBSIDIAN_PRODUCTS = [
     "genero": "Hombre",
     "colecciones": [],
     "imagenes": ["img/products/b3-chanclas-polo-1.jpg", "img/products/b3-chanclas-polo-2.jpg", "img/products/b3-chanclas-polo-3.jpg", "img/products/b3-chanclas-polo-4.jpg"],
+    "colores": [
+      { "nombre": "Blanco", "foto": 1 },
+      { "nombre": "Azul marino", "foto": 2 },
+      { "nombre": "Negro · Blanco", "foto": 3 },
+      { "nombre": "Negro · Dorado", "foto": 4 }
+    ],
     "agotado": false
   },
   {
@@ -2381,6 +2467,11 @@ window.OBSIDIAN_PRODUCTS = [
     "genero": "Niños",
     "colecciones": [],
     "imagenes": ["img/products/b3-superstar-ninos-1.jpg", "img/products/b3-superstar-ninos-2.jpg", "img/products/b3-superstar-ninos-3.jpg"],
+    "colores": [
+      { "nombre": "Blanco · Negro", "foto": 1 },
+      { "nombre": "Rosado", "foto": 2 },
+      { "nombre": "Lila", "foto": 3 }
+    ],
     "agotado": false
   },
   {
@@ -2501,6 +2592,16 @@ window.OBSIDIAN_PRODUCTS = [
     "genero": "Niños",
     "colecciones": [],
     "imagenes": ["img/products/b3-crocs-ninos-1.jpg", "img/products/b3-crocs-ninos-2.jpg", "img/products/b3-crocs-ninos-3.jpg", "img/products/b3-crocs-ninos-4.jpg", "img/products/b3-crocs-ninos-5.jpg", "img/products/b3-crocs-ninos-6.jpg", "img/products/b3-crocs-ninos-7.jpg", "img/products/b3-crocs-ninos-8.jpg"],
+    "colores": [
+      { "nombre": "Azul marino", "foto": 1 },
+      { "nombre": "Blanco", "foto": 2 },
+      { "nombre": "Rojo", "foto": 3 },
+      { "nombre": "Negro", "foto": 4 },
+      { "nombre": "Rosado chicle", "foto": 5 },
+      { "nombre": "Negro · Fucsia", "foto": 6 },
+      { "nombre": "Lila", "foto": 7 },
+      { "nombre": "Rosado palo", "foto": 8 }
+    ],
     "agotado": false
   }
 ];

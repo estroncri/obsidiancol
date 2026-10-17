@@ -103,6 +103,8 @@
   const productUrl = p => u(`productos/${p.slug}.html`);
   const brandUrl = m => u(`marcas/${slugify(m)}.html`);
   const colUrl = k => u(`colecciones/${k}.html`);
+  const SIBS = {}; PRODUCTS.forEach(p => { if (!p.colores) (SIBS[norm(`${p.marca}|${p.nombre}`)] ||= []).push(p); });
+  const colorLabel = p => { if (p.colores?.length) return `${p.colores.length} colores`; const n = (SIBS[norm(`${p.marca}|${p.nombre}`)] || []).length; return n > 1 ? `${p.color} · ${n} colores` : p.color; };
   const sizeRange = p => p.tallas.length ? `${p.tallas[0]}–${p.tallas[p.tallas.length - 1]}` : '—';
   const adultSizes = () => { const t = PRODUCTS.filter(p => p.genero !== 'Niños').flatMap(p => p.tallas); return t.length ? `${Math.min(...t)}–${Math.max(...t)}` : '36–44'; };
   const forGender = (p, g) => !g || p.genero === g || (p.genero === 'Unisex' && g !== 'Niños');
@@ -264,9 +266,9 @@
     items: [],
     load() { this.items = (store.get(CART_KEY, []) || []).filter(i => byId[i.id] && i.qty > 0); },
     save() { store.set(CART_KEY, this.items); renderBag(); },
-    add(id, talla, qty = 1) {
-      const f = this.items.find(i => i.id === id && i.talla === talla);
-      if (f) f.qty = Math.min(10, f.qty + qty); else this.items.push({ id, talla, qty: Math.min(10, qty) });
+    add(id, talla, qty = 1, color = '', foto = 0) {
+      const f = this.items.find(i => i.id === id && i.talla === talla && (i.color || '') === color);
+      if (f) f.qty = Math.min(10, f.qty + qty); else this.items.push({ id, talla, qty: Math.min(10, qty), ...(color ? { color, foto } : {}) });
       this.save();
     },
     setQty(i, q) { if (!this.items[i]) return; if (q <= 0) this.items.splice(i, 1); else this.items[i].qty = Math.min(10, q); this.save(); },
@@ -281,11 +283,11 @@
   const lineHTML = (it, idx) => {
     const p = byId[it.id];
     return `<div class="ln" data-idx="${idx}">
-      <a class="ln__img" href="${productUrl(p)}"><img src="${u(p.imagenes[0])}" alt="${esc(fullName(p))}" width="520" height="650"></a>
+      <a class="ln__img" href="${productUrl(p)}"><img src="${u(p.imagenes[(it.foto || 1) - 1] || p.imagenes[0])}" alt="${esc(fullName(p))}" width="520" height="650"></a>
       <div>
         <p class="mono muted">${esc(p.marca)} · N.º ${pad(p.n)}</p>
         <a class="ln__name" href="${productUrl(p)}">${esc(p.nombre)}</a>
-        <p class="mono">Talla ${it.talla} · ${esc(p.color)}</p>
+        <p class="mono">Talla ${it.talla} · ${esc(it.color || p.color)}</p>
         <div class="qty qty--sm"><button type="button" data-act="dec" aria-label="Quitar uno">−</button><output>${it.qty}</output><button type="button" data-act="inc" aria-label="Agregar uno">+</button></div>
       </div>
       <div class="ln__r"><span class="mono">${fmt(p.precio * it.qty)}</span><button type="button" class="ln__rm mono" data-act="rm">Quitar</button></div>
@@ -368,7 +370,7 @@
   function cardHTML(p) {
     const name = esc(fullName(p));
     const tag = p.agotado ? 'Agotado' : p.etiqueta;
-    const quick = p.agotado ? '' : `<div class="card__q"><p class="mono">Agregar talla</p><div>${p.tallas.map(t => `<button type="button" data-size="${t}">${t}</button>`).join('')}</div></div>
+    const quick = p.agotado || p.colores?.length ? '' : `<div class="card__q"><p class="mono">Agregar talla</p><div>${p.tallas.map(t => `<button type="button" data-size="${t}">${t}</button>`).join('')}</div></div>
       <button class="card__plus" type="button" aria-label="Elegir talla de ${name}" aria-expanded="false">${I.plus}</button>`;
     return `<article class="card${p.agotado ? ' is-out' : ''}" data-id="${esc(p.id)}">
       <div class="card__media">
@@ -380,11 +382,11 @@
         ${tag ? `<span class="tag card__tag">${esc(tag)}</span>` : ''}
         ${quick}
       </div>
-      <div class="card__meta"><p class="mono">${esc(p.marca)}</p><h3 class="card__name"><a href="${productUrl(p)}">${esc(p.nombre)}</a></h3><span class="card__price" data-price-of="${p.slug}">${fmt(p.precio)}</span><p class="card__color">${esc(p.color)}</p></div>
+      <div class="card__meta"><p class="mono">${esc(p.marca)}</p><h3 class="card__name"><a href="${productUrl(p)}">${esc(p.nombre)}</a></h3><span class="card__price" data-price-of="${p.slug}">${fmt(p.precio)}</span><p class="card__color">${esc(colorLabel(p))}</p></div>
     </article>`;
   }
   const rowHTML = p => `<a class="irow${p.agotado ? ' is-out' : ''}" href="${productUrl(p)}" data-id="${esc(p.id)}" data-hover-img="${u(p.imagenes[0])}">
-    <span class="mono">${pad(p.n)}</span><span class="mono c-brand">${esc(p.marca)}</span><span class="serif">${esc(p.nombre)}</span><span class="mono c-color muted">${esc(p.color)}</span><span class="mono c-sizes">${sizeRange(p)}</span>${p.agotado ? '<span class="mono">Agotado</span>' : `<span class="mono" data-price-of="${p.slug}">${fmt(p.precio)}</span>`}${I.arrowUR}</a>`;
+    <span class="mono">${pad(p.n)}</span><span class="mono c-brand">${esc(p.marca)}</span><span class="serif">${esc(p.nombre)}</span><span class="mono c-color muted">${esc(colorLabel(p))}</span><span class="mono c-sizes">${sizeRange(p)}</span>${p.agotado ? '<span class="mono">Agotado</span>' : `<span class="mono" data-price-of="${p.slug}">${fmt(p.precio)}</span>`}${I.arrowUR}</a>`;
 
   document.addEventListener('click', e => {
     const plus = e.target.closest('.card__plus');
@@ -908,8 +910,8 @@
     const sizesEl = $('#sizes'), hint = $('#sizeHint'), addBtn = $('#addBtn'), waBtn = $('#waBtn');
     $$('.size', sizesEl).forEach(b => { b.disabled = p.agotado || !p.tallas.includes(Number(b.dataset.size)); });
     if (p.agotado) { addBtn.disabled = true; addBtn.firstChild.textContent = 'Agotado '; }
-    let size = null, qty = 1;
-    const waMsg = () => `Hola OBSIDIAN 👋 Quiero este par:\n\n• ${qty} × ${name} (${p.color}) — Talla ${size} — ${fmt(p.precio * qty)}\n\n¿Está disponible? ${location.href}${refLine()}`;
+    let size = null, qty = 1, color = '', foto = 0;
+    const waMsg = () => `Hola OBSIDIAN 👋 Quiero este par:\n\n• ${qty} × ${name} (${color || p.color}) — Talla ${size} — ${fmt(p.precio * qty)}\n\n¿Está disponible? ${location.href}${refLine()}`;
     sizesEl.addEventListener('click', e => {
       const b = e.target.closest('.size'); if (!b) return;
       size = Number(b.dataset.size);
@@ -917,7 +919,33 @@
       hint.textContent = ''; waBtn.href = waLink(waMsg());
     });
     $$('[data-q]').forEach(b => b.addEventListener('click', () => { qty = Math.max(1, Math.min(10, qty + Number(b.dataset.q))); $('#qty').textContent = qty; if (size) waBtn.href = waLink(waMsg()); }));
+    /* color: obligatorio cuando el producto viene en varios colores */
+    const colorsEl = $('#colors'), colorHint = $('#colorHint'), shotImgs = $$('.pdp__shot img'), orig = shotImgs.map(i => i.getAttribute('src'));
+    const showFoto = k => {
+      shotImgs.forEach((im, i) => { im.src = orig[i]; });
+      if (k > 0 && shotImgs[k]) { shotImgs[0].src = orig[k]; shotImgs[k].src = orig[0]; }
+      const st = $('.pdp__stack');
+      if (st.scrollWidth > st.clientWidth) st.scrollTo({ left: 0, behavior: 'smooth' });
+      else if (shotImgs[0].getBoundingClientRect().bottom < 120) { if (lenis) lenis.scrollTo(0); else scrollTo({ top: 0, behavior: 'smooth' }); }
+    };
+    colorsEl?.addEventListener('click', e => {
+      const b = e.target.closest('.sw'); if (!b) return;
+      color = b.dataset.color; foto = Number(b.dataset.foto) || 1;
+      $$('.sw', colorsEl).forEach(x => { const on = x === b; x.classList.toggle('is-on', on); x.setAttribute('aria-pressed', on); });
+      $('#colorName').textContent = color; colorHint.textContent = '';
+      showFoto(foto - 1);
+      if (size) waBtn.href = waLink(waMsg());
+    });
+    const needColor = () => {
+      if (!colorsEl || color) return false;
+      colorHint.textContent = 'Elige el color para continuar.';
+      colorsEl.classList.remove('shake'); void colorsEl.offsetWidth; colorsEl.classList.add('shake');
+      const r = colorsEl.getBoundingClientRect();
+      if (r.top < 90 || r.bottom > innerHeight) { if (lenis) lenis.scrollTo(colorsEl, { offset: -160 }); else colorsEl.scrollIntoView({ block: 'center', behavior: 'smooth' }); }
+      return true;
+    };
     const need = () => {
+      if (needColor()) return true;
       if (size) return false;
       hint.textContent = 'Elige tu talla para continuar.';
       sizesEl.classList.remove('shake'); void sizesEl.offsetWidth; sizesEl.classList.add('shake');
@@ -927,9 +955,9 @@
     };
     const add = () => {
       if (p.agotado || need()) return;
-      Cart.add(p.id, size, qty);
+      Cart.add(p.id, size, qty, color, foto);
       flyToBag($('.pdp__shot img'));
-      toast(`${name} · talla ${size} en tu bolsa`, u(p.imagenes[0]));
+      toast(`${name}${color ? ` · ${color}` : ''} · talla ${size} en tu bolsa`, u(p.imagenes[(foto || 1) - 1] || p.imagenes[0]));
       setTimeout(openBag, ANIM ? 1250 : 0);
     };
     addBtn.addEventListener('click', add);
@@ -1053,7 +1081,7 @@
       });
       if (bad) { bad.focus(); return; }
       await RefPrices.ready;
-      const items = Cart.items.map(i => { const p = byId[i.id]; return { id: p.id, slug: p.slug, marca: p.marca, nombre: p.nombre, color: p.color, talla: i.talla, cantidad: i.qty, precio: p.precio }; });
+      const items = Cart.items.map(i => { const p = byId[i.id]; return { id: p.id, slug: p.slug, marca: p.marca, nombre: p.nombre, color: i.color || p.color, talla: i.talla, cantidad: i.qty, precio: p.precio }; });
       const pedido = { nombre: d.nombre.trim(), celular: d.celular.trim(), ciudad: d.ciudad.trim(), direccion: d.direccion.trim(), barrio: (d.barrio || '').trim(), notas: (d.notas || '').trim(), items, subtotal: Cart.total(), origen: location.host || 'local', ref: getRef() };
       const btn = $('button[type="submit"]', form), btnHTML = btn.innerHTML;
       let numero = '';

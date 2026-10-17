@@ -36,6 +36,9 @@ const forGender = (p, g) => !g || p.genero === g || (p.genero === 'Unisex' && g 
 const ADULT = P.filter(p => p.genero !== 'Niños'), KIDS = P.filter(p => p.genero === 'Niños');
 const genRange = g => range(P.filter(p => p.genero === g));
 /* botones de talla de la página de cada producto: adultos siempre ven 36–44 (y más si el modelo lo tiene); niños, su rango */
+/* mismo modelo en otros colores (productos aparte con igual marca y nombre) */
+const SIBS = {}; P.forEach(p => { if (!p.colores) (SIBS[norm(`${p.marca}|${p.nombre}`)] ||= []).push(p); });
+const siblings = p => (p.colores ? [] : SIBS[norm(`${p.marca}|${p.nombre}`)] || []);
 const sizeGrid = p => { const k = p.genero === 'Niños', lo = Math.min(...p.tallas, k ? Infinity : 36), hi = Math.max(...p.tallas, k ? -Infinity : 44); return Array.from({ length: hi - lo + 1 }, (_, i) => lo + i); };
 const NEW_TAGS = ['Nuevo', 'Tendencia', 'Edición especial', 'Colaboración'];
 
@@ -280,6 +283,22 @@ function listing({ file, R = '', title, h1, h1html, lead, crumbsArr, preset = {}
 const othersBlock = (label, links) => `<div class="sh__k mono" style="margin-top:clamp(60px,8vw,110px)"><span>${label}</span><span></span></div><div class="others mono" style="margin-top:1.2rem">${links}</div>`;
 
 /* ======================= PRODUCTO ======================= */
+const swImg = (R, src, alt) => `<img src="${R}${src}" alt="${esc(alt)}" width="64" height="80" loading="lazy">`;
+function colorBlock(R, p) {
+  if (p.colores?.length) return `<div class="pdp__colors" id="colors">
+      <div class="pdp__lab mono"><span>Color</span><span id="colorName" class="muted">Elige uno · ${p.colores.length} colores</span></div>
+      <div class="swatches" role="group" aria-label="Elige el color">${p.colores.map(c => `<button type="button" class="sw" data-color="${esc(c.nombre)}" data-foto="${c.foto}" aria-pressed="false" title="${esc(c.nombre)}">${swImg(R, p.imagenes[c.foto - 1] || p.imagenes[0], c.nombre)}</button>`).join('')}</div>
+      <p class="size-hint mono" id="colorHint" role="alert"></p>
+    </div>`;
+  const sib = siblings(p);
+  if (sib.length < 2) return '';
+  return `<div class="pdp__colors">
+      <div class="pdp__lab mono"><span>Color</span><span class="muted">${esc(p.color)} · ${sib.length} colores</span></div>
+      <div class="swatches">${sib.map(s => s.id === p.id
+        ? `<span class="sw is-on" aria-current="true" title="${esc(s.color)}">${swImg(R, s.imagenes[0], s.color)}</span>`
+        : `<a class="sw" href="${R}productos/${s.slug}.html" title="${esc(s.color)} · ${fmt(s.precio)}">${swImg(R, s.imagenes[0], s.color)}</a>`).join('')}</div>
+    </div>`;
+}
 function product(p, i) {
   const R = '../';
   const brand = BRANDS.find(b => b.name === p.marca);
@@ -302,6 +321,7 @@ function product(p, i) {
     <p class="pdp__color">${esc(p.color)} · ${gen} · Tallas ${range([p])}</p>
     <p class="pdp__price" data-price>${fmt(p.precio)}</p>
     <p class="mono muted"><span data-cfg="pago">${esc(pago)}</span> · <span data-cfg="envio">${esc(envio)}</span></p>
+    ${colorBlock(R, p)}
     <div class="pdp__sizes">
       <div class="pdp__lab mono"><span>Talla (EU)</span><a href="${R}guia-de-tallas.html">Guía de tallas</a></div>
       <div class="sizes${sizeGrid(p).length > 10 ? ' sizes--2' : ''}" id="sizes" role="group" aria-label="Elige tu talla" style="--n:${sizeGrid(p).length > 10 ? Math.ceil(sizeGrid(p).length / 2) : sizeGrid(p).length}">${sizeGrid(p).map(t => `<button type="button" class="size" data-size="${t}" aria-pressed="false"${p.tallas.includes(t) && !p.agotado ? '' : ' disabled'}>${t}</button>`).join('')}</div>
