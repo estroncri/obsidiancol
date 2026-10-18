@@ -1,4 +1,4 @@
-/* Catálogo OBSIDIAN — 181 modelos (proveedores: korvenoficial.store y BAKAYOCO).
+/* Catálogo OBSIDIAN — 182 modelos (proveedores: korvenoficial.store y BAKAYOCO).
  *
  * Para agregar un par:
  *  1. Copia un bloque completo y cambia: id (único), slug (la dirección de su página,
@@ -66,6 +66,22 @@ window.OBSIDIAN_PRODUCTS = [
     "genero": "Unisex",
     "colecciones": ["icons"],
     "imagenes": ["img/products/af1-white-5.jpg", "img/products/af1-white-1.jpg", "img/products/af1-white-2.jpg", "img/products/af1-white-3.jpg", "img/products/af1-white-4.jpg"],
+    "agotado": false
+  },
+  {
+    "id": "superstar-negro-dama",
+    "slug": "adidas-superstar-negro-logo-dorado",
+    "marca": "Adidas",
+    "nombre": "Superstar",
+    "color": "Negro · Logo dorado",
+    "precio": 115000,
+    "contraentrega": true,
+    "etiqueta": "Nuevo",
+    "descripcion": "Superstar para dama en cuero negro con franjas blancas, logo dorado, puntera de concha y suela negra.",
+    "tallas": [36, 37, 38, 39],
+    "genero": "Mujer",
+    "colecciones": ["blackout"],
+    "imagenes": ["img/products/superstar-negro-dama-1.jpg"],
     "agotado": false
   },
   {
@@ -777,13 +793,12 @@ window.OBSIDIAN_PRODUCTS = [
     "nombre": "Superstar",
     "color": "Core Black",
     "precio": 130000,
-    "contraentrega": true,
     "etiqueta": "Nuevo",
-    "descripcion": "Superstar en cuero negro con las franjas blancas, puntera de concha y suela negra. Trae cordones negros y blancos.",
-    "tallas": [36, 37, 38, 39, 40, 41, 42, 43, 44],
-    "genero": "Unisex",
+    "descripcion": "Superstar negro con las franjas blancas.",
+    "tallas": [40, 41, 42, 43, 44],
+    "genero": "Hombre",
     "colecciones": ["blackout"],
-    "imagenes": ["img/products/superstar-negro-2.jpg", "img/products/superstar-negro-1.jpg"],
+    "imagenes": ["img/products/superstar-negro-1.jpg"],
     "agotado": false
   },
   {

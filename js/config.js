@@ -31,8 +31,8 @@ window.OBSIDIAN_CONFIG = {
 
   // Textos de la promesa de compra (ajústalos a lo que acordaste con tu proveedor)
   pago: 'Contraentrega en 4 modelos',
-  contraentregaModelos: 'los Air Force 1 Triple White, las Numeris (azules y negras) y el Superstar negro',
-  pagoDetalle: 'Los Air Force 1 Triple White, las Numeris (azules y negras) y el Superstar negro los pagas cuando te llegan. Los demás modelos se pagan por adelantado, por transferencia: te mandamos los datos por WhatsApp y despachamos apenas confirmemos el pago.',
+  contraentregaModelos: 'los Air Force 1 Triple White, las Numeris (azules y negras) y el Superstar negro de dama',
+  pagoDetalle: 'Los Air Force 1 Triple White, las Numeris (azules y negras) y el Superstar negro de dama los pagas cuando te llegan. Los demás modelos se pagan por adelantado, por transferencia: te mandamos los datos por WhatsApp y despachamos apenas confirmemos el pago.',
   // Qué modelos se pagan contraentrega se marca en js/productos.js con "contraentrega": true;
   // contraentregaModelos es el texto con sus nombres que sale en la página (cámbialo si cambias esa lista).
   envio: 'Envíos a toda Colombia',
