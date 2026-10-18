@@ -9,6 +9,7 @@
  *
  * "colecciones" acepta: blackout, icons, luxury, runner.
  * "agotado": true lo muestra como agotado y bloquea la compra.
+ * "contraentrega": true: ese modelo se paga al recibir. Los que no lo tienen se pagan por adelantado.
  * "colores" (opcional): si un mismo producto viene en varios colores, una lista de
  *   { "nombre": "Azul marino", "foto": 2 } (foto = número de la foto en "imagenes").
  *   El cliente debe elegir el color antes de agregarlo a la bolsa.
@@ -23,6 +24,7 @@ window.OBSIDIAN_PRODUCTS = [
     "nombre": "Air Force 1",
     "color": "Triple White",
     "precio": 120000,
+    "contraentrega": true,
     "etiqueta": "Más vendido",
     "descripcion": "El clásico que nunca falla. Cuero blanco impecable, unidad Air en el talón y una silueta que combina con absolutamente todo.",
     "tallas": [36, 37, 38, 39, 40, 41, 42, 43, 44],

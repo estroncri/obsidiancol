@@ -26,9 +26,8 @@
   const EXTRA = Number(CFG.aumentoPrecio) || 0;
   const PRODUCTS = (window.OBSIDIAN_PRODUCTS || []).map((p, i) => ({ ...p, precio: p.precio + EXTRA, rank: i, n: i + 1, slug: p.slug || slugify(`${fullName(p)} ${p.color}`) }));
   const byId = Object.fromEntries(PRODUCTS.map(p => [p.id, p]));
-  /* forma de pago: solo los modelos de CFG.contraentrega se pagan al recibir; el resto, por adelantado */
-  const COD = (CFG.contraentrega || []).map(norm);
-  const isCOD = p => !!p && COD.some(k => norm(p.nombre).includes(k));
+  /* forma de pago: solo los productos con "contraentrega": true se pagan al recibir; el resto, por adelantado */
+  const isCOD = p => !!(p && p.contraentrega);
   const cartCOD = () => Cart.items.every(i => isCOD(byId[i.id]));
   const bySlug = Object.fromEntries(PRODUCTS.map(p => [p.slug, p]));
   const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
