@@ -56,6 +56,7 @@ const BRAND_DESC = {
   'Louis Vuitton': 'El LV Skate en negro: volumen, textura y la firma Vuitton.',
   Puma: 'Gamuza XL y estética de terraza retro para el día a día.',
   ASICS: 'Tecnología GEL y estética runner de los 2000.',
+  Numeris: 'Las más pedidas de la tienda: lona, puntera de cuero, cordones gruesos y suela plataforma.',
 };
 const BRANDS = [...new Set(P.map(p => p.marca))].map(m => ({ name: m, slug: slugify(m), items: P.filter(p => p.marca === m), desc: BRAND_DESC[m] || `Todos los modelos ${m} de OBSIDIAN.` }))
   .sort((a, b) => b.items.length - a.items.length);
@@ -119,15 +120,15 @@ const arrowBtn = '<span class="btn__ico"></span>';
 const img = (R, s, alt = '', extra = '') => `<img src="${R}img/products/${s}.jpg" alt="${esc(alt)}" loading="lazy" width="520" height="650"${extra}>`;
 const pImg = (R, p, i = 0, extra = '') => `<img src="${R}${p.imagenes[i] || p.imagenes[0]}" alt="${esc(fullName(p))}" loading="lazy" width="520" height="650"${extra}>`;
 const crumbs = (R, ...items) => `<nav class="crumbs mono" aria-label="Ruta"><a href="${R}index.html">Inicio</a>${items.map(([l, h]) => `<span>/</span>${h ? `<a href="${R}${h}">${esc(l)}</a>` : `<span>${esc(l)}</span>`}`).join('')}</nav>`;
-const REELS = [['cual-te-llevas', '¿Cuál te llevas?', '5 modelos'], ['uno-o-dos', '¿1 o 2?', '3 duelos'], ['como-pedir', 'Cómo pedir', 'Paso a paso']];
+const REELS = [['numeris', 'Numeris', 'Las más pedidas'], ['cual-te-llevas', '¿Cuál te llevas?', '5 modelos'], ['uno-o-dos', '¿1 o 2?', '3 duelos'], ['como-pedir', 'Cómo pedir', 'Paso a paso']];
 const sh = (left, right, h2, link) => `<div class="sh"><div class="sh__k mono"><span>${left}</span><span>${right}</span></div>${h2 ? `<h2 class="s-lg" data-split>${h2}</h2>` : ''}${link || ''}</div>`;
 const mq = (items, attrs = '') => `<div class="mq" ${attrs} aria-hidden="true"><div class="mq__track"><div class="mq__group">${items.map(t => `<span class="mq__item">${esc(t)}<i></i></span>`).join('')}</div></div></div>`;
 
 /* ======================= INICIO ======================= */
 function home() {
   const R = '';
-  const heroSlides = [['air-jordan-4-black-cat', 0], ['louis-vuitton-lv-skate-negro', 0], ['asics-gel-plateado', 0], ['adidas-samba-og', 0], ['nike-shox-tl-negro-plateado', 0], ['air-jordan-3-black-cat', 0]].filter(([s]) => bySlug[s]);
-  const sala = [['louis-vuitton-lv-skate-negro', 1], ['nike-nocta-negro', 0], ['air-jordan-4-black-cat', 0], ['nike-shox-tl-negro-plateado', 0], ['air-jordan-3-black-cat', 1]].filter(([s]) => bySlug[s]);
+  const heroSlides = [['numeris-azul-blanco', 0], ['numeris-negro-suela-blanca', 0], ['air-jordan-4-black-cat', 0], ['louis-vuitton-lv-skate-negro', 0], ['asics-gel-plateado', 0], ['adidas-samba-og', 0], ['nike-shox-tl-negro-plateado', 0], ['air-jordan-3-black-cat', 0]].filter(([s]) => bySlug[s]);
+  const sala = [['numeris-azul-blanco', 0], ['numeris-negro-suela-blanca', 0], ['louis-vuitton-lv-skate-negro', 1], ['nike-nocta-negro', 0], ['air-jordan-4-black-cat', 0], ['nike-shox-tl-negro-plateado', 0], ['air-jordan-3-black-cat', 1]].filter(([s]) => bySlug[s]);
   const look = [['louis-vuitton-lv-skate-negro', 3], ['asics-gel-plateado', 0], ['nike-air-force-1-mid', 1], ['air-jordan-3-blanco-gris-cemento', 0], ['puma-suede-xl', 0]].filter(([s]) => bySlug[s]);
   const hm = P.filter(p => forGender(p, 'Hombre')).length, mj = P.filter(p => forGender(p, 'Mujer')).length, nv = P.filter(p => NEW_TAGS.includes(p.etiqueta)).length;
   const body = `
@@ -191,7 +192,7 @@ ${mq(BRANDS.map(b => b.name), 'data-duration="40"')}
   <div class="wrap">
     ${sh('Encuentra tu par', `Tallas ${range(ADULT)} EU`, 'Para cada <em>paso</em>')}
     <div class="trio">
-      <a class="tcard" href="hombre.html" data-cursor="Ver"><div class="tcard__img arch" data-img="clip">${img(R, 'j3-black-1')}</div><div class="tcard__row"><h3 class="s-md">Hombre</h3><p class="mono"><span data-count-gen="Hombre">${hm}</span> modelos</p></div></a>
+      <a class="tcard" href="hombre.html" data-cursor="Ver"><div class="tcard__img arch" data-img="clip">${img(R, 'numeris-negro-1')}</div><div class="tcard__row"><h3 class="s-md">Hombre</h3><p class="mono"><span data-count-gen="Hombre">${hm}</span> modelos</p></div></a>
       <a class="tcard" href="mujer.html" data-cursor="Ver"><div class="tcard__img arch" data-img="clip">${img(R, 'dunk-panda-1')}</div><div class="tcard__row"><h3 class="s-md">Mujer</h3><p class="mono"><span data-count-gen="Mujer">${mj}</span> modelos</p></div></a>
       <a class="tcard" href="novedades.html" data-cursor="Ver"><div class="tcard__img arch" data-img="clip">${img(R, 'nocta-negro-1')}</div><div class="tcard__row"><h3 class="s-md">Novedades</h3><p class="mono"><span data-count-new>${nv}</span> modelos</p></div></a>
     </div>
@@ -231,7 +232,7 @@ ${mq(BRANDS.map(b => b.name), 'data-duration="40"')}
 
 <section class="sec sec--top0">
   <div class="wrap">
-    ${sh('Cómo comprar', 'Sin pagos por adelantado', 'Así de <em>simple</em>', `<a class="link" href="como-comprar.html" data-reveal>Ver la guía completa ${ico('arrow')}</a>`)}
+    ${sh('Cómo comprar', 'Pedido por WhatsApp', 'Así de <em>simple</em>', `<a class="link" href="como-comprar.html" data-reveal>Ver la guía completa ${ico('arrow')}</a>`)}
     <div class="steps4" data-stagger>
       <div class="st4"><p class="serif">1</p><h3>Elige</h3><p>Entra a la página de cada modelo, mira todas sus fotos y escoge tu talla.</p></div>
       <div class="st4"><p class="serif">2</p><h3>Pide</h3><p>Llena tus datos de envío en la bolsa. El pedido nos llega por WhatsApp.</p></div>
@@ -315,8 +316,8 @@ function product(p, i) {
   const body = `
 <article class="wrap pdp">
   <div class="pdp__media">
-    <div class="pdp__stack">${p.imagenes.map((s, k) => `<figure class="pdp__shot"><img src="${R}${s}" alt="${esc(fullName(p))} — foto ${k + 1}" width="520" height="650"${k ? ' loading="lazy"' : ''}></figure>`).join('')}</div>
-    <p class="pdp__count mono"><b id="shotCur">01</b> / ${pad(p.imagenes.length)}</p>
+    <div class="pdp__stack">${p.imagenes.map((s, k) => `<figure class="pdp__shot"><img src="${R}${s}" alt="${esc(fullName(p))} — foto ${k + 1}" width="520" height="650"${k ? ' loading="lazy"' : ''}></figure>`).join('')}${p.video ? `<figure class="pdp__shot reel"><video muted loop playsinline preload="none" poster="${R}video/${p.video}.jpg" data-src="${R}video/${p.video}.mp4" aria-label="${esc(fullName(p))} en video"></video><button class="reel__snd mono" type="button" aria-pressed="false">Activar sonido</button></figure>` : ''}</div>
+    <p class="pdp__count mono"><b id="shotCur">01</b> / ${pad(p.imagenes.length + (p.video ? 1 : 0))}</p>
   </div>
   <aside class="pdp__info">
     ${crumbs(R, ['Tienda', 'tienda.html'], [p.marca, `marcas/${brand.slug}.html`], [p.nombre])}
@@ -592,9 +593,9 @@ function notFound() {
 /* ======================= construir ======================= */
 const pages = [
   home(),
-  listing({ file: 'tienda.html', title: 'Tienda', h1: 'Tienda', h1html: 'Tien<em>da</em>', lead: `Los ${P.length} modelos de OBSIDIAN. Busca, filtra por marca, colección o precio y cambia entre galería e índice.`, crumbsArr: [['Tienda']], full: true, heroImg: `<img src="img/products/af1-white-1.jpg" alt="" width="520" height="650">`, seoTitle: 'Tienda | OBSIDIAN' }),
-  listing({ file: 'novedades.html', title: 'Novedades', h1: 'Novedades', h1html: 'Nove<em>dades</em>', lead: 'Lo nuevo y lo que está marcando tendencia: lanzamientos, colaboraciones y ediciones especiales.', crumbsArr: [['Tienda', 'tienda.html'], ['Novedades']], preset: { nuevos: true }, heroImg: `<img src="img/products/nocta-negro-1.jpg" alt="" width="520" height="650">` }),
-  listing({ file: 'hombre.html', title: 'Hombre', h1: 'Hombre', h1html: 'Hom<em>bre</em>', lead: `Modelos disponibles en tallas de hombre (${genRange('Hombre')}), incluidos los unisex.`, crumbsArr: [['Tienda', 'tienda.html'], ['Hombre']], preset: { genero: 'Hombre' }, heroImg: `<img src="img/products/j3-black-1.jpg" alt="" width="520" height="650">` }),
+  listing({ file: 'tienda.html', title: 'Tienda', h1: 'Tienda', h1html: 'Tien<em>da</em>', lead: `Los ${P.length} modelos de OBSIDIAN. Busca, filtra por marca, colección o precio y cambia entre galería e índice.`, crumbsArr: [['Tienda']], full: true, heroImg: `<img src="img/products/numeris-azul-1.jpg" alt="" width="520" height="650">`, seoTitle: 'Tienda | OBSIDIAN' }),
+  listing({ file: 'novedades.html', title: 'Novedades', h1: 'Novedades', h1html: 'Nove<em>dades</em>', lead: 'Lo nuevo y lo que está marcando tendencia: lanzamientos, colaboraciones y ediciones especiales.', crumbsArr: [['Tienda', 'tienda.html'], ['Novedades']], preset: { nuevos: true }, heroImg: `<img src="img/products/numeris-negro-1.jpg" alt="" width="520" height="650">` }),
+  listing({ file: 'hombre.html', title: 'Hombre', h1: 'Hombre', h1html: 'Hom<em>bre</em>', lead: `Modelos disponibles en tallas de hombre (${genRange('Hombre')}), incluidos los unisex.`, crumbsArr: [['Tienda', 'tienda.html'], ['Hombre']], preset: { genero: 'Hombre' }, heroImg: `<img src="img/products/numeris-azul-1.jpg" alt="" width="520" height="650">` }),
   listing({ file: 'mujer.html', title: 'Mujer', h1: 'Mujer', h1html: 'Mu<em>jer</em>', lead: `Modelos disponibles en tallas de mujer (${genRange('Mujer')}), incluidos los unisex.`, crumbsArr: [['Tienda', 'tienda.html'], ['Mujer']], preset: { genero: 'Mujer' }, heroImg: `<img src="img/products/dunk-panda-1.jpg" alt="" width="520" height="650">` }),
   ...(KIDS.length ? [listing({ file: 'ninos.html', title: 'Niños', h1: 'Niños', h1html: 'Ni<em>ños</em>', lead: `Tenis para los más pequeños, en tallas de niño (${genRange('Niños')}).`, crumbsArr: [['Tienda', 'tienda.html'], ['Niños']], preset: { genero: 'Niños' }, heroImg: `<img src="${KIDS[0].imagenes[0]}" alt="" width="520" height="650">` })] : []),
   collectionsIndex(),

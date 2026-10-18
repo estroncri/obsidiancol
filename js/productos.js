@@ -1,4 +1,4 @@
-/* Catálogo OBSIDIAN — 179 modelos (proveedores: korvenoficial.store y BAKAYOCO).
+/* Catálogo OBSIDIAN — 181 modelos (proveedores: korvenoficial.store y BAKAYOCO).
  *
  * Para agregar un par:
  *  1. Copia un bloque completo y cambia: id (único), slug (la dirección de su página,
@@ -9,6 +9,7 @@
  *
  * "colecciones" acepta: blackout, icons, luxury, runner.
  * "agotado": true lo muestra como agotado y bloquea la compra.
+ * "video" (opcional): nombre de un video de video/ (sin .mp4) que se muestra con las fotos.
  * "contraentrega": true: ese modelo se paga al recibir. Los que no lo tienen se pagan por adelantado.
  * "colores" (opcional): si un mismo producto viene en varios colores, una lista de
  *   { "nombre": "Azul marino", "foto": 2 } (foto = número de la foto en "imagenes").
@@ -17,6 +18,38 @@
  * Lo que te cuesta cada par y el precio para vendedores NO va aquí (este archivo es público):
  * se pone en el panel, pestaña Costos. */
 window.OBSIDIAN_PRODUCTS = [
+  {
+    "id": "numeris-azul",
+    "slug": "numeris-azul-blanco",
+    "marca": "Numeris",
+    "nombre": "Numeris",
+    "color": "Azul · Blanco",
+    "precio": 220000,
+    "etiqueta": "Más vendido",
+    "descripcion": "La más pedida de la tienda. Lona azul con efecto deslavado, puntera de cuero blanco, cordones gruesos y suela plataforma blanca. Viene con su bolsa Numeris.",
+    "tallas": [40, 41, 42, 43, 44],
+    "genero": "Hombre",
+    "colecciones": ["luxury"],
+    "imagenes": ["img/products/numeris-azul-1.jpg", "img/products/numeris-azul-2.jpg", "img/products/numeris-azul-3.jpg"],
+    "video": "numeris",
+    "agotado": false
+  },
+  {
+    "id": "numeris-negro",
+    "slug": "numeris-negro-suela-blanca",
+    "marca": "Numeris",
+    "nombre": "Numeris",
+    "color": "Negro · Suela blanca",
+    "precio": 190000,
+    "etiqueta": "Tendencia",
+    "descripcion": "Lona negra con puntera de cuero blanco, cordones gruesos blancos y suela plataforma blanca. Combina con todo y viene con su bolsa Numeris.",
+    "tallas": [40, 41, 42, 43, 44],
+    "genero": "Hombre",
+    "colecciones": ["luxury"],
+    "imagenes": ["img/products/numeris-negro-1.jpg", "img/products/numeris-negro-2.jpg", "img/products/numeris-negro-3.jpg"],
+    "video": "numeris",
+    "agotado": false
+  },
   {
     "id": "af1-white",
     "slug": "nike-air-force-1-triple-white",
@@ -30,7 +63,7 @@ window.OBSIDIAN_PRODUCTS = [
     "tallas": [36, 37, 38, 39, 40, 41, 42, 43, 44],
     "genero": "Unisex",
     "colecciones": ["icons"],
-    "imagenes": ["img/products/af1-white-1.jpg", "img/products/af1-white-2.jpg", "img/products/af1-white-3.jpg", "img/products/af1-white-4.jpg"],
+    "imagenes": ["img/products/af1-white-5.jpg", "img/products/af1-white-1.jpg", "img/products/af1-white-2.jpg", "img/products/af1-white-3.jpg", "img/products/af1-white-4.jpg"],
     "agotado": false
   },
   {
@@ -743,11 +776,11 @@ window.OBSIDIAN_PRODUCTS = [
     "color": "Core Black",
     "precio": 130000,
     "etiqueta": "Nuevo",
-    "descripcion": "Superstar negro con las franjas blancas.",
-    "tallas": [40, 41, 42, 43, 44],
-    "genero": "Hombre",
+    "descripcion": "Superstar en cuero negro con las franjas blancas, puntera de concha y suela negra. Trae cordones negros y blancos.",
+    "tallas": [36, 37, 38, 39, 40, 41, 42, 43, 44],
+    "genero": "Unisex",
     "colecciones": ["blackout"],
-    "imagenes": ["img/products/superstar-negro-1.jpg"],
+    "imagenes": ["img/products/superstar-negro-2.jpg", "img/products/superstar-negro-1.jpg"],
     "agotado": false
   },
   {

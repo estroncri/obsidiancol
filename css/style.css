@@ -545,6 +545,7 @@ html.is-nav .tr__panel { transform: translateY(0); }
 .pdp__shot { position: relative; aspect-ratio: 4 / 5; overflow: hidden; background: var(--paper-2); }
 .pdp__shot:first-child { border-radius: 999px 999px 0 0; }
 .pdp__shot img { width: 100%; height: 100%; object-fit: cover; }
+.pdp__shot video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; background: var(--night); }
 .pdp__count { position: sticky; bottom: 18px; margin: -50px 0 0 14px; z-index: 3; display: inline-flex; gap: .3rem; padding: .4rem .6rem; background: var(--paper); }
 .pdp__info { position: sticky; top: calc(var(--nav-h) + var(--safe-top) + 20px); min-width: 0; }
 .pdp__no { margin-top: 1.4rem; }
@@ -856,7 +857,7 @@ html.is-nav .tr__panel { transform: translateY(0); }
 }
 
 /* videos del inicio */
-.reels { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(14px, 2vw, 28px); }
+.reels { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(14px, 2vw, 28px); }
 .reel { min-width: 0; }
 .reel__frame { position: relative; aspect-ratio: 9 / 16; border-radius: 18px; overflow: hidden; background: var(--night); }
 .reel__frame video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }

@@ -164,8 +164,8 @@
       .map(t => `<span class="tb__item"><span class="dot"></span>${esc(t)}</span>`).join('');
     const nav = [['tienda.html', 'Tienda', 'shop'], ['colecciones.html', 'Colecciones', 'collections'], ['marcas.html', 'Marcas', 'brands'], ['lookbook.html', 'Lookbook', 'lookbook']];
     const big = [
-      ['index.html', 'Inicio', 'img/products/j4-negro-1.jpg'], ['tienda.html', 'Tienda', 'img/products/af1-white-1.jpg'],
-      ['novedades.html', 'Novedades', 'img/products/nocta-negro-1.jpg'], ['hombre.html', 'Hombre', 'img/products/j3-black-1.jpg'],
+      ['index.html', 'Inicio', 'img/products/j4-negro-1.jpg'], ['tienda.html', 'Tienda', 'img/products/numeris-azul-1.jpg'],
+      ['novedades.html', 'Novedades', 'img/products/nocta-negro-1.jpg'], ['hombre.html', 'Hombre', 'img/products/numeris-negro-1.jpg'],
       ['mujer.html', 'Mujer', 'img/products/dunk-panda-1.jpg'], ...(PRODUCTS.some(p => p.genero === 'Niños') ? [['ninos.html', 'Niños', 'img/products/jordan-ninos-1.jpg']] : []), ['colecciones.html', 'Colecciones', 'img/products/nocta-blanco-1.jpg'],
       ['marcas.html', 'Marcas', 'img/products/samba-2.jpg'], ['lookbook.html', 'Lookbook', 'img/products/lv-skate-black-4.jpg'],
       ['nosotros.html', 'Nosotros', 'img/products/j3-black-2.jpg'], ['contacto.html', 'Contacto', 'img/products/suede-xl-1.jpg'],
@@ -179,7 +179,7 @@
       <div class="fimg" aria-hidden="true"><img alt=""></div>
       <div class="pl" aria-hidden="true">
         <div class="pl__meta mono"><span>Obsidian — Colección 2026</span><span id="plCount">000</span></div>
-        <div class="pl__frame">${['j4-negro-1', 'lv-skate-black-1', 'samba-1', 'shox-negro-1', 'asics-plateado-1', 'j3-black-1', 'j1-patent-1', 'af1-white-1'].map((s, i) => `<img src="${u(`img/products/${s}.jpg`)}" alt=""${i ? '' : ' class="on"'}>`).join('')}</div>
+        <div class="pl__frame">${['numeris-azul-1', 'j4-negro-1', 'lv-skate-black-1', 'samba-1', 'shox-negro-1', 'asics-plateado-1', 'j3-black-1', 'j1-patent-1', 'af1-white-1'].map((s, i) => `<img src="${u(`img/products/${s}.jpg`)}" alt=""${i ? '' : ' class="on"'}>`).join('')}</div>
         <div class="pl__word">${'Obsidian'.split('').map(c => `<span>${c}</span>`).join('')}</div>
       </div>
       <div class="tr" aria-hidden="true"><div class="tr__panel"><div class="tr__line"></div><div class="tr__inner"><img class="tr__logo" src="${u('img/logo/obsidian-logo-sm.webp')}" alt=""><p class="tr__title"><span id="trTitle">${esc(body.dataset.title || 'Obsidian')}</span></p><p class="mono muted">${esc(CFG.dominio || '')}</p></div></div></div>
@@ -1006,7 +1006,7 @@
       .from('.pdp__info > *:not(.pdp__name)', { y: 24, opacity: 0, duration: 1, stagger: .04, ease: 'expo.out', clearProps: 'opacity,transform' }, .35);
   }
 
-  /* ---------- VIDEOS (inicio) ---------- */
+  /* ---------- VIDEOS (inicio y páginas de producto) ---------- */
   function initReels() {
     const vids = $$('.reel video');
     if (!vids.length) return;
