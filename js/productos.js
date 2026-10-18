@@ -65,7 +65,7 @@ window.OBSIDIAN_PRODUCTS = [
     "tallas": [36, 37, 38, 39, 40, 41, 42, 43, 44],
     "genero": "Unisex",
     "colecciones": ["icons"],
-    "imagenes": ["img/products/af1-white-5.jpg", "img/products/af1-white-1.jpg", "img/products/af1-white-2.jpg", "img/products/af1-white-3.jpg", "img/products/af1-white-4.jpg"],
+    "imagenes": ["img/products/af1-white-5.jpg"],
     "agotado": false
   },
   {

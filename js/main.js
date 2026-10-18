@@ -179,7 +179,7 @@
       <div class="fimg" aria-hidden="true"><img alt=""></div>
       <div class="pl" aria-hidden="true">
         <div class="pl__meta mono"><span>Obsidian — Colección 2026</span><span id="plCount">000</span></div>
-        <div class="pl__frame">${['numeris-azul-1', 'j4-negro-1', 'lv-skate-black-1', 'samba-1', 'shox-negro-1', 'asics-plateado-1', 'j3-black-1', 'j1-patent-1', 'af1-white-1'].map((s, i) => `<img src="${u(`img/products/${s}.jpg`)}" alt=""${i ? '' : ' class="on"'}>`).join('')}</div>
+        <div class="pl__frame">${['numeris-azul-1', 'j4-negro-1', 'lv-skate-black-1', 'samba-1', 'shox-negro-1', 'asics-plateado-1', 'j3-black-1', 'j1-patent-1', 'af1-white-5'].map((s, i) => `<img src="${u(`img/products/${s}.jpg`)}" alt=""${i ? '' : ' class="on"'}>`).join('')}</div>
         <div class="pl__word">${'Obsidian'.split('').map(c => `<span>${c}</span>`).join('')}</div>
       </div>
       <div class="tr" aria-hidden="true"><div class="tr__panel"><div class="tr__line"></div><div class="tr__inner"><img class="tr__logo" src="${u('img/logo/obsidian-logo-sm.webp')}" alt=""><p class="tr__title"><span id="trTitle">${esc(body.dataset.title || 'Obsidian')}</span></p><p class="mono muted">${esc(CFG.dominio || '')}</p></div></div></div>
