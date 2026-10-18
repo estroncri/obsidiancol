@@ -128,7 +128,7 @@
     const l = link();
     $('#vLink').value = l;
     $('#seeStore').href = l;
-    const msg = `Mira los tenis de OBSIDIAN 👟 Pide aquí y te llegan a tu casa (los Air Force 1 Triple White los pagas al recibir):\n${l}`;
+    const msg = `Mira los tenis de OBSIDIAN 👟 Pide aquí y te llegan a tu casa (${CFG.contraentregaModelos || 'los modelos contraentrega'} los pagas al recibir):\n${l}`;
     $('#shareWa').href = `https://wa.me/?text=${encodeURIComponent(msg)}`;
     $('#shareNative').hidden = !navigator.share;
     $('#shareNative').onclick = () => navigator.share({ title: 'OBSIDIAN', text: 'Mira los tenis de OBSIDIAN 👟', url: l }).catch(() => {});

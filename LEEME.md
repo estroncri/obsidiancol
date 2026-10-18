@@ -1,6 +1,6 @@
 # OBSIDIAN — tienda de sneakers + panel de pedidos
 
-Sitio estático (HTML, CSS y JS) con 118 páginas, publicado en **https://obsidiancol.shop**. Los pedidos se registran en tu hoja de Google Sheets **OBSIDIAN Pedidos**, los ves en tu panel privado y te llegan por WhatsApp al 319 255 9674. Solo los Air Force 1 Triple White (blancos, de caña baja) se pagan contraentrega (marcados con `"contraentrega": true` en `js/productos.js`); los demás modelos, por adelantado.
+Sitio estático (HTML, CSS y JS) con 118 páginas, publicado en **https://obsidiancol.shop**. Los pedidos se registran en tu hoja de Google Sheets **OBSIDIAN Pedidos**, los ves en tu panel privado y te llegan por WhatsApp al 319 255 9674. Solo 4 pares se pagan contraentrega: Air Force 1 Triple White, Numeris azul, Numeris negro y Superstar negro (marcados con `"contraentrega": true` en `js/productos.js`; sus nombres para los textos están en `contraentregaModelos` de `js/config.js`). Los demás modelos, por adelantado.
 
 ## Dónde está cada cosa
 
