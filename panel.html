@@ -61,6 +61,7 @@
       <button type="button" role="tab" class="is-on" data-tab="pedidos" aria-selected="true">Pedidos <small id="tabPedN"></small></button>
       <button type="button" role="tab" data-tab="vendedores" aria-selected="false">Vendedores <small id="tabVenN"></small></button>
       <button type="button" role="tab" data-tab="costos" aria-selected="false">Costos <small id="tabCosN"></small></button>
+      <button type="button" role="tab" data-tab="resenas" aria-selected="false">Reseñas <small id="tabResN"></small></button>
     </div>
 
     <div id="tabPedidos">
@@ -149,6 +150,20 @@
       <p class="pn-costnote">Escribe lo que te cobra el proveedor (<b>te cuesta</b>) y a cuánto se lo das a tus vendedores (<b>precio vendedor</b>). Esta tabla solo la ves tú: los vendedores ven su precio vendedor, nunca tu costo. <label class="link pn-import">¿Tienes una lista? Importar CSV<input type="file" accept=".csv,text/csv,text/plain" id="costCsv" hidden></label></p>
       <div class="pn-costs" id="costList" role="table" aria-label="Costos por modelo"></div>
       <div class="pn-savebar" id="costBar" hidden><p class="mono" id="costDirty"></p><button class="btn btn--sm" type="button" id="costSave">Guardar costos <span class="btn__ico"></span></button></div>
+    </div>
+    <div id="tabResenas" hidden>
+      <div class="pn-head">
+        <div><p class="mono muted">Lo que dicen tus clientes</p><h1 class="s-lg">Rese<em>ñas</em></h1></div>
+        <p class="mono muted" id="resTotalTxt"></p>
+      </div>
+      <div class="pn-tools"><div class="pn-chips" id="resChips"></div></div>
+      <div class="pn-rv" id="resList"></div>
+      <div class="empty" id="resEmpty" hidden><p class="s-md">Sin <em>reseñas</em></p><p id="resEmptyTxt">Cuando un cliente deje una reseña en la página, aparecerá aquí para que la revises.</p></div>
+      <section class="pn-help" style="margin-top:2.4rem"><h2>Cómo <em>funciona</em></h2>
+        <p>Al final de todas las páginas de la tienda hay una sección de reseñas. Los clientes ponen estrellas, su opinión, fotos y un video. Todo llega aquí como <b>Pendiente</b>; en la página no se ve nada hasta que tú la publiques.</p>
+        <p><b>Publicar</b> la muestra en la página y comparte sus fotos y video con "cualquiera con el enlace". <b>Ocultar</b> la quita de la página y vuelve privados sus archivos. Los archivos quedan en tu Google Drive, en la carpeta "OBSIDIAN reseñas (fotos y videos)".</p>
+        <p>El número de pedido o celular que deja el cliente solo lo ves tú: úsalo para comprobar que de verdad compró.</p>
+      </section>
     </div>
   </main>
 </div>

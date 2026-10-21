@@ -235,3 +235,18 @@
   .ph__btns .btn { width: 100%; justify-content: center; }
   .ph__btns .chip { flex: 1; justify-content: center; padding: 0 .4rem; }
 }
+
+/* reseñas */
+.pn-rv { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; }
+.pn-rv__card { display: grid; gap: .8rem; align-content: start; padding: 1.1rem 1.2rem; background: var(--receipt); box-shadow: inset 0 0 0 1px var(--line); }
+.pn-rv__card[data-estado="Pendiente"] { box-shadow: inset 0 0 0 1px var(--ember); }
+.pn-rv__card[data-estado="Oculta"] { opacity: .6; }
+.pn-rv__top { display: flex; align-items: center; gap: .8rem; flex-wrap: wrap; }
+.pn-rv__stars { color: var(--ember); font-size: 1.1rem; letter-spacing: 2px; }
+.pn-rv__st { margin-left: auto; height: 26px; }
+.pn-rv__txt { line-height: 1.5; white-space: pre-line; }
+.pn-rv__media { display: flex; flex-wrap: wrap; gap: 6px; }
+.pn-rv__m { position: relative; width: 84px; height: 84px; display: grid; place-items: end start; background: var(--paper-3); overflow: hidden; }
+.pn-rv__m img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.pn-rv__m span { position: relative; margin: 4px; padding: 1px 5px; background: var(--ink); color: var(--paper); font-size: .58rem; }
+.pn-rv__acts { display: flex; gap: .6rem; flex-wrap: wrap; }

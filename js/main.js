@@ -221,7 +221,7 @@
         </div>
       </div>`);
 
-    document.body.insertAdjacentHTML('beforeend', `
+    document.body.insertAdjacentHTML('beforeend', `${reviewsSectionHTML()}
       <footer class="ft is-dark">
         <div class="marble" style="opacity:.22"></div>
         <div class="wrap">
@@ -245,7 +245,7 @@
           <div class="dw__foot"></div>
         </aside>
       </div>
-      <div class="toast" role="status" aria-live="polite"><img alt="" hidden><span class="mono"></span></div>`);
+      <div class="toast" role="status" aria-live="polite"><img alt="" hidden><span class="mono"></span></div>${reviewsModalHTML()}`);
   }
 
   function applyConfig() {
@@ -261,6 +261,245 @@
     $$('[data-n="models"]').forEach(el => { el.textContent = PRODUCTS.length; });
     $$('[data-n="brands"]').forEach(el => { el.textContent = brands().length; });
     $$('[data-price-of]').forEach(el => { const p = bySlug[el.dataset.priceOf]; if (p) el.textContent = fmt(p.precio); });
+  }
+
+  /* =====================================================================
+     Reseñas de clientes (al final de todas las páginas)
+     Se guardan en la hoja de Google (pestaña Resenas) y las fotos y videos en tu Drive.
+     Solo aparecen las que apruebas en el panel. Sin reseñas, invita a dejar la primera.
+     ===================================================================== */
+  const RV_CACHE = 'obs-rv-v1';
+  const RV_MAX_FOTOS = 4, RV_MAX_VIDEO = 20 * 1024 * 1024, RV_MAX_FOTO = 5 * 1024 * 1024;
+  const driveImg = (id, w = 900) => `https://drive.google.com/thumbnail?id=${encodeURIComponent(id)}&sz=w${w}`;
+  const driveVideo = id => `https://drive.google.com/file/d/${encodeURIComponent(id)}/preview`;
+  const STAR = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg>';
+  const starsHTML = n => `<span class="rv-stars" role="img" aria-label="${n} de 5 estrellas">${[1, 2, 3, 4, 5].map(i => `<i class="${i <= Math.round(n) ? 'is-on' : ''}">${STAR}</i>`).join('')}</span>`;
+  const rvDate = v => { const d = new Date(v); return isNaN(d) ? '' : d.toLocaleDateString('es-CO', { day: 'numeric', month: 'short', year: 'numeric' }); };
+  const rvPlay = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>';
+
+  function reviewsSectionHTML() {
+    return `
+      <section class="rv" id="resenas" aria-labelledby="rvTitle">
+        <div class="wrap">
+          <div class="rv__head">
+            <div><p class="mono muted">Lo que dicen nuestros clientes</p><h2 class="s-lg" id="rvTitle">Rese<em>ñas</em></h2></div>
+            <div class="rv__sum" id="rvSum"></div>
+          </div>
+          <div class="rv__list" id="rvList"><p class="mono muted">Cargando reseñas…</p></div>
+          <div class="rv__more"><button class="btn btn--line btn--sm" type="button" id="rvMore" hidden>Ver más reseñas ${btnIco}</button></div>
+          <div class="rv__cta">
+            <div><p class="rv__cta-t">¿Ya tienes tus <em>tenis</em>?</p><p class="mono muted">Cuéntanos cómo te fue. Puedes subir fotos y un video.</p></div>
+            <button class="btn" type="button" data-rv-open>Escribir una reseña ${btnIco}</button>
+          </div>
+        </div>
+      </section>`;
+  }
+
+  function reviewsModalHTML() {
+    const opts = [...PRODUCTS].sort((a, b) => fullName(a).localeCompare(fullName(b), 'es'))
+      .map(p => `<option value="${esc(p.id)}">${esc(fullName(p))} · ${esc(p.color)}</option>`).join('');
+    return `
+      <div class="rvm" id="rvModal" aria-hidden="true">
+        <div class="rvm__bg" data-rv-close></div>
+        <div class="rvm__box" role="dialog" aria-modal="true" aria-labelledby="rvmTitle" data-lenis-prevent>
+          <div class="rvm__head"><p class="rvm__title" id="rvmTitle">Tu <em>reseña</em></p><button class="dw__close mono" type="button" data-rv-close>Cerrar ${I.x}</button></div>
+          <form class="form rvm__form" id="rvForm" novalidate>
+            <div class="field full"><span class="mono muted">Calificación</span>
+              <div class="rv-rate" id="rvRate" role="radiogroup" aria-label="Calificación">${[1, 2, 3, 4, 5].map(i => `<button type="button" role="radio" aria-checked="false" aria-label="${i} ${i === 1 ? 'estrella' : 'estrellas'}" data-rate="${i}">${STAR}</button>`).join('')}</div>
+            </div>
+            <div class="field"><label class="mono" for="rvNombre">Tu nombre</label><input id="rvNombre" name="nombre" maxlength="40" autocomplete="name" required></div>
+            <div class="field"><label class="mono" for="rvCiudad">Ciudad</label><input id="rvCiudad" name="ciudad" maxlength="40" autocomplete="address-level2"></div>
+            <div class="field full"><label class="mono" for="rvProd">¿Qué tenis compraste?</label><select id="rvProd" name="producto"><option value="">Elige el modelo (opcional)</option>${opts}</select></div>
+            <div class="field full"><label class="mono" for="rvTexto">Tu opinión</label><textarea id="rvTexto" name="texto" rows="4" maxlength="1000" required placeholder="¿Cómo te llegaron? ¿Te quedó bien la talla? ¿Qué tal la calidad?"></textarea></div>
+            <div class="field full"><span class="mono muted">Fotos y video (opcional)</span>
+              <div class="rv-up">
+                <label class="chip mono">+ Fotos (hasta ${RV_MAX_FOTOS})<input type="file" id="rvFotos" accept="image/*" multiple hidden></label>
+                <label class="chip mono">+ Un video (máx. 20 MB)<input type="file" id="rvVideo" accept="video/*" hidden></label>
+              </div>
+              <div class="rv-prev" id="rvPrev"></div>
+            </div>
+            <div class="field full"><label class="mono" for="rvPedido">Número de pedido o celular (opcional, no se publica)</label><input id="rvPedido" name="pedido" maxlength="30" inputmode="text" autocomplete="off"></div>
+            <div class="sr-only" aria-hidden="true"><label for="rvWeb">No llenar este campo</label><input id="rvWeb" name="website" tabindex="-1" autocomplete="off"></div>
+            <p class="rv-err full" id="rvErr" role="alert"></p>
+            <button class="btn btn--block full" type="submit" id="rvSend">Enviar reseña ${btnIco}</button>
+            <p class="mono muted full">Revisamos cada reseña antes de publicarla. En la página solo aparece tu nombre con la inicial del apellido y tu ciudad.</p>
+          </form>
+          <div class="rvm__ok" id="rvOk" hidden>
+            <div class="done__ico">${I.check}</div>
+            <p class="rvm__title">¡Gracias por tu <em>reseña</em>!</p>
+            <p id="rvOkTxt"></p>
+            <button class="btn btn--line btn--sm" type="button" data-rv-close>Cerrar</button>
+          </div>
+        </div>
+      </div>
+      <div class="rvx" id="rvView" aria-hidden="true">
+        <div class="rvx__bg" data-rvx-close></div>
+        <div class="rvx__box" role="dialog" aria-modal="true" aria-label="Foto o video de la reseña">
+          <button class="rvx__close mono" type="button" data-rvx-close>Cerrar ${I.x}</button>
+          <div class="rvx__body" id="rvxBody"></div>
+        </div>
+      </div>`;
+  }
+
+  function initReviews() {
+    const sec = $('#resenas'), list = $('#rvList'), sum = $('#rvSum'), more = $('#rvMore');
+    if (!sec) return;
+    const cur = bySlug[body.dataset.product] || null;
+    let all = [], shown = 6;
+
+    const card = r => {
+      const p = byId[r.producto];
+      const media = [...(r.fotos || []).map(id => `<button type="button" class="rv-m" data-rv-img="${esc(id)}" aria-label="Ver foto"><img src="${driveImg(id, 500)}" alt="Foto de ${esc(r.nombre)}" loading="lazy" onerror="this.parentNode.classList.add('is-err')"></button>`),
+        ...(r.video ? [`<button type="button" class="rv-m rv-m--v" data-rv-vid="${esc(r.video)}" aria-label="Ver video"><img src="${driveImg(r.video, 500)}" alt="" loading="lazy" onerror="this.parentNode.classList.add('is-err')">${rvPlay}</button>`] : [])].join('');
+      return `<article class="rv-card${cur && r.producto === cur.id ? ' is-this' : ''}">
+        <div class="rv-card__top">${starsHTML(r.estrellas)}<span class="mono muted">${rvDate(r.fecha)}</span></div>
+        <p class="rv-card__txt">${esc(r.texto)}</p>
+        ${media ? `<div class="rv-card__media">${media}</div>` : ''}
+        <p class="rv-card__who"><b>${esc(r.nombre)}</b>${r.ciudad ? ` <span class="muted">· ${esc(r.ciudad)}</span>` : ''}</p>
+        ${p ? `<a class="mono rv-card__prod" href="${productUrl(p)}">${cur && p.id === cur.id ? 'Este modelo' : 'Compró'}: ${esc(fullName(p))} · ${esc(p.color)}</a>` : (r.producto_nombre ? `<p class="mono muted">Compró: ${esc(r.producto_nombre)}</p>` : '')}
+      </article>`;
+    };
+
+    const paint = () => {
+      if (!all.length) {
+        sum.innerHTML = '';
+        list.innerHTML = `<div class="rv-empty"><p class="rv-empty__t">Aún no hay <em>reseñas</em></p><p class="muted">Sé el primero en contar cómo te llegaron tus tenis. Tu opinión ayuda a otros a comprar con confianza.</p></div>`;
+        more.hidden = true;
+        return;
+      }
+      const avg = all.reduce((a, r) => a + (Number(r.estrellas) || 0), 0) / all.length;
+      sum.innerHTML = `<b class="rv__avg">${avg.toFixed(1).replace('.', ',')}</b><div>${starsHTML(avg)}<p class="mono muted">${all.length} ${all.length === 1 ? 'reseña' : 'reseñas'}</p></div>`;
+      const ordered = cur ? [...all.filter(r => r.producto === cur.id), ...all.filter(r => r.producto !== cur.id)] : all;
+      list.innerHTML = ordered.slice(0, shown).map(card).join('');
+      more.hidden = ordered.length <= shown;
+    };
+
+    const fetchList = () => {
+      const c = (() => { try { return JSON.parse(sess.get(RV_CACHE) || 'null'); } catch (e) { return null; } })();
+      if (c && Date.now() - c.t < 5 * 60e3) { all = c.r; paint(); return; }
+      if (!CFG.pedidosApi) { all = []; paint(); return; }
+      const ctl = new AbortController(); setTimeout(() => ctl.abort(), 12000);
+      fetch(CFG.pedidosApi, { method: 'POST', body: JSON.stringify({ accion: 'resenas' }), signal: ctl.signal })
+        .then(r => r.json())
+        .then(j => { all = j && j.ok && Array.isArray(j.resenas) ? j.resenas : []; sess.set(RV_CACHE, JSON.stringify({ t: Date.now(), r: all })); })
+        .catch(() => { all = []; })
+        .finally(paint);
+    };
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { io.disconnect(); fetchList(); } }, { rootMargin: '900px 0px' });
+      io.observe(sec);
+    } else fetchList();
+    more.addEventListener('click', () => { shown += 6; paint(); });
+
+    /* ----- formulario ----- */
+    const modal = $('#rvModal'), form = $('#rvForm'), err = $('#rvErr'), send = $('#rvSend'), prev = $('#rvPrev');
+    let rating = 0, fotos = [], video = null;
+    const setRate = n => { rating = n; $$('#rvRate [data-rate]').forEach(b => { const on = Number(b.dataset.rate) <= n; b.classList.toggle('is-on', on); b.setAttribute('aria-checked', String(Number(b.dataset.rate) === n)); }); };
+    const paintPrev = () => {
+      prev.innerHTML = [...fotos.map((f, i) => `<div class="rv-th"><img src="${f.url}" alt=""><button type="button" data-rm-foto="${i}" aria-label="Quitar foto">${I.x}</button></div>`),
+        ...(video ? [`<div class="rv-th rv-th--v"><video src="${video.url}" muted playsinline preload="metadata"></video>${rvPlay}<button type="button" data-rm-video aria-label="Quitar video">${I.x}</button></div>`] : [])].join('');
+    };
+    const reset = () => {
+      form.reset(); setRate(0); fotos.forEach(f => URL.revokeObjectURL(f.url)); if (video) URL.revokeObjectURL(video.url);
+      fotos = []; video = null; paintPrev(); err.textContent = ''; form.hidden = false; $('#rvOk').hidden = true;
+    };
+    const open = () => {
+      reset();
+      if (cur) $('#rvProd').value = cur.id;
+      modal.classList.add('is-open'); modal.setAttribute('aria-hidden', 'false'); lock();
+      setTimeout(() => $('#rvRate [data-rate="5"]')?.focus(), 80);
+    };
+    const close = () => { modal.classList.remove('is-open'); modal.setAttribute('aria-hidden', 'true'); unlock(); };
+
+    $('#rvRate').addEventListener('click', e => { const b = e.target.closest('[data-rate]'); if (b) setRate(Number(b.dataset.rate)); });
+    $('#rvFotos').addEventListener('change', e => {
+      const files = [...e.target.files].filter(f => /^image\//.test(f.type) || /\.(heic|heif)$/i.test(f.name));
+      const room = RV_MAX_FOTOS - fotos.length;
+      files.slice(0, room).forEach(f => fotos.push({ file: f, url: URL.createObjectURL(f) }));
+      err.textContent = files.length > room ? `Puedes subir hasta ${RV_MAX_FOTOS} fotos.` : '';
+      e.target.value = ''; paintPrev();
+    });
+    $('#rvVideo').addEventListener('change', e => {
+      const f = e.target.files[0]; e.target.value = '';
+      if (!f) return;
+      if (f.size > RV_MAX_VIDEO) { err.textContent = 'El video pesa más de 20 MB. Graba uno más corto (unos 15 segundos) y vuelve a intentar.'; return; }
+      if (video) URL.revokeObjectURL(video.url);
+      video = { file: f, url: URL.createObjectURL(f) }; err.textContent = ''; paintPrev();
+    });
+    prev.addEventListener('click', e => {
+      const rf = e.target.closest('[data-rm-foto]'); if (rf) { const i = Number(rf.dataset.rmFoto); URL.revokeObjectURL(fotos[i].url); fotos.splice(i, 1); paintPrev(); return; }
+      if (e.target.closest('[data-rm-video]')) { URL.revokeObjectURL(video.url); video = null; paintPrev(); }
+    });
+
+    /* fotos: se reducen a 1600 px en JPEG antes de enviarlas */
+    const shrink = file => new Promise(res => {
+      const url = URL.createObjectURL(file), img = new Image();
+      img.onload = () => {
+        const s = Math.min(1, 1600 / Math.max(img.naturalWidth, img.naturalHeight));
+        const c = document.createElement('canvas'); c.width = Math.round(img.naturalWidth * s); c.height = Math.round(img.naturalHeight * s);
+        c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(url);
+        c.toBlob(b => res(b || file), 'image/jpeg', .84);
+      };
+      img.onerror = () => { URL.revokeObjectURL(url); res(file); };
+      img.src = url;
+    });
+    const b64 = blob => new Promise((res, rej) => { const fr = new FileReader(); fr.onload = () => res(String(fr.result).split(',')[1] || ''); fr.onerror = rej; fr.readAsDataURL(blob); });
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      err.textContent = '';
+      const d = Object.fromEntries(new FormData(form));
+      if (!rating) { err.textContent = 'Elige de 1 a 5 estrellas.'; return; }
+      if (String(d.nombre || '').trim().length < 2) { err.textContent = 'Escribe tu nombre.'; $('#rvNombre').focus(); return; }
+      if (String(d.texto || '').trim().length < 8) { err.textContent = 'Cuéntanos un poco más en tu opinión.'; $('#rvTexto').focus(); return; }
+      if (!CFG.pedidosApi) { err.textContent = 'Por ahora no podemos recibir reseñas aquí. Escríbenos por WhatsApp.'; return; }
+      send.disabled = true;
+      const label = send.firstChild; const old = label.textContent;
+      try {
+        label.textContent = fotos.length || video ? 'Subiendo fotos y video… ' : 'Enviando… ';
+        const fotosB = [];
+        for (const f of fotos) {
+          const b = await shrink(f.file);
+          if (b.size > RV_MAX_FOTO) continue;
+          fotosB.push({ tipo: b.type || f.file.type || 'image/jpeg', datos: await b64(b) });
+        }
+        const vid = video ? { tipo: video.file.type || 'video/mp4', datos: await b64(video.file) } : null;
+        const p = byId[d.producto];
+        const payload = { accion: 'resenaCrear', website: d.website || '', resena: {
+          estrellas: rating, nombre: String(d.nombre).trim(), ciudad: String(d.ciudad || '').trim(), texto: String(d.texto).trim(),
+          producto: p ? p.id : '', producto_nombre: p ? `${fullName(p)} · ${p.color}` : '', pedido: String(d.pedido || '').trim(),
+          origen: location.pathname, fotos: fotosB, video: vid } };
+        const ctl = new AbortController(); const t = setTimeout(() => ctl.abort(), 180000);
+        const r = await fetch(CFG.pedidosApi, { method: 'POST', body: JSON.stringify(payload), signal: ctl.signal });
+        clearTimeout(t);
+        const j = await r.json();
+        if (!j || !j.ok) throw new Error((j && j.error) || 'error');
+        form.hidden = true; $('#rvOk').hidden = false;
+        $('#rvOkTxt').textContent = `${String(d.nombre).trim().split(' ')[0]}, recibimos tu reseña${j.fotos && j.video ? ' con tus fotos y tu video' : j.fotos ? (j.fotos > 1 ? ' con tus fotos' : ' con tu foto') : j.video ? ' con tu video' : ''}. La publicamos apenas la revisemos.`;
+      } catch (ex) {
+        err.innerHTML = `No pudimos enviar tu reseña${video ? ' (si el video es muy pesado, prueba sin él)' : ''}. Intenta de nuevo o <a class="link" href="${waLink('Hola OBSIDIAN 👋 Quiero dejar una reseña de mi compra.')}" target="_blank" rel="noopener">mándanosla por WhatsApp</a>.`;
+      } finally {
+        send.disabled = false; label.textContent = old;
+      }
+    });
+
+    /* ----- visor de fotos y videos ----- */
+    const view = $('#rvView'), vbody = $('#rvxBody');
+    const openView = html => { vbody.innerHTML = html; view.classList.add('is-open'); view.setAttribute('aria-hidden', 'false'); lock(); };
+    const closeView = () => { view.classList.remove('is-open'); view.setAttribute('aria-hidden', 'true'); vbody.innerHTML = ''; if (!modal.classList.contains('is-open')) unlock(); };
+
+    document.addEventListener('click', e => {
+      if (e.target.closest('[data-rv-open]')) { open(); return; }
+      if (e.target.closest('[data-rv-close]')) { close(); return; }
+      if (e.target.closest('[data-rvx-close]')) { closeView(); return; }
+      const im = e.target.closest('[data-rv-img]'); if (im) { openView(`<img src="${driveImg(im.dataset.rvImg, 1600)}" alt="Foto de la reseña">`); return; }
+      const vd = e.target.closest('[data-rv-vid]'); if (vd) openView(`<iframe src="${driveVideo(vd.dataset.rvVid)}" allow="autoplay; fullscreen" allowfullscreen title="Video de la reseña"></iframe>`);
+    });
+    addEventListener('keydown', e => {
+      if (e.key !== 'Escape') return;
+      if (view.classList.contains('is-open')) closeView(); else if (modal.classList.contains('is-open')) close();
+    });
+    if (location.hash === '#escribir-resena') setTimeout(open, 600);
   }
 
   /* =====================================================================
@@ -1141,6 +1380,7 @@
   try { pageTl = PAGES[PAGE]?.() || null; } catch (err) { console.error('[OBSIDIAN]', err); }
   initAccordions();
   initReels();
+  try { initReviews(); } catch (err) { console.error('[OBSIDIAN reseñas]', err); }
   initCursor();
   initMagnetic();
 

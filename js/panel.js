@@ -40,7 +40,7 @@
   const thisMonth = p => { const d = toDate(p.fecha), h = new Date(); return d && d.getMonth() === h.getMonth() && d.getFullYear() === h.getFullYear(); };
 
   let clave = '', demo = false, filtro = 'Todos', q = '', abierto = null, timer = null, tab = 'pedidos', editando = null, pagando = null;
-  let pedidos = [], vendedores = [], costos = {}, precios = {};
+  let pedidos = [], vendedores = [], costos = {}, precios = {}, resenas = [], rfiltro = 'Pendiente';
   let dirty = {}; // cambios sin guardar en la tabla de costos: { id: { costo, base } }
 
   /* ---------- utilidades de interfaz ---------- */
@@ -70,7 +70,7 @@
     } finally { clearTimeout(t); }
   }
   function take(j) {
-    pedidos = j.pedidos || []; vendedores = j.vendedores || []; costos = j.costos || {}; precios = j.precios || {};
+    pedidos = j.pedidos || []; vendedores = j.vendedores || []; costos = j.costos || {}; precios = j.precios || {}; resenas = j.resenas || [];
   }
 
   /* ---------- acceso ---------- */
@@ -107,7 +107,7 @@
     if (!demo) timer = setInterval(() => { if (!document.hidden) load(true); }, 60000);
   }
   function logout(msg) {
-    clearInterval(timer); keep.clear(); clave = ''; demo = false; pedidos = []; vendedores = []; costos = {}; precios = {}; dirty = {}; closeDetail();
+    clearInterval(timer); keep.clear(); clave = ''; demo = false; pedidos = []; vendedores = []; costos = {}; precios = {}; resenas = []; dirty = {}; closeDetail();
     view('login'); $('#clave').value = ''; $('#loginErr').textContent = msg || '';
     document.title = 'Panel OBSIDIAN';
   }
@@ -207,6 +207,7 @@
   function render() {
     renderOrders();
     renderVendors();
+    renderReviews();
     if (!typingIn('#costList')) renderCosts();
   }
 
@@ -579,10 +580,59 @@
     setTimeout(() => URL.revokeObjectURL(url), 2000);
   }
 
+  /* ---------- reseñas ---------- */
+  const ESTADOS_RES = ['Pendiente', 'Publicada', 'Oculta'];
+  const driveImg = id => `https://drive.google.com/thumbnail?id=${encodeURIComponent(id)}&sz=w400`;
+  const driveView = id => `https://drive.google.com/file/d/${encodeURIComponent(id)}/view`;
+  const stars = n => '★★★★★'.slice(0, Math.max(0, Math.min(5, n))) + '☆☆☆☆☆'.slice(0, 5 - Math.max(0, Math.min(5, n)));
+  function renderReviews() {
+    const nPend = resenas.filter(r => r.estado === 'Pendiente').length;
+    $('#tabResN').textContent = nPend ? `(${nPend})` : '';
+    const pub = resenas.filter(r => r.estado === 'Publicada');
+    const avg = pub.length ? pub.reduce((a, r) => a + Number(r.estrellas || 0), 0) / pub.length : 0;
+    $('#resTotalTxt').textContent = resenas.length ? `${pub.length} publicadas${pub.length ? ` · promedio ${avg.toFixed(1).replace('.', ',')} ★` : ''}` : '';
+    const count = e => e === 'Todas' ? resenas.length : resenas.filter(r => r.estado === e).length;
+    $('#resChips').innerHTML = [...ESTADOS_RES, 'Todas'].map(e => `<button type="button" class="chip mono${rfiltro === e ? ' is-on' : ''}" data-rf="${e}">${e === 'Pendiente' ? 'Por revisar' : e === 'Publicada' ? 'Publicadas' : e === 'Oculta' ? 'Ocultas' : 'Todas'} <small>${count(e)}</small></button>`).join('');
+    const lista = rfiltro === 'Todas' ? resenas : resenas.filter(r => r.estado === rfiltro);
+    $('#resEmpty').hidden = !!lista.length;
+    $('#resEmptyTxt').textContent = resenas.length ? 'No hay reseñas en este filtro.' : 'Cuando un cliente deje una reseña en la página, aparecerá aquí para que la revises.';
+    $('#resList').innerHTML = lista.map(r => {
+      const p = byId[r.producto];
+      const media = [...(r.fotos || []).map(id => `<a class="pn-rv__m" href="${driveView(id)}" target="_blank" rel="noopener" title="Abrir foto en Drive"><img src="${driveImg(id)}" alt="" loading="lazy" onerror="this.remove()"><span class="mono">Foto</span></a>`),
+        ...(r.video ? [`<a class="pn-rv__m pn-rv__m--v" href="${driveView(r.video)}" target="_blank" rel="noopener" title="Abrir video en Drive"><img src="${driveImg(r.video)}" alt="" loading="lazy" onerror="this.remove()"><span class="mono">Video ▶</span></a>`] : [])].join('');
+      const d = toDate(r.fecha);
+      return `<article class="pn-rv__card" data-estado="${esc(r.estado)}">
+        <div class="pn-rv__top"><span class="pn-rv__stars" aria-label="${r.estrellas} de 5">${stars(Number(r.estrellas) || 0)}</span><span class="mono muted">${d ? dfFull.format(d) : ''}</span><span class="chip mono pn-rv__st">${esc(r.estado)}</span></div>
+        <p class="pn-rv__txt">${esc(r.texto)}</p>
+        ${media ? `<div class="pn-rv__media">${media}</div>` : ''}
+        <p class="mono"><b>${esc(r.nombre)}</b>${r.ciudad ? ' · ' + esc(r.ciudad) : ''}${p ? ` · <a class="link" href="${SITE}/productos/${esc(p.slug || '')}.html" target="_blank" rel="noopener">${esc(fullName(p))} ${esc(p.color)}</a>` : (r.producto_nombre ? ' · ' + esc(r.producto_nombre) : '')}</p>
+        ${r.pedido ? `<p class="mono muted">Para verificar: ${esc(r.pedido)}</p>` : ''}
+        <div class="pn-rv__acts">
+          ${r.estado !== 'Publicada' ? `<button class="btn btn--sm" type="button" data-rv-set="Publicada" data-id="${esc(r.id)}">Publicar ${btnIco}</button>` : ''}
+          ${r.estado !== 'Oculta' ? `<button class="btn btn--line btn--sm" type="button" data-rv-set="Oculta" data-id="${esc(r.id)}">Ocultar</button>` : ''}
+        </div>
+      </article>`;
+    }).join('');
+  }
+  async function setReview(id, estado) {
+    const r = resenas.find(x => x.id === id); if (!r) return;
+    if (demo) { r.estado = estado; renderReviews(); toast('En la demostración los cambios no se guardan'); return; }
+    $$(`[data-rv-set][data-id="${CSS.escape(id)}"]`).forEach(b => { b.disabled = true; });
+    try {
+      const j = await api({ accion: 'resenaEstado', clave, id, estado });
+      if (!j.ok) throw new Error(j.error);
+      r.estado = estado; renderReviews();
+      toast(estado === 'Publicada' ? 'Reseña publicada en la página' : 'Reseña oculta');
+    } catch (e) {
+      toast('No se pudo guardar. Revisa tu conexión.');
+      renderReviews();
+    }
+  }
+
   function setTab(t) {
     tab = t;
     $$('.pn-tabs [data-tab]').forEach(b => { const on = b.dataset.tab === t; b.classList.toggle('is-on', on); b.setAttribute('aria-selected', on); });
-    $('#tabPedidos').hidden = t !== 'pedidos'; $('#tabVendedores').hidden = t !== 'vendedores'; $('#tabCostos').hidden = t !== 'costos';
+    $('#tabPedidos').hidden = t !== 'pedidos'; $('#tabVendedores').hidden = t !== 'vendedores'; $('#tabCostos').hidden = t !== 'costos'; $('#tabResenas').hidden = t !== 'resenas';
     $('#csvBtn').hidden = t !== 'pedidos';
   }
 
@@ -614,6 +664,8 @@
     const cl = e.target.closest('[data-copy-link]'); if (cl) { copyText(cl.dataset.copyLink, 'Enlace copiado'); return; }
     const cm = e.target.closest('[data-copy-msg]'); if (cm) { copyText(cm.dataset.copyMsg, 'Mensaje copiado'); return; }
     const pay = e.target.closest('[data-pay]'); if (pay) { payVendor(pay.dataset.pay); return; }
+    const rf = e.target.closest('[data-rf]'); if (rf) { rfiltro = rf.dataset.rf; renderReviews(); return; }
+    const rs = e.target.closest('[data-rv-set]'); if (rs) { setReview(rs.dataset.id, rs.dataset.rvSet); return; }
     const ed = e.target.closest('[data-edit-ven]'); if (ed) { editVendor(ed.dataset.editVen); return; }
     const rg = e.target.closest('[data-register]'); if (rg) { resetForm(); $('#vCod').value = rg.dataset.register; $('#vCod').dataset.touched = '1'; updatePreview(); $('#vNombre').focus(); return; }
     if (pagando && !e.target.closest('[data-pay]')) { pagando = null; renderVendors(); }

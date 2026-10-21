@@ -1,5 +1,6 @@
 /**
- * @OnlyCurrentDoc  El script solo puede acceder a esta hoja, no a tus otros archivos.
+ * @OnlyCurrentDoc  El script solo puede acceder a esta hoja y, en Drive, solo a la carpeta de reseñas que él mismo crea
+ *                  (permisos en appsscript.json: ver herramientas/appsscript.json).
  */
 /* =====================================================================
    OBSIDIAN — pedidos, vendedores y costos en Google Sheets (Apps Script)
@@ -9,6 +10,10 @@
    - "Vendedores": tus trabajadores (código, nombre, celular, PIN).
    - "Costos": por modelo, lo que te cuesta y a cuánto se lo das al vendedor.
    - "PreciosVendedores": el precio de venta que puso cada vendedor.
+   - "Resenas": las reseñas de los clientes. Las fotos y videos van a la carpeta
+     "OBSIDIAN reseñas (fotos y videos)" de tu Drive. Solo se ven en la página las que
+     apruebas en el panel (pestaña Reseñas); al aprobarlas, sus fotos y videos se comparten
+     con "cualquiera con el enlace" y al ocultarlas vuelven a ser privados.
 
    CLAVE DEL PANEL: en la hoja, menú  OBSIDIAN → Definir clave del panel.
 
@@ -22,6 +27,10 @@
 
    Si cambias este código: Implementar → Administrar implementaciones → editar (lápiz)
    → Versión: "Nueva versión" → Implementar. La URL no cambia.
+
+   PERMISOS (appsscript.json): Configuración del proyecto → "Mostrar el archivo de manifiesto
+   appsscript.json" y deja en "oauthScopes" los tres permisos de herramientas/appsscript.json.
+   La primera vez que se use Drive, Google te pide autorizar de nuevo.
    ===================================================================== */
 
 const HOJA = 'Pedidos';
@@ -32,6 +41,11 @@ const HOJA_COSTOS = 'Costos';
 const COLUMNAS_COSTOS = ['producto', 'nombre', 'costo', 'precio_vendedor'];
 const HOJA_PRECIOS = 'PreciosVendedores';
 const COLUMNAS_PRECIOS = ['codigo', 'producto', 'precio', 'actualizado'];
+const HOJA_RES = 'Resenas';
+const COLUMNAS_RES = ['id', 'fecha', 'estado', 'estrellas', 'nombre', 'ciudad', 'producto', 'producto_nombre', 'texto', 'fotos', 'video', 'pedido', 'origen'];
+const ESTADOS_RES = ['Pendiente', 'Publicada', 'Oculta'];
+const PROP_CARPETA = 'CARPETA_RESENAS';
+const MAX_FOTO = 5 * 1024 * 1024, MAX_VIDEO = 25 * 1024 * 1024;
 const SEMILLA_COSTOS = [['af1-white', 'Nike Air Force 1 Triple White', 90000, 100000]];
 const ESTADOS = ['Nuevo', 'Confirmado', 'Enviado', 'Entregado', 'Cancelado'];
 const PROP_CLAVE = 'CLAVE_PANEL';
@@ -84,7 +98,8 @@ function hojaCostos_() {
   return sh;
 }
 function hojaPrecios_() { return pestana_(HOJA_PRECIOS, COLUMNAS_PRECIOS); }
-function todas_() { hoja_(); hojaVend_(); hojaCostos_(); hojaPrecios_(); }
+function hojaRes_() { return pestana_(HOJA_RES, COLUMNAS_RES); }
+function todas_() { hoja_(); hojaVend_(); hojaCostos_(); hojaPrecios_(); hojaRes_(); }
 
 function encabezado_(sh) { return sh.getRange(1, 1, 1, Math.max(1, sh.getLastColumn())).getValues()[0].map(String); }
 function agregar_(sh, obj) { sh.appendRow(encabezado_(sh).map(h => (obj[h] === undefined ? '' : obj[h]))); }
@@ -190,6 +205,8 @@ function doPost(e) {
   // públicas
   if (body.accion === 'crear') return crear_(body);
   if (body.accion === 'preciosRef') return preciosRef_(body);
+  if (body.accion === 'resenas') return resenasPublicas_();
+  if (body.accion === 'resenaCrear') return resenaCrear_(body);
   // vendedores (código + PIN)
   if (body.accion === 'vendedorEntrar' || body.accion === 'vendedorPrecios') {
     const a = autorizarVendedor_(body.codigo, body.pin);
@@ -204,6 +221,7 @@ function doPost(e) {
   if (body.accion === 'guardarVendedor') return guardarVendedor_(body);
   if (body.accion === 'pagarVendedor') return pagarVendedor_(body);
   if (body.accion === 'guardarCostos') return guardarCostos_(body);
+  if (body.accion === 'resenaEstado') return resenaEstado_(body);
   return json_({ ok: false, error: 'accion' });
 }
 
@@ -281,7 +299,7 @@ function listar_() {
   }));
   const precios = {};
   filas_(hojaPrecios_()).forEach(r => { const c = String(r.codigo); (precios[c] = precios[c] || {})[String(r.producto)] = num_(r.precio); });
-  return json_({ ok: true, pedidos: pedidos_(), vendedores: vendedores, costos: costos, precios: precios });
+  return json_({ ok: true, pedidos: pedidos_(), vendedores: vendedores, costos: costos, precios: precios, resenas: resenasTodas_() });
 }
 
 function actualizar_(body) {
@@ -396,4 +414,104 @@ function vendedorPrecios_(v, body) {
   } finally {
     lock.releaseLock();
   }
+}
+
+/* ---------- reseñas ---------- */
+function lista_(v) { try { const a = JSON.parse(v || '[]'); return Array.isArray(a) ? a.map(String) : []; } catch (err) { return []; } }
+/* "Rooney Agamez" → "Rooney A." */
+function nombrePublico_(n) {
+  const p = String(n || '').trim().split(/\s+/);
+  return p[0] ? p[0] + (p[1] ? ' ' + p[1].charAt(0).toUpperCase() + '.' : '') : 'Cliente';
+}
+function carpetaRes_() {
+  const props = PropertiesService.getScriptProperties();
+  const id = props.getProperty(PROP_CARPETA);
+  if (id) { try { return DriveApp.getFolderById(id); } catch (err) { /* la borraron: se crea otra */ } }
+  const f = DriveApp.createFolder('OBSIDIAN reseñas (fotos y videos)');
+  props.setProperty(PROP_CARPETA, f.getId());
+  return f;
+}
+/* a = { tipo, datos (base64) } → id del archivo en Drive (privado hasta que se publique la reseña) */
+function archivo_(a, carpeta, nombre, max, tipos) {
+  if (!a || !a.datos) return '';
+  const tipo = String(a.tipo || '').toLowerCase();
+  if (!tipos.test(tipo)) return '';
+  let bytes;
+  try { bytes = Utilities.base64Decode(String(a.datos)); } catch (err) { return ''; }
+  if (!bytes.length || bytes.length > max) return '';
+  const ext = (tipo.split('/')[1] || 'bin').replace('quicktime', 'mov').replace('jpeg', 'jpg').replace(/[^a-z0-9]/g, '');
+  return carpeta.createFile(Utilities.newBlob(bytes, tipo, nombre + '.' + ext)).getId();
+}
+function compartir_(ids, publico) {
+  ids.forEach(id => {
+    try {
+      const f = DriveApp.getFileById(id);
+      if (publico) f.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+      else f.setSharing(DriveApp.Access.PRIVATE, DriveApp.Permission.NONE);
+    } catch (err) { /* el archivo ya no existe */ }
+  });
+}
+
+function resenaCrear_(body) {
+  if (body.website) return json_({ ok: true, id: '' }); // campo trampa contra bots
+  const r = body.resena || {};
+  const estrellas = Math.round(Number(r.estrellas));
+  const nombre = txt_(r.nombre, 40), texto = txt_(r.texto, 1000);
+  if (!(estrellas >= 1 && estrellas <= 5) || nombre.length < 2 || texto.length < 8) return json_({ ok: false, error: 'datos' });
+  const cache = CacheService.getScriptCache();
+  const enviadas = Number(cache.get('res_n') || 0);
+  if (enviadas >= 30) return json_({ ok: false, error: 'muchas' }); // más de 30 en 10 minutos: algo raro
+  cache.put('res_n', String(enviadas + 1), 600);
+  const id = 'R' + Utilities.formatDate(new Date(), 'America/Bogota', 'yyMMddHHmmss') + Math.floor(Math.random() * 90 + 10);
+  const fotosIn = Array.isArray(r.fotos) ? r.fotos.slice(0, 4) : [];
+  let fotos = [], video = '';
+  if (fotosIn.length || (r.video && r.video.datos)) {
+    const carpeta = carpetaRes_();
+    fotos = fotosIn.map((f, i) => archivo_(f, carpeta, id + '-foto' + (i + 1), MAX_FOTO, /^image\/(jpeg|png|webp|heic|heif)$/)).filter(String);
+    video = archivo_(r.video, carpeta, id + '-video', MAX_VIDEO, /^video\/(mp4|quicktime|webm|3gpp|x-m4v)$/);
+  }
+  agregar_(hojaRes_(), {
+    id: id, fecha: new Date(), estado: 'Pendiente', estrellas: estrellas, nombre: nombre, ciudad: txt_(r.ciudad, 40),
+    producto: txt_(r.producto, 40), producto_nombre: txt_(r.producto_nombre, 120), texto: texto,
+    fotos: JSON.stringify(fotos), video: video, pedido: txt_(r.pedido, 30), origen: txt_(r.origen, 120),
+  });
+  return json_({ ok: true, id: id, fotos: fotos.length, video: !!video });
+}
+
+/* lo que ve el público: solo las publicadas, sin datos de contacto */
+function resenasPublicas_() {
+  const cache = CacheService.getScriptCache();
+  const guardado = cache.get('res_pub');
+  if (guardado) return json_({ ok: true, resenas: JSON.parse(guardado) });
+  const lista = filas_(hojaRes_()).filter(r => r.id && String(r.estado) === 'Publicada').map(r => ({
+    id: String(r.id), fecha: iso_(r.fecha), estrellas: Number(r.estrellas) || 5, nombre: nombrePublico_(r.nombre), ciudad: String(r.ciudad || ''),
+    producto: String(r.producto || ''), producto_nombre: String(r.producto_nombre || ''), texto: String(r.texto || ''),
+    fotos: lista_(r.fotos), video: String(r.video || ''),
+  })).reverse().slice(0, 200);
+  const s = JSON.stringify(lista);
+  if (s.length < 90000) cache.put('res_pub', s, 300);
+  return json_({ ok: true, resenas: lista });
+}
+
+/* para el panel: todas, con el dato para verificar la compra */
+function resenasTodas_() {
+  return filas_(hojaRes_()).filter(r => r.id).map(r => ({
+    id: String(r.id), fecha: iso_(r.fecha), estado: String(r.estado || 'Pendiente'), estrellas: Number(r.estrellas) || 0,
+    nombre: String(r.nombre || ''), ciudad: String(r.ciudad || ''), producto: String(r.producto || ''), producto_nombre: String(r.producto_nombre || ''),
+    texto: String(r.texto || ''), fotos: lista_(r.fotos), video: String(r.video || ''), pedido: String(r.pedido || ''),
+  })).reverse();
+}
+
+function resenaEstado_(body) {
+  const estado = String(body.estado || '');
+  if (ESTADOS_RES.indexOf(estado) < 0) return json_({ ok: false, error: 'estado' });
+  const sh = hojaRes_();
+  const fila = buscarFila_(sh, { id: body.id });
+  if (!fila) return json_({ ok: false, error: 'no_existe' });
+  const r = filas_(sh)[fila - 2];
+  poner_(sh, fila, 'estado', estado);
+  const ids = lista_(r.fotos).concat(r.video ? [String(r.video)] : []);
+  if (ids.length) compartir_(ids, estado === 'Publicada');
+  CacheService.getScriptCache().remove('res_pub');
+  return json_({ ok: true });
 }
