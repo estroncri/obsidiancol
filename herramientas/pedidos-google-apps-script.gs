@@ -30,7 +30,8 @@
 
    PERMISOS (appsscript.json): Configuración del proyecto → "Mostrar el archivo de manifiesto
    appsscript.json" y deja en "oauthScopes" los tres permisos de herramientas/appsscript.json.
-   La primera vez que se use Drive, Google te pide autorizar de nuevo.
+   Además, en el editor: Servicios (+) → "Drive API" (v3) → Agregar. Con eso las reseñas
+   guardan fotos y videos usando solo el permiso drive.file (sin acceso a tus otros archivos).
    ===================================================================== */
 
 const HOJA = 'Pedidos';
@@ -423,16 +424,20 @@ function nombrePublico_(n) {
   const p = String(n || '').trim().split(/\s+/);
   return p[0] ? p[0] + (p[1] ? ' ' + p[1].charAt(0).toUpperCase() + '.' : '') : 'Cliente';
 }
+/* Drive se maneja con el servicio avanzado "Drive API" (Servicios → Drive API, v3): funciona con el permiso
+   drive.file, que solo deja tocar los archivos que este script crea. */
 function carpetaRes_() {
   const props = PropertiesService.getScriptProperties();
   const id = props.getProperty(PROP_CARPETA);
-  if (id) { try { return DriveApp.getFolderById(id); } catch (err) { /* la borraron: se crea otra */ } }
-  const f = DriveApp.createFolder('OBSIDIAN reseñas (fotos y videos)');
-  props.setProperty(PROP_CARPETA, f.getId());
-  return f;
+  if (id) {
+    try { const f = Drive.Files.get(id, { fields: 'id,trashed' }); if (!f.trashed) return id; } catch (err) { /* la borraron: se crea otra */ }
+  }
+  const f = Drive.Files.create({ name: 'OBSIDIAN reseñas (fotos y videos)', mimeType: 'application/vnd.google-apps.folder' });
+  props.setProperty(PROP_CARPETA, f.id);
+  return f.id;
 }
 /* a = { tipo, datos (base64) } → id del archivo en Drive (privado hasta que se publique la reseña) */
-function archivo_(a, carpeta, nombre, max, tipos) {
+function archivo_(a, carpetaId, nombre, max, tipos) {
   if (!a || !a.datos) return '';
   const tipo = String(a.tipo || '').toLowerCase();
   if (!tipos.test(tipo)) return '';
@@ -440,15 +445,16 @@ function archivo_(a, carpeta, nombre, max, tipos) {
   try { bytes = Utilities.base64Decode(String(a.datos)); } catch (err) { return ''; }
   if (!bytes.length || bytes.length > max) return '';
   const ext = (tipo.split('/')[1] || 'bin').replace('quicktime', 'mov').replace('jpeg', 'jpg').replace(/[^a-z0-9]/g, '');
-  return carpeta.createFile(Utilities.newBlob(bytes, tipo, nombre + '.' + ext)).getId();
+  const blob = Utilities.newBlob(bytes, tipo, nombre + '.' + ext);
+  return Drive.Files.create({ name: blob.getName(), parents: [carpetaId] }, blob, { fields: 'id' }).id;
 }
+/* publicar: cualquiera con el enlace puede ver; ocultar: vuelve a ser privado */
 function compartir_(ids, publico) {
   ids.forEach(id => {
     try {
-      const f = DriveApp.getFileById(id);
-      if (publico) f.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
-      else f.setSharing(DriveApp.Access.PRIVATE, DriveApp.Permission.NONE);
-    } catch (err) { /* el archivo ya no existe */ }
+      if (publico) Drive.Permissions.create({ role: 'reader', type: 'anyone' }, id);
+      else Drive.Permissions.remove(id, 'anyoneWithLink');
+    } catch (err) { /* ya estaba así o el archivo no existe */ }
   });
 }
 
