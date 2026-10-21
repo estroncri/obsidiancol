@@ -57,6 +57,7 @@ const BRAND_DESC = {
   Puma: 'Gamuza XL y estética de terraza retro para el día a día.',
   ASICS: 'Tecnología GEL y estética runner de los 2000.',
   Numeris: 'Las más pedidas de la tienda: lona, puntera de cuero, cordones gruesos y suela plataforma.',
+  BAPE: 'Bape Sta: la silueta japonesa de A Bathing Ape, en charol y con su estrella a un lado.',
 };
 const BRANDS = [...new Set(P.map(p => p.marca))].map(m => ({ name: m, slug: slugify(m), items: P.filter(p => p.marca === m), desc: BRAND_DESC[m] || `Todos los modelos ${m} de OBSIDIAN.` }))
   .sort((a, b) => b.items.length - a.items.length);

@@ -1,4 +1,4 @@
-/* Catálogo OBSIDIAN — 182 modelos (proveedores: korvenoficial.store y BAKAYOCO).
+/* Catálogo OBSIDIAN — 219 modelos (proveedores: korvenoficial.store y BAKAYOCO).
  *
  * Para agregar un par:
  *  1. Copia un bloque completo y cambia: id (único), slug (la dirección de su página,
@@ -668,16 +668,46 @@ window.OBSIDIAN_PRODUCTS = [
     "colecciones": [],
     "imagenes": ["img/products/on-cloud-ninos-1.jpg", "img/products/on-cloud-ninos-2.jpg", "img/products/on-cloud-ninos-3.jpg", "img/products/on-cloud-ninos-4.jpg", "img/products/on-cloud-ninos-5.jpg", "img/products/on-cloud-ninos-6.jpg", "img/products/on-cloud-ninos-7.jpg", "img/products/on-cloud-ninos-8.jpg", "img/products/on-cloud-ninos-9.jpg", "img/products/on-cloud-ninos-10.jpg"],
     "colores": [
-      { "nombre": "Blanco · Rosado", "foto": 1 },
-      { "nombre": "Blanco · Naranja", "foto": 2 },
-      { "nombre": "Blanco · Gris", "foto": 3 },
-      { "nombre": "Negro · Blanco", "foto": 4 },
-      { "nombre": "Blanco · Negro", "foto": 5 },
-      { "nombre": "Negro total", "foto": 6 },
-      { "nombre": "Blanco · Fucsia", "foto": 7 },
-      { "nombre": "Crema · Negro", "foto": 8 },
-      { "nombre": "Negro · Suela blanca", "foto": 9 },
-      { "nombre": "Blanco · Lila", "foto": 10 }
+      {
+        "nombre": "Blanco · Rosado",
+        "foto": 1
+      },
+      {
+        "nombre": "Blanco · Naranja",
+        "foto": 2
+      },
+      {
+        "nombre": "Blanco · Gris",
+        "foto": 3
+      },
+      {
+        "nombre": "Negro · Blanco",
+        "foto": 4
+      },
+      {
+        "nombre": "Blanco · Negro",
+        "foto": 5
+      },
+      {
+        "nombre": "Negro total",
+        "foto": 6
+      },
+      {
+        "nombre": "Blanco · Fucsia",
+        "foto": 7
+      },
+      {
+        "nombre": "Crema · Negro",
+        "foto": 8
+      },
+      {
+        "nombre": "Negro · Suela blanca",
+        "foto": 9
+      },
+      {
+        "nombre": "Blanco · Lila",
+        "foto": 10
+      }
     ],
     "agotado": false
   },
@@ -935,16 +965,46 @@ window.OBSIDIAN_PRODUCTS = [
     "colecciones": [],
     "imagenes": ["img/products/chanclas-nike-1.jpg", "img/products/chanclas-nike-2.jpg", "img/products/chanclas-nike-3.jpg", "img/products/chanclas-nike-4.jpg", "img/products/chanclas-nike-5.jpg", "img/products/chanclas-nike-6.jpg", "img/products/chanclas-nike-7.jpg", "img/products/chanclas-nike-8.jpg", "img/products/chanclas-nike-9.jpg", "img/products/chanclas-nike-10.jpg"],
     "colores": [
-      { "nombre": "Negro (una pieza)", "foto": 1 },
-      { "nombre": "Crema (una pieza)", "foto": 2 },
-      { "nombre": "Beige (una pieza)", "foto": 3 },
-      { "nombre": "Verde (una pieza)", "foto": 4 },
-      { "nombre": "Gris oscuro", "foto": 5 },
-      { "nombre": "Blanco · Negro", "foto": 6 },
-      { "nombre": "Negro · Swoosh negro", "foto": 7 },
-      { "nombre": "Negro · Swoosh blanco", "foto": 8 },
-      { "nombre": "Blanco · Letras NIKE", "foto": 9 },
-      { "nombre": "Negro · Letras NIKE", "foto": 10 }
+      {
+        "nombre": "Negro (una pieza)",
+        "foto": 1
+      },
+      {
+        "nombre": "Crema (una pieza)",
+        "foto": 2
+      },
+      {
+        "nombre": "Beige (una pieza)",
+        "foto": 3
+      },
+      {
+        "nombre": "Verde (una pieza)",
+        "foto": 4
+      },
+      {
+        "nombre": "Gris oscuro",
+        "foto": 5
+      },
+      {
+        "nombre": "Blanco · Negro",
+        "foto": 6
+      },
+      {
+        "nombre": "Negro · Swoosh negro",
+        "foto": 7
+      },
+      {
+        "nombre": "Negro · Swoosh blanco",
+        "foto": 8
+      },
+      {
+        "nombre": "Blanco · Letras NIKE",
+        "foto": 9
+      },
+      {
+        "nombre": "Negro · Letras NIKE",
+        "foto": 10
+      }
     ],
     "agotado": false
   },
@@ -1037,11 +1097,26 @@ window.OBSIDIAN_PRODUCTS = [
     "colecciones": [],
     "imagenes": ["img/products/jordan-ninos-1.jpg", "img/products/jordan-ninos-2.jpg", "img/products/jordan-ninos-3.jpg", "img/products/jordan-ninos-4.jpg", "img/products/jordan-ninos-5.jpg"],
     "colores": [
-      { "nombre": "Negro total", "foto": 1 },
-      { "nombre": "Negro · Blanco", "foto": 2 },
-      { "nombre": "Negro · Gris", "foto": 3 },
-      { "nombre": "Blanco · Gris", "foto": 4 },
-      { "nombre": "Negro · Amarillo", "foto": 5 }
+      {
+        "nombre": "Negro total",
+        "foto": 1
+      },
+      {
+        "nombre": "Negro · Blanco",
+        "foto": 2
+      },
+      {
+        "nombre": "Negro · Gris",
+        "foto": 3
+      },
+      {
+        "nombre": "Blanco · Gris",
+        "foto": 4
+      },
+      {
+        "nombre": "Negro · Amarillo",
+        "foto": 5
+      }
     ],
     "agotado": false
   },
@@ -1059,11 +1134,26 @@ window.OBSIDIAN_PRODUCTS = [
     "colecciones": [],
     "imagenes": ["img/products/adilette-1.jpg", "img/products/adilette-2.jpg", "img/products/adilette-3.jpg", "img/products/adilette-4.jpg", "img/products/adilette-5.jpg"],
     "colores": [
-      { "nombre": "Negro · Blanco", "foto": 1 },
-      { "nombre": "Rojo", "foto": 2 },
-      { "nombre": "Azul rey", "foto": 3 },
-      { "nombre": "Negro total", "foto": 4 },
-      { "nombre": "Blanco · Negro", "foto": 5 }
+      {
+        "nombre": "Negro · Blanco",
+        "foto": 1
+      },
+      {
+        "nombre": "Rojo",
+        "foto": 2
+      },
+      {
+        "nombre": "Azul rey",
+        "foto": 3
+      },
+      {
+        "nombre": "Negro total",
+        "foto": 4
+      },
+      {
+        "nombre": "Blanco · Negro",
+        "foto": 5
+      }
     ],
     "agotado": false
   },
@@ -1081,9 +1171,18 @@ window.OBSIDIAN_PRODUCTS = [
     "colecciones": [],
     "imagenes": ["img/products/nike-ninos-1.jpg", "img/products/nike-ninos-2.jpg", "img/products/nike-ninos-3.jpg"],
     "colores": [
-      { "nombre": "Negro · Blanco", "foto": 1 },
-      { "nombre": "Blanco · Negro", "foto": 2 },
-      { "nombre": "Blanco", "foto": 3 }
+      {
+        "nombre": "Negro · Blanco",
+        "foto": 1
+      },
+      {
+        "nombre": "Blanco · Negro",
+        "foto": 2
+      },
+      {
+        "nombre": "Blanco",
+        "foto": 3
+      }
     ],
     "agotado": false
   },
@@ -1131,8 +1230,14 @@ window.OBSIDIAN_PRODUCTS = [
     "colecciones": [],
     "imagenes": ["img/products/chancla-offcourt-1.jpg", "img/products/chancla-offcourt-2.jpg"],
     "colores": [
-      { "nombre": "Verde", "foto": 1 },
-      { "nombre": "Azul", "foto": 2 }
+      {
+        "nombre": "Verde",
+        "foto": 1
+      },
+      {
+        "nombre": "Azul",
+        "foto": 2
+      }
     ],
     "agotado": false
   },
@@ -1150,13 +1255,34 @@ window.OBSIDIAN_PRODUCTS = [
     "colecciones": [],
     "imagenes": ["img/products/chanclas-adidas-1.jpg", "img/products/chanclas-adidas-2.jpg", "img/products/chanclas-adidas-3.jpg", "img/products/chanclas-adidas-4.jpg", "img/products/chanclas-adidas-5.jpg", "img/products/chanclas-adidas-6.jpg", "img/products/chanclas-adidas-7.jpg"],
     "colores": [
-      { "nombre": "Negro · Relieve", "foto": 1 },
-      { "nombre": "Beige", "foto": 2 },
-      { "nombre": "Negro (una pieza)", "foto": 3 },
-      { "nombre": "Rojo · Negro", "foto": 4 },
-      { "nombre": "Gris · Negro", "foto": 5 },
-      { "nombre": "Negro · Rojo", "foto": 6 },
-      { "nombre": "Negro · Blanco", "foto": 7 }
+      {
+        "nombre": "Negro · Relieve",
+        "foto": 1
+      },
+      {
+        "nombre": "Beige",
+        "foto": 2
+      },
+      {
+        "nombre": "Negro (una pieza)",
+        "foto": 3
+      },
+      {
+        "nombre": "Rojo · Negro",
+        "foto": 4
+      },
+      {
+        "nombre": "Gris · Negro",
+        "foto": 5
+      },
+      {
+        "nombre": "Negro · Rojo",
+        "foto": 6
+      },
+      {
+        "nombre": "Negro · Blanco",
+        "foto": 7
+      }
     ],
     "agotado": false
   },
@@ -1174,9 +1300,18 @@ window.OBSIDIAN_PRODUCTS = [
     "colecciones": [],
     "imagenes": ["img/products/adidas-ninos-1.jpg", "img/products/adidas-ninos-2.jpg", "img/products/adidas-ninos-3.jpg"],
     "colores": [
-      { "nombre": "Blanco · Negro", "foto": 1 },
-      { "nombre": "Negro · Blanco", "foto": 2 },
-      { "nombre": "Blanco · Rosado", "foto": 3 }
+      {
+        "nombre": "Blanco · Negro",
+        "foto": 1
+      },
+      {
+        "nombre": "Negro · Blanco",
+        "foto": 2
+      },
+      {
+        "nombre": "Blanco · Rosado",
+        "foto": 3
+      }
     ],
     "agotado": false
   },
@@ -1224,8 +1359,14 @@ window.OBSIDIAN_PRODUCTS = [
     "colecciones": ["luxury"],
     "imagenes": ["img/products/chanclas-prada-1.jpg", "img/products/chanclas-prada-2.jpg"],
     "colores": [
-      { "nombre": "Negro", "foto": 1 },
-      { "nombre": "Naranja", "foto": 2 }
+      {
+        "nombre": "Negro",
+        "foto": 1
+      },
+      {
+        "nombre": "Naranja",
+        "foto": 2
+      }
     ],
     "agotado": false
   },
@@ -1388,10 +1529,10 @@ window.OBSIDIAN_PRODUCTS = [
     "precio": 145000,
     "etiqueta": "Nuevo",
     "descripcion": "On Cloud con su suela de cápsulas, cómoda y liviana para caminar todo el día.",
-    "tallas": [35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45],
+    "tallas": [36, 37, 38, 39, 40, 41, 42, 43, 44],
     "genero": "Unisex",
     "colecciones": [],
-    "imagenes": ["img/products/t504-133-1.jpg"],
+    "imagenes": ["img/products/t504-133-1.jpg", "img/products/t504-133-2.jpg"],
     "agotado": false
   },
   {
@@ -1978,16 +2119,46 @@ window.OBSIDIAN_PRODUCTS = [
     "colecciones": [],
     "imagenes": ["img/products/b3-chanclas-lacoste-1.jpg", "img/products/b3-chanclas-lacoste-2.jpg", "img/products/b3-chanclas-lacoste-3.jpg", "img/products/b3-chanclas-lacoste-4.jpg", "img/products/b3-chanclas-lacoste-5.jpg", "img/products/b3-chanclas-lacoste-6.jpg", "img/products/b3-chanclas-lacoste-7.jpg", "img/products/b3-chanclas-lacoste-8.jpg", "img/products/b3-chanclas-lacoste-9.jpg", "img/products/b3-chanclas-lacoste-10.jpg"],
     "colores": [
-      { "nombre": "Azul marino", "foto": 1 },
-      { "nombre": "Verde", "foto": 2 },
-      { "nombre": "Negro · Letras", "foto": 3 },
-      { "nombre": "Beige", "foto": 4 },
-      { "nombre": "Blanco", "foto": 5 },
-      { "nombre": "Negro · Letras y cocodrilo", "foto": 6 },
-      { "nombre": "Verde · Cocodrilo", "foto": 7 },
-      { "nombre": "Negro · Cocodrilo", "foto": 8 },
-      { "nombre": "Azul · Cocodrilo", "foto": 9 },
-      { "nombre": "Beige · Cocodrilo", "foto": 10 }
+      {
+        "nombre": "Azul marino",
+        "foto": 1
+      },
+      {
+        "nombre": "Verde",
+        "foto": 2
+      },
+      {
+        "nombre": "Negro · Letras",
+        "foto": 3
+      },
+      {
+        "nombre": "Beige",
+        "foto": 4
+      },
+      {
+        "nombre": "Blanco",
+        "foto": 5
+      },
+      {
+        "nombre": "Negro · Letras y cocodrilo",
+        "foto": 6
+      },
+      {
+        "nombre": "Verde · Cocodrilo",
+        "foto": 7
+      },
+      {
+        "nombre": "Negro · Cocodrilo",
+        "foto": 8
+      },
+      {
+        "nombre": "Azul · Cocodrilo",
+        "foto": 9
+      },
+      {
+        "nombre": "Beige · Cocodrilo",
+        "foto": 10
+      }
     ],
     "agotado": false
   },
@@ -2005,10 +2176,22 @@ window.OBSIDIAN_PRODUCTS = [
     "colecciones": [],
     "imagenes": ["img/products/b3-chanclas-polo-1.jpg", "img/products/b3-chanclas-polo-2.jpg", "img/products/b3-chanclas-polo-3.jpg", "img/products/b3-chanclas-polo-4.jpg"],
     "colores": [
-      { "nombre": "Blanco", "foto": 1 },
-      { "nombre": "Azul marino", "foto": 2 },
-      { "nombre": "Negro · Blanco", "foto": 3 },
-      { "nombre": "Negro · Dorado", "foto": 4 }
+      {
+        "nombre": "Blanco",
+        "foto": 1
+      },
+      {
+        "nombre": "Azul marino",
+        "foto": 2
+      },
+      {
+        "nombre": "Negro · Blanco",
+        "foto": 3
+      },
+      {
+        "nombre": "Negro · Dorado",
+        "foto": 4
+      }
     ],
     "agotado": false
   },
@@ -2339,7 +2522,7 @@ window.OBSIDIAN_PRODUCTS = [
     "tallas": [36, 37, 38, 39],
     "genero": "Mujer",
     "colecciones": [],
-    "imagenes": ["img/products/b3-superstar-leopardo-1.jpg"],
+    "imagenes": ["img/products/b3-superstar-leopardo-1.jpg", "img/products/b3-superstar-leopardo-2.jpg"],
     "agotado": false
   },
   {
@@ -2521,9 +2704,18 @@ window.OBSIDIAN_PRODUCTS = [
     "colecciones": [],
     "imagenes": ["img/products/b3-superstar-ninos-1.jpg", "img/products/b3-superstar-ninos-2.jpg", "img/products/b3-superstar-ninos-3.jpg"],
     "colores": [
-      { "nombre": "Blanco · Negro", "foto": 1 },
-      { "nombre": "Rosado", "foto": 2 },
-      { "nombre": "Lila", "foto": 3 }
+      {
+        "nombre": "Blanco · Negro",
+        "foto": 1
+      },
+      {
+        "nombre": "Rosado",
+        "foto": 2
+      },
+      {
+        "nombre": "Lila",
+        "foto": 3
+      }
     ],
     "agotado": false
   },
@@ -2646,14 +2838,38 @@ window.OBSIDIAN_PRODUCTS = [
     "colecciones": [],
     "imagenes": ["img/products/b3-crocs-ninos-1.jpg", "img/products/b3-crocs-ninos-2.jpg", "img/products/b3-crocs-ninos-3.jpg", "img/products/b3-crocs-ninos-4.jpg", "img/products/b3-crocs-ninos-5.jpg", "img/products/b3-crocs-ninos-6.jpg", "img/products/b3-crocs-ninos-7.jpg", "img/products/b3-crocs-ninos-8.jpg"],
     "colores": [
-      { "nombre": "Azul marino", "foto": 1 },
-      { "nombre": "Blanco", "foto": 2 },
-      { "nombre": "Rojo", "foto": 3 },
-      { "nombre": "Negro", "foto": 4 },
-      { "nombre": "Rosado chicle", "foto": 5 },
-      { "nombre": "Negro · Fucsia", "foto": 6 },
-      { "nombre": "Lila", "foto": 7 },
-      { "nombre": "Rosado palo", "foto": 8 }
+      {
+        "nombre": "Azul marino",
+        "foto": 1
+      },
+      {
+        "nombre": "Blanco",
+        "foto": 2
+      },
+      {
+        "nombre": "Rojo",
+        "foto": 3
+      },
+      {
+        "nombre": "Negro",
+        "foto": 4
+      },
+      {
+        "nombre": "Rosado chicle",
+        "foto": 5
+      },
+      {
+        "nombre": "Negro · Fucsia",
+        "foto": 6
+      },
+      {
+        "nombre": "Lila",
+        "foto": 7
+      },
+      {
+        "nombre": "Rosado palo",
+        "foto": 8
+      }
     ],
     "agotado": false
   },
@@ -2776,11 +2992,26 @@ window.OBSIDIAN_PRODUCTS = [
     "colecciones": [],
     "imagenes": ["img/products/b4-superstar-colores-1.jpg", "img/products/b4-superstar-colores-2.jpg", "img/products/b4-superstar-colores-3.jpg", "img/products/b4-superstar-colores-4.jpg", "img/products/b4-superstar-colores-5.jpg"],
     "colores": [
-      { "nombre": "Franjas menta", "foto": 1 },
-      { "nombre": "Franjas crema", "foto": 2 },
-      { "nombre": "Franjas jean", "foto": 3 },
-      { "nombre": "Franjas azules", "foto": 4 },
-      { "nombre": "Franjas plateadas", "foto": 5 }
+      {
+        "nombre": "Franjas menta",
+        "foto": 1
+      },
+      {
+        "nombre": "Franjas crema",
+        "foto": 2
+      },
+      {
+        "nombre": "Franjas jean",
+        "foto": 3
+      },
+      {
+        "nombre": "Franjas azules",
+        "foto": 4
+      },
+      {
+        "nombre": "Franjas plateadas",
+        "foto": 5
+      }
     ],
     "agotado": false
   },
@@ -2857,6 +3088,599 @@ window.OBSIDIAN_PRODUCTS = [
     "genero": "Hombre",
     "colecciones": [],
     "imagenes": ["img/products/b4-superstar-camuflado-1.jpg"],
+    "agotado": false
+  },
+  {
+    "id": "b5-bape-gris",
+    "slug": "bape-sta-gris-blanco",
+    "marca": "BAPE",
+    "nombre": "Bape Sta",
+    "color": "Gris · Blanco",
+    "precio": 105000,
+    "etiqueta": "Nuevo",
+    "descripcion": "Bape Sta en charol gris y blanco con la estrella a un lado.",
+    "tallas": [41, 42, 43, 44],
+    "genero": "Hombre",
+    "colecciones": [],
+    "imagenes": ["img/products/b5-bape-gris-1.jpg"],
+    "agotado": false
+  },
+  {
+    "id": "b5-bape-blanco-rojo",
+    "slug": "bape-sta-blanco-rojo",
+    "marca": "BAPE",
+    "nombre": "Bape Sta",
+    "color": "Blanco · Rojo",
+    "precio": 115000,
+    "etiqueta": "Nuevo",
+    "descripcion": "Bape Sta blanco con la estrella roja y detalle de tiburón.",
+    "tallas": [40, 41, 42, 43, 44],
+    "genero": "Hombre",
+    "colecciones": [],
+    "imagenes": ["img/products/b5-bape-blanco-rojo-1.jpg"],
+    "agotado": false
+  },
+  {
+    "id": "b5-bape-naranja-vinotinto",
+    "slug": "bape-sta-naranja-vinotinto",
+    "marca": "BAPE",
+    "nombre": "Bape Sta",
+    "color": "Naranja · Vinotinto",
+    "precio": 105000,
+    "etiqueta": "Nuevo",
+    "descripcion": "Bape Sta en charol naranja y vinotinto con la estrella negra.",
+    "tallas": [40, 41, 42, 43, 44],
+    "genero": "Hombre",
+    "colecciones": [],
+    "imagenes": ["img/products/b5-bape-naranja-vinotinto-1.jpg"],
+    "agotado": false
+  },
+  {
+    "id": "b5-bape-azul-rojo",
+    "slug": "bape-sta-azul-rojo",
+    "marca": "BAPE",
+    "nombre": "Bape Sta",
+    "color": "Azul · Rojo",
+    "precio": 105000,
+    "etiqueta": "Nuevo",
+    "descripcion": "Bape Sta en charol azul cielo y rojo con la estrella blanca.",
+    "tallas": [40, 41, 42, 43, 44],
+    "genero": "Hombre",
+    "colecciones": [],
+    "imagenes": ["img/products/b5-bape-azul-rojo-1.jpg"],
+    "agotado": false
+  },
+  {
+    "id": "b5-bape-tiburon",
+    "slug": "bape-sta-negro-naranja-tiburon",
+    "marca": "BAPE",
+    "nombre": "Bape Sta",
+    "color": "Negro · Naranja · Tiburón",
+    "precio": 105000,
+    "etiqueta": "Nuevo",
+    "descripcion": "Bape Sta en charol negro y naranja con la boca de tiburón a un lado.",
+    "tallas": [40, 41, 42, 43, 44],
+    "genero": "Hombre",
+    "colecciones": [],
+    "imagenes": ["img/products/b5-bape-tiburon-1.jpg"],
+    "agotado": false
+  },
+  {
+    "id": "b5-reebok-classic-negro",
+    "slug": "reebok-classic-leather-negro-suela-goma",
+    "marca": "Reebok",
+    "nombre": "Classic Leather",
+    "color": "Negro · Suela goma",
+    "precio": 130000,
+    "etiqueta": "Nuevo",
+    "descripcion": "Reebok Classic Leather en cuero negro con suela de goma.",
+    "tallas": [36, 37, 38, 39, 40, 41, 42, 43, 44],
+    "genero": "Unisex",
+    "colecciones": ["blackout"],
+    "imagenes": ["img/products/b5-reebok-classic-negro-1.jpg"],
+    "agotado": false
+  },
+  {
+    "id": "b5-reebok-classic-blanco",
+    "slug": "reebok-classic-leather-blanco",
+    "marca": "Reebok",
+    "nombre": "Classic Leather",
+    "color": "Blanco",
+    "precio": 130000,
+    "etiqueta": "Nuevo",
+    "descripcion": "Reebok Classic Leather en cuero blanco, el clásico de todos los días.",
+    "tallas": [36, 37, 38, 39, 40, 41, 42, 43, 44],
+    "genero": "Unisex",
+    "colecciones": [],
+    "imagenes": ["img/products/b5-reebok-classic-blanco-1.jpg"],
+    "agotado": false
+  },
+  {
+    "id": "b5-p6000-plata-negro",
+    "slug": "nike-p-6000-plata-negro",
+    "marca": "Nike",
+    "nombre": "P-6000",
+    "color": "Plata · Negro",
+    "precio": 135000,
+    "etiqueta": "Nuevo",
+    "descripcion": "Runner de estilo 2000 en plateado metálico con detalles negros.",
+    "tallas": [36, 37, 38, 39, 40, 41, 42, 43, 44],
+    "genero": "Unisex",
+    "colecciones": ["runner"],
+    "imagenes": ["img/products/b5-p6000-plata-negro-1.jpg"],
+    "agotado": false
+  },
+  {
+    "id": "b5-af1-supreme",
+    "slug": "nike-air-force-1-x-supreme-blanco-cordones-rojos",
+    "marca": "Nike",
+    "nombre": "Air Force 1 x Supreme",
+    "color": "Blanco · Cordones rojos",
+    "precio": 145000,
+    "etiqueta": "Nuevo",
+    "descripcion": "Air Force 1 blanco con el logo de Supreme en el talón y cordones rojos.",
+    "tallas": [40, 41, 42, 43, 44],
+    "genero": "Hombre",
+    "colecciones": ["icons"],
+    "imagenes": ["img/products/b5-af1-supreme-1.jpg"],
+    "agotado": false
+  },
+  {
+    "id": "b5-mcqueen-negro",
+    "slug": "alexander-mcqueen-oversized-negro-suela-blanca",
+    "marca": "Alexander McQueen",
+    "nombre": "Oversized",
+    "color": "Negro · Suela blanca",
+    "precio": 140000,
+    "etiqueta": "Nuevo",
+    "descripcion": "Alexander McQueen Oversized en cuero negro con su suela blanca alta.",
+    "tallas": [40, 41, 42, 43, 44],
+    "genero": "Hombre",
+    "colecciones": ["luxury"],
+    "imagenes": ["img/products/b5-mcqueen-negro-1.jpg"],
+    "agotado": false
+  },
+  {
+    "id": "b5-samba-leopardo",
+    "slug": "adidas-samba-crema-leopardo",
+    "marca": "Adidas",
+    "nombre": "Samba",
+    "color": "Crema · Leopardo",
+    "precio": 140000,
+    "etiqueta": "Nuevo",
+    "descripcion": "Samba crema con franjas de leopardo y suela de goma, en tallas de dama.",
+    "tallas": [36, 37, 38, 39],
+    "genero": "Mujer",
+    "colecciones": [],
+    "imagenes": ["img/products/b5-samba-leopardo-1.jpg"],
+    "agotado": false
+  },
+  {
+    "id": "b5-superstar-corazones",
+    "slug": "adidas-superstar-crema-corazones-rojos",
+    "marca": "Adidas",
+    "nombre": "Superstar",
+    "color": "Crema · Corazones rojos",
+    "precio": 140000,
+    "etiqueta": "Nuevo",
+    "descripcion": "Superstar crema con franjas rojas y corazones, en tallas de dama.",
+    "tallas": [36, 37, 38, 39],
+    "genero": "Mujer",
+    "colecciones": [],
+    "imagenes": ["img/products/b5-superstar-corazones-1.jpg"],
+    "agotado": false
+  },
+  {
+    "id": "b5-on-negro-naranja",
+    "slug": "on-cloud-negro-naranja",
+    "marca": "On",
+    "nombre": "Cloud",
+    "color": "Negro · Naranja",
+    "precio": 140000,
+    "etiqueta": "Nuevo",
+    "descripcion": "On Cloud negro con detalles naranja y morado, en tallas de dama.",
+    "tallas": [36, 37, 38, 39],
+    "genero": "Mujer",
+    "colecciones": ["runner"],
+    "imagenes": ["img/products/b5-on-negro-naranja-1.jpg"],
+    "agotado": false
+  },
+  {
+    "id": "b5-running-blanco-talon-negro",
+    "slug": "adidas-running-blanco-talon-negro",
+    "marca": "Adidas",
+    "nombre": "Running",
+    "color": "Blanco · Talón negro",
+    "precio": 140000,
+    "etiqueta": "Nuevo",
+    "descripcion": "Running en tejido blanco con franjas negras y talón negro.",
+    "tallas": [40, 41, 42, 43, 44],
+    "genero": "Hombre",
+    "colecciones": ["runner"],
+    "imagenes": ["img/products/b5-running-blanco-talon-negro-1.jpg"],
+    "agotado": false
+  },
+  {
+    "id": "b5-running-negro-blanco-rojo",
+    "slug": "adidas-running-negro-blanco-rojo",
+    "marca": "Adidas",
+    "nombre": "Running",
+    "color": "Negro · Blanco · Rojo",
+    "precio": 140000,
+    "etiqueta": "Nuevo",
+    "descripcion": "Running negro con franjas blancas, suela blanca y detalles rojos.",
+    "tallas": [40, 41, 42, 43, 44],
+    "genero": "Hombre",
+    "colecciones": ["runner"],
+    "imagenes": ["img/products/b5-running-negro-blanco-rojo-1.jpg"],
+    "agotado": false
+  },
+  {
+    "id": "b5-running-negro-gris-oscuro",
+    "slug": "adidas-running-negro-gris-oscuro",
+    "marca": "Adidas",
+    "nombre": "Running",
+    "color": "Negro · Gris oscuro",
+    "precio": 140000,
+    "etiqueta": "Nuevo",
+    "descripcion": "Running negro con franjas grises y suela oscura.",
+    "tallas": [40, 41, 42, 43, 44],
+    "genero": "Hombre",
+    "colecciones": ["runner"],
+    "imagenes": ["img/products/b5-running-negro-gris-oscuro-1.jpg"],
+    "agotado": false
+  },
+  {
+    "id": "b5-running-negro-franjas-blancas",
+    "slug": "adidas-running-negro-franjas-blancas",
+    "marca": "Adidas",
+    "nombre": "Running",
+    "color": "Negro · Franjas blancas",
+    "precio": 140000,
+    "etiqueta": "Nuevo",
+    "descripcion": "Running liviano negro con franjas blancas y suela blanca.",
+    "tallas": [40, 41, 42, 43, 44],
+    "genero": "Hombre",
+    "colecciones": ["runner"],
+    "imagenes": ["img/products/b5-running-negro-franjas-blancas-1.jpg"],
+    "agotado": false
+  },
+  {
+    "id": "b5-running-negro-franjas-rojas",
+    "slug": "adidas-running-negro-franjas-rojas",
+    "marca": "Adidas",
+    "nombre": "Running",
+    "color": "Negro · Franjas rojas",
+    "precio": 140000,
+    "etiqueta": "Nuevo",
+    "descripcion": "Running negro con franjas rojas y suela blanca.",
+    "tallas": [40, 41, 42, 43, 44],
+    "genero": "Hombre",
+    "colecciones": ["runner"],
+    "imagenes": ["img/products/b5-running-negro-franjas-rojas-1.jpg"],
+    "agotado": false
+  },
+  {
+    "id": "b5-running-crema-franjas-rojas",
+    "slug": "adidas-running-crema-franjas-rojas",
+    "marca": "Adidas",
+    "nombre": "Running",
+    "color": "Crema · Franjas rojas",
+    "precio": 140000,
+    "etiqueta": "Nuevo",
+    "descripcion": "Running crema con franjas rojas y suela crema.",
+    "tallas": [40, 41, 42, 43, 44],
+    "genero": "Hombre",
+    "colecciones": ["runner"],
+    "imagenes": ["img/products/b5-running-crema-franjas-rojas-1.jpg"],
+    "agotado": false
+  },
+  {
+    "id": "b5-running-negro-tejido",
+    "slug": "adidas-running-negro-tejido-gris",
+    "marca": "Adidas",
+    "nombre": "Running",
+    "color": "Negro tejido · Gris",
+    "precio": 140000,
+    "etiqueta": "Nuevo",
+    "descripcion": "Running en tejido negro con franjas grises y suela blanca.",
+    "tallas": [40, 41, 42, 43, 44],
+    "genero": "Hombre",
+    "colecciones": ["runner"],
+    "imagenes": ["img/products/b5-running-negro-tejido-1.jpg"],
+    "agotado": false
+  },
+  {
+    "id": "b5-running-azul-fucsia",
+    "slug": "adidas-running-azul-marino-fucsia",
+    "marca": "Adidas",
+    "nombre": "Running",
+    "color": "Azul marino · Fucsia",
+    "precio": 145000,
+    "etiqueta": "Nuevo",
+    "descripcion": "Running azul marino con franjas blancas y detalles fucsia, en tallas de dama.",
+    "tallas": [36, 37, 38, 39],
+    "genero": "Mujer",
+    "colecciones": ["runner"],
+    "imagenes": ["img/products/b5-running-azul-fucsia-1.jpg"],
+    "agotado": false
+  },
+  {
+    "id": "b5-nb530-blanco",
+    "slug": "new-balance-530-blanco-azul-marino",
+    "marca": "New Balance",
+    "nombre": "530",
+    "color": "Blanco · Azul marino",
+    "precio": 125000,
+    "etiqueta": "Nuevo",
+    "descripcion": "New Balance 530 blanco con plateado y azul marino, en tallas de dama.",
+    "tallas": [36, 37, 38, 39],
+    "genero": "Mujer",
+    "colecciones": ["runner"],
+    "imagenes": ["img/products/b5-nb530-blanco-1.jpg"],
+    "agotado": false
+  },
+  {
+    "id": "b5-superstar-negro-croco",
+    "slug": "adidas-superstar-negro-croco-logo-dorado",
+    "marca": "Adidas",
+    "nombre": "Superstar",
+    "color": "Negro croco · Logo dorado",
+    "precio": 120000,
+    "etiqueta": "Nuevo",
+    "descripcion": "Superstar negro con textura de cocodrilo, puntera negra y logo dorado.",
+    "tallas": [40, 41, 42, 43, 44],
+    "genero": "Hombre",
+    "colecciones": ["blackout"],
+    "imagenes": ["img/products/b5-superstar-negro-croco-1.jpg"],
+    "agotado": false
+  },
+  {
+    "id": "b5-running-beige-naranja",
+    "slug": "adidas-running-beige-naranja",
+    "marca": "Adidas",
+    "nombre": "Running",
+    "color": "Beige · Naranja",
+    "precio": 145000,
+    "etiqueta": "Nuevo",
+    "descripcion": "Running beige con franjas blancas y detalles naranja, en tallas de dama.",
+    "tallas": [36, 37, 38, 39],
+    "genero": "Mujer",
+    "colecciones": ["runner"],
+    "imagenes": ["img/products/b5-running-beige-naranja-1.jpg"],
+    "agotado": false
+  },
+  {
+    "id": "b5-kayano-plateado-negro",
+    "slug": "asics-gel-kayano-14-plateado-negro",
+    "marca": "ASICS",
+    "nombre": "Gel-Kayano 14",
+    "color": "Plateado · Negro",
+    "precio": 120000,
+    "etiqueta": "Nuevo",
+    "descripcion": "Gel-Kayano 14 plateado con franjas negras y detalles dorados.",
+    "tallas": [40, 41, 42, 43, 44],
+    "genero": "Hombre",
+    "colecciones": ["runner"],
+    "imagenes": ["img/products/b5-kayano-plateado-negro-1.jpg", "img/products/b5-kayano-plateado-negro-2.jpg"],
+    "agotado": false
+  },
+  {
+    "id": "b5-nike-training-rosado",
+    "slug": "nike-training-rosado-palo",
+    "marca": "Nike",
+    "nombre": "Training",
+    "color": "Rosado palo",
+    "precio": 120000,
+    "etiqueta": "Nuevo",
+    "descripcion": "Tenis de entrenamiento en tejido rosado palo con suela blanca, en tallas de dama.",
+    "tallas": [36, 37, 38, 39],
+    "genero": "Mujer",
+    "colecciones": [],
+    "imagenes": ["img/products/b5-nike-training-rosado-1.jpg"],
+    "agotado": false
+  },
+  {
+    "id": "b5-nike-training-lila",
+    "slug": "nike-training-gris-lila",
+    "marca": "Nike",
+    "nombre": "Training",
+    "color": "Gris lila",
+    "precio": 120000,
+    "etiqueta": "Nuevo",
+    "descripcion": "Tenis de entrenamiento en tejido gris lila con suela blanca, en tallas de dama.",
+    "tallas": [36, 37, 38, 39],
+    "genero": "Mujer",
+    "colecciones": [],
+    "imagenes": ["img/products/b5-nike-training-lila-1.jpg"],
+    "agotado": false
+  },
+  {
+    "id": "b5-on-blanco-rosa",
+    "slug": "on-cloud-blanco-rosa-viejo",
+    "marca": "On",
+    "nombre": "Cloud",
+    "color": "Blanco · Rosa viejo",
+    "precio": 140000,
+    "etiqueta": "Nuevo",
+    "descripcion": "On Cloud blanco con detalles rosa viejo y su suela de cápsulas.",
+    "tallas": [40, 41, 42, 43, 44],
+    "genero": "Hombre",
+    "colecciones": ["runner"],
+    "imagenes": ["img/products/b5-on-blanco-rosa-1.jpg"],
+    "agotado": false
+  },
+  {
+    "id": "b5-on-gris-blanco",
+    "slug": "on-cloud-gris-blanco",
+    "marca": "On",
+    "nombre": "Cloud",
+    "color": "Gris · Blanco",
+    "precio": 140000,
+    "etiqueta": "Nuevo",
+    "descripcion": "On Cloud gris claro con suela blanca de cápsulas.",
+    "tallas": [40, 41, 42, 43, 44],
+    "genero": "Hombre",
+    "colecciones": ["runner"],
+    "imagenes": ["img/products/b5-on-gris-blanco-1.jpg"],
+    "agotado": false
+  },
+  {
+    "id": "b5-on-celeste",
+    "slug": "on-cloud-celeste",
+    "marca": "On",
+    "nombre": "Cloud",
+    "color": "Celeste",
+    "precio": 140000,
+    "etiqueta": "Nuevo",
+    "descripcion": "On Cloud celeste con suela blanca de cápsulas, en tallas de dama.",
+    "tallas": [36, 37, 38, 39],
+    "genero": "Mujer",
+    "colecciones": ["runner"],
+    "imagenes": ["img/products/b5-on-celeste-1.jpg"],
+    "agotado": false
+  },
+  {
+    "id": "b5-on-negro-dama",
+    "slug": "on-cloud-negro-suela-blanca",
+    "marca": "On",
+    "nombre": "Cloud",
+    "color": "Negro · Suela blanca",
+    "precio": 140000,
+    "etiqueta": "Nuevo",
+    "descripcion": "On Cloud negro con suela blanca de cápsulas, en tallas de dama.",
+    "tallas": [36, 37, 38, 39],
+    "genero": "Mujer",
+    "colecciones": ["runner"],
+    "imagenes": ["img/products/b5-on-negro-dama-1.jpg"],
+    "agotado": false
+  },
+  {
+    "id": "b5-on-rosado",
+    "slug": "on-cloud-rosado",
+    "marca": "On",
+    "nombre": "Cloud",
+    "color": "Rosado",
+    "precio": 140000,
+    "etiqueta": "Nuevo",
+    "descripcion": "On Cloud rosado con suela de cápsulas, en tallas de dama.",
+    "tallas": [36, 37, 38, 39],
+    "genero": "Mujer",
+    "colecciones": ["runner"],
+    "imagenes": ["img/products/b5-on-rosado-1.jpg"],
+    "agotado": false
+  },
+  {
+    "id": "b5-asics-amarillo",
+    "slug": "asics-running-amarillo-neon",
+    "marca": "ASICS",
+    "nombre": "Running",
+    "color": "Amarillo neón",
+    "precio": 130000,
+    "etiqueta": "Nuevo",
+    "descripcion": "Running ASICS amarillo neón, liviano y con buena amortiguación.",
+    "tallas": [40, 41, 42, 43, 44],
+    "genero": "Hombre",
+    "colecciones": ["runner"],
+    "imagenes": ["img/products/b5-asics-amarillo-1.jpg"],
+    "agotado": false
+  },
+  {
+    "id": "b5-asics-blanco-morado",
+    "slug": "asics-running-blanco-rosado-morado",
+    "marca": "ASICS",
+    "nombre": "Running",
+    "color": "Blanco · Rosado · Morado",
+    "precio": 130000,
+    "etiqueta": "Nuevo",
+    "descripcion": "Running ASICS blanco con degradado rosado y morado.",
+    "tallas": [40, 41, 42, 43, 44],
+    "genero": "Hombre",
+    "colecciones": ["runner"],
+    "imagenes": ["img/products/b5-asics-blanco-morado-1.jpg"],
+    "agotado": false
+  },
+  {
+    "id": "b5-kayano-blanco-vinotinto",
+    "slug": "asics-gel-kayano-14-blanco-vinotinto-rosado",
+    "marca": "ASICS",
+    "nombre": "Gel-Kayano 14",
+    "color": "Blanco · Vinotinto · Rosado",
+    "precio": 120000,
+    "etiqueta": "Nuevo",
+    "descripcion": "Gel-Kayano 14 blanco con vinotinto y rosado, en tallas de dama.",
+    "tallas": [36, 37, 38, 39],
+    "genero": "Mujer",
+    "colecciones": ["runner"],
+    "imagenes": ["img/products/b5-kayano-blanco-vinotinto-1.jpg"],
+    "agotado": false
+  },
+  {
+    "id": "b5-j4-negro-blanco",
+    "slug": "air-jordan-4-negro-blanco",
+    "marca": "Jordan",
+    "nombre": "Air Jordan 4",
+    "color": "Negro · Blanco",
+    "precio": 130000,
+    "etiqueta": "Nuevo",
+    "descripcion": "Air Jordan 4 en gamuza negra con detalles y suela blancos.",
+    "tallas": [40, 41, 42, 43, 44],
+    "genero": "Hombre",
+    "colecciones": ["icons"],
+    "imagenes": ["img/products/b5-j4-negro-blanco-1.jpg"],
+    "agotado": false
+  },
+  {
+    "id": "b5-nike-runner-colores",
+    "slug": "nike-runner-varios-colores",
+    "marca": "Nike",
+    "nombre": "Runner",
+    "color": "Varios colores",
+    "precio": 135000,
+    "etiqueta": "Nuevo",
+    "descripcion": "Runner de estilo 2000 en 9 colores, en tallas de dama. Elige el tuyo antes de agregarlo a la bolsa.",
+    "tallas": [36, 37, 38, 39],
+    "genero": "Mujer",
+    "colecciones": ["runner"],
+    "imagenes": ["img/products/b5-nike-runner-colores-1.jpg", "img/products/b5-nike-runner-colores-2.jpg", "img/products/b5-nike-runner-colores-3.jpg", "img/products/b5-nike-runner-colores-4.jpg", "img/products/b5-nike-runner-colores-5.jpg", "img/products/b5-nike-runner-colores-6.jpg", "img/products/b5-nike-runner-colores-7.jpg", "img/products/b5-nike-runner-colores-8.jpg", "img/products/b5-nike-runner-colores-9.jpg"],
+    "colores": [
+      {
+        "nombre": "Beige",
+        "foto": 1
+      },
+      {
+        "nombre": "Lila · Gris",
+        "foto": 2
+      },
+      {
+        "nombre": "Gris · Rosado",
+        "foto": 3
+      },
+      {
+        "nombre": "Blanco · Celeste",
+        "foto": 4
+      },
+      {
+        "nombre": "Azul cielo",
+        "foto": 5
+      },
+      {
+        "nombre": "Negro",
+        "foto": 6
+      },
+      {
+        "nombre": "Rosado",
+        "foto": 7
+      },
+      {
+        "nombre": "Blanco · Verde",
+        "foto": 8
+      },
+      {
+        "nombre": "Blanco",
+        "foto": 9
+      }
+    ],
     "agotado": false
   }
 ];
