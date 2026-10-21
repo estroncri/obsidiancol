@@ -48,6 +48,15 @@ Ejemplo con el Air Force 1: al proveedor le pagas **$90.000** (te cuesta), al ve
 
 En la hoja de Google quedan las pestañas **Pedidos**, **Vendedores**, **Costos** y **PreciosVendedores**. Cada pedido guarda la ganancia del vendedor y la tuya.
 
+## Reseñas de clientes
+
+Al final de todas las páginas hay una sección **Reseñas**. Los clientes ponen estrellas, su opinión, hasta 4 fotos y un video (máx. 20 MB). Todo llega a la pestaña **Reseñas** del panel como *Por revisar*; en la página no aparece nada hasta que le das **Publicar**. **Ocultar** la quita.
+
+- Las reseñas quedan en la hoja (pestaña `Resenas`) y las fotos y videos en tu Google Drive, carpeta **OBSIDIAN reseñas (fotos y videos)**. Son privados hasta que publicas la reseña.
+- En la página solo se ve el nombre con la inicial del apellido y la ciudad. El número de pedido o celular que deja el cliente solo lo ves tú, para comprobar que compró.
+- El script usa el servicio avanzado **Drive API** con el permiso `drive.file` (solo los archivos que él crea). Ver `herramientas/appsscript.json`.
+- Enlace directo para pedir reseñas por WhatsApp: `https://obsidiancol.shop/#escribir-resena` (abre el formulario).
+
 ## Cambiar datos — `js/config.js`
 
 WhatsApp, Instagram, correo, margen sobre el precio (`aumentoPrecio`) y los textos de pago, envío y cambios.
